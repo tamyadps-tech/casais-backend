@@ -15,7 +15,7 @@ const RUBRIC = [
   'Usa o nome da pessoa e faz referência a pelo menos 2 dados concretos do perfil dela',
   'Não usa termos clínicos/diagnósticos (nada de "transtorno", "patologia", "disfunção")',
   'Traz 1 dica prática de autoconhecimento, curta e acionável, para a própria pessoa',
-  'Usa 2 a 5 emojis, espalhados com naturalidade, sem exagero',
+  'Não usa emojis em nenhum ponto do texto — tom caloroso, mas sóbrio e direto',
   'Tem entre 80 e 180 palavras'
 ];
 
@@ -26,13 +26,13 @@ function mockResult(name, scores) {
   const temperamentoInfo = temp ? profiles.temperamento[temp] : null;
   const linguagemInfo = linguagem ? profiles.linguagemAmor[linguagem] : null;
 
-  return `${name}, olha só o que suas respostas mostraram! 💜
+  return `${name}, olha só o que suas respostas mostraram.
 
 Seu jeito tem um quê de ${temperamentoInfo ? temperamentoInfo.nome.toLowerCase() : 'único'} — ${temperamentoInfo ? temperamentoInfo.descricao : 'cada resposta sua tem sua marca'}. No amor, você ${apegoInfo ? apegoInfo.descricao : 'ainda está se descobrindo'}.
 
-E o que mais te faz sentir amado(a)? ${linguagemInfo ? linguagemInfo.descricao : 'ainda estamos descobrindo'} 🥰
+E o que mais te faz sentir amado(a)? ${linguagemInfo ? linguagemInfo.descricao : 'ainda estamos descobrindo'}.
 
-Dica pra essa semana: separe 10 minutinhos sozinho(a) e escreva uma coisa que você sentiu essa semana mas não disse pra ninguém. Só pra você se conhecer um pouco mais. ✨`;
+Dica pra essa semana: separe 10 minutos sozinho(a) e escreva uma coisa que você sentiu essa semana mas não disse pra ninguém. Só pra você se conhecer um pouco mais.`;
 }
 
 async function buildResult({ name, responses }) {
@@ -61,7 +61,7 @@ async function buildResult({ name, responses }) {
 DADOS DO PERFIL DE ${name.toUpperCase()} (uso interno, não cite os nomes técnicos como "apego ansioso" — traduza em linguagem natural):
 ${contexto}
 
-TAREFA: Escreva um resultado pessoal, carinhoso e informal para ${name}, como se fosse uma mensagem de um amigo(a) que entende de relacionamentos. Fale sobre o jeito dela(e) de ser e de amar, sem usar termos técnicos/clínicos. Termine com UMA dica prática de autoconhecimento. Use emojis com naturalidade (2 a 5). Entre 80 e 180 palavras.${correcoes}`;
+TAREFA: Escreva um resultado pessoal, carinhoso e informal para ${name}, como se fosse uma mensagem de um amigo(a) que entende de relacionamentos. Fale sobre o jeito dela(e) de ser e de amar, sem usar termos técnicos/clínicos. Termine com UMA dica prática de autoconhecimento. NÃO use emojis. Entre 80 e 180 palavras.${correcoes}`;
 
     return ask(prompt, { maxTokens: 700 });
   };

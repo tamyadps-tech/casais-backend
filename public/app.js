@@ -6,22 +6,22 @@
     saulo: { id: 'saulo', name: 'Saulo' }
   };
 
-  const TIP_TIPO_EMOJI = {
-    gesto_de_amor: '💌',
-    reforco: '✨',
-    dinamica_apego: '🧭',
-    cuidado_ferida: '🩹',
-    papo_valores: '💬'
+  const TIP_TIPO_LABEL = {
+    gesto_de_amor: 'Gesto de amor',
+    reforco: 'Reforço',
+    dinamica_apego: 'Conexão',
+    cuidado_ferida: 'Cuidado',
+    papo_valores: 'Papo de valores'
   };
 
   const CATEGORY_META = {
-    personalidade: { emoji: '🧠', label: 'Seu jeito de ser' },
-    temperamento: { emoji: '🌡️', label: 'Seu temperamento' },
-    apego: { emoji: '💞', label: 'Conexão emocional' },
-    feridas_infancia: { emoji: '🌱', label: 'Autoconhecimento' },
-    linguagem_amor: { emoji: '💌', label: 'Linguagem do amor' },
-    valores_vida: { emoji: '🧭', label: 'Valores & vida a dois' },
-    conhecer_melhor: { emoji: '🗝️', label: 'Conhecer melhor' }
+    personalidade: { label: 'Seu jeito de ser' },
+    temperamento: { label: 'Seu temperamento' },
+    apego: { label: 'Conexão emocional' },
+    feridas_infancia: { label: 'Autoconhecimento' },
+    linguagem_amor: { label: 'Linguagem do amor' },
+    valores_vida: { label: 'Valores & vida a dois' },
+    conhecer_melhor: { label: 'Conhecer melhor' }
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -136,8 +136,8 @@
     const total = state.questions.length;
     $('#progress-fill').style.width = `${Math.round((state.index / total) * 100)}%`;
     $('#quiz-counter').textContent = `${state.index + 1} / ${total}`;
-    const meta = CATEGORY_META[q.categoria] || { emoji: '💜', label: q.categoria };
-    $('#quiz-category-badge').textContent = `${meta.emoji} ${meta.label}`;
+    const meta = CATEGORY_META[q.categoria] || { label: q.categoria };
+    $('#quiz-category-badge').textContent = meta.label;
     $('#question-text').textContent = q.texto;
     $('#btn-back').style.visibility = state.index === 0 ? 'hidden' : 'visible';
 
@@ -220,7 +220,7 @@
   }
 
   async function finishQuiz() {
-    setLoading('Calculando seu resultado — isso pode levar alguns segundinhos 💜');
+    setLoading('Calculando seu resultado — isso pode levar alguns segundos.');
     try {
       await api('/api/test/submit', {
         method: 'POST',
@@ -258,10 +258,10 @@
       const partnerStatus = await api(`/api/test/status/${partner.id}`);
       if (partnerStatus.status !== 'submitted') {
         $('#partner-status-text').textContent =
-          `${partner.name} ainda não respondeu o dele(a). Assim que responder, as dicas cruzadas de vocês dois começam a chegar 💜`;
+          `${partner.name} ainda não respondeu o dele(a). Assim que responder, as dicas cruzadas de vocês dois começam a chegar.`;
       } else {
         $('#partner-status-text').textContent =
-          `Vocês dois já responderam! As dicas quinzenais chegam toda segunda e quinta até janeiro de 2027 💜`;
+          `Vocês dois já responderam. As dicas quinzenais chegam toda segunda e quinta até janeiro de 2027.`;
         // garante que a análise cruzada exista (endpoint é cacheado, seguro chamar sempre)
         await api('/api/test/process', {
           method: 'POST',
@@ -287,7 +287,7 @@
     try {
       const data = await api(`/api/tips/${me.id}/${partner.id}/mine/${encodeURIComponent(me.name)}`);
       if (!data.tips.length) {
-        list.innerHTML = '<p class="tip-empty">Ainda não chegou nenhuma dica — a primeira aparece na próxima segunda ou quinta 💜</p>';
+        list.innerHTML = '<p class="tip-empty">Ainda não chegou nenhuma dica — a primeira aparece na próxima segunda ou quinta.</p>';
         return;
       }
       list.innerHTML = '';
@@ -295,8 +295,8 @@
         const card = document.createElement('div');
         card.className = 'tip-card';
         const date = new Date(`${tip.date}T00:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' });
-        const emoji = TIP_TIPO_EMOJI[tip.tipo] || '💜';
-        card.innerHTML = `<span class="tip-date">${date}</span>${emoji} ${escapeHtml(tip.texto)}`;
+        const tipoLabel = TIP_TIPO_LABEL[tip.tipo] || '';
+        card.innerHTML = `<span class="tip-date"><span>${date}</span>${tipoLabel ? `<span class="tip-tipo">${tipoLabel}</span>` : ''}</span>${escapeHtml(tip.texto)}`;
         list.appendChild(card);
       });
     } catch (e) {
@@ -354,7 +354,7 @@
     }
     const btn = $('#btn-copy-ics');
     const original = btn.textContent;
-    btn.textContent = 'Copiado! ✅';
+    btn.textContent = 'Copiado';
     setTimeout(() => { btn.textContent = original; }, 1500);
   });
 

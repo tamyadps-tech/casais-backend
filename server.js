@@ -11,6 +11,7 @@ const questionsRouter = require('./src/routes/questions');
 const testsRouter = require('./src/routes/tests');
 const tipsRouter = require('./src/routes/tips');
 const calendarRouter = require('./src/routes/calendar');
+const adminRouter = require('./src/routes/admin');
 const { DELIVERY_HOUR, START_DATE, END_DATE } = require('./src/lib/scheduler');
 
 const app = express();
@@ -55,6 +56,7 @@ app.use('/api/questions', questionsRouter);
 app.use('/api/test', testsRouter);
 app.use('/api/tips', tipsRouter);
 app.use('/api/calendar', calendarRouter);
+app.use('/api/admin', adminRouter);
 
 // ==========================================
 // AGENDAMENTO AUTOMÁTICO DAS DICAS (2x/semana até jan/2027)
@@ -65,7 +67,7 @@ cron.schedule(`0 ${DELIVERY_HOUR} * * *`, async () => {
   try {
     const result = await pipeline.generateDueTips(PERSON_1_ID, PERSON_2_ID);
     if (result.generated) {
-      console.log(`💜 Dicas quinzenais geradas e aprovadas para ${result.date}`);
+      console.log(`Dicas quinzenais geradas e aprovadas para ${result.date}`);
     }
   } catch (error) {
     console.error('Erro ao gerar dicas automáticas:', error.message);
@@ -77,8 +79,8 @@ cron.schedule(`0 ${DELIVERY_HOUR} * * *`, async () => {
 // ==========================================
 
 app.listen(PORT, () => {
-  console.log(`✅ Servidor Casais rodando em http://localhost:${PORT}`);
-  console.log(`💜 Entregas de dica: ${START_DATE} até ${END_DATE}, 2x/semana às ${DELIVERY_HOUR}h`);
+  console.log(`Servidor Casais rodando em http://localhost:${PORT}`);
+  console.log(`Entregas de dica: ${START_DATE} até ${END_DATE}, 2x/semana às ${DELIVERY_HOUR}h`);
 });
 
 module.exports = app;

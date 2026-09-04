@@ -85,6 +85,39 @@ function markFindingUsed(cId, personName, findingId, whenIso) {
   return log;
 }
 
+// Apaga tudo (respostas, resultados, análise cruzada, dicas e histórico de
+// rotação) de um casal — usado pra zerar dados de teste antes da rodada
+// "de verdade". Sempre por trás de um endpoint protegido, nunca chamado
+// direto por rota pública sem confirmação.
+function resetCouple(id1, id2) {
+  const cId = coupleId(id1, id2);
+  const removed = [];
+
+  [id1, id2].forEach((id) => {
+    ['responses', 'results'].forEach((sub) => {
+      const p = filePath(sub, id);
+      if (fs.existsSync(p)) {
+        fs.unlinkSync(p);
+        removed.push(`${sub}/${safeId(id)}`);
+      }
+    });
+  });
+
+  const analysisPath = filePath('analysis', cId);
+  if (fs.existsSync(analysisPath)) {
+    fs.unlinkSync(analysisPath);
+    removed.push(`analysis/${cId}`);
+  }
+
+  const tDir = path.join(DATA_DIR, 'tips', safeId(cId));
+  if (fs.existsSync(tDir)) {
+    fs.rmSync(tDir, { recursive: true, force: true });
+    removed.push(`tips/${cId}`);
+  }
+
+  return { couple_id: cId, removed };
+}
+
 module.exports = {
   DATA_DIR,
   readJson,
@@ -95,5 +128,6 @@ module.exports = {
   appendTip,
   readTips,
   readFindingsLog,
-  markFindingUsed
+  markFindingUsed,
+  resetCouple
 };
