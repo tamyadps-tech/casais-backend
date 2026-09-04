@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
+const path = require('path');
 
 dotenv.config();
 
@@ -33,6 +34,9 @@ app.use(
 );
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Frontend estático (o próprio Railway serve a UI, sem precisar de Netlify)
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ==========================================
 // ROTAS

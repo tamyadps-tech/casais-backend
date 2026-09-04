@@ -118,10 +118,14 @@ async function generateDueTips(id1, id2) {
   const tip1 = await generateTip({ targetName: nome1, partnerName: nome2, finding: finding1 });
   const tip2 = await generateTip({ targetName: nome2, partnerName: nome1, finding: finding2 });
 
-  const entries = [tip1, tip2].map((tip, idx) => ({
-    id: `${today}-${idx === 0 ? nome1 : nome2}`,
+  const entries = [
+    { tip: tip1, target: nome1, finding: finding1 },
+    { tip: tip2, target: nome2, finding: finding2 }
+  ].map(({ tip, target, finding }) => ({
+    id: `${today}-${target}`,
     date: today,
-    target: idx === 0 ? nome1 : nome2,
+    target,
+    tipo: finding ? finding.tipo : null,
     ...tip
   }));
 

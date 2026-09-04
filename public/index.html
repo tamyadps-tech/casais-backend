@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>💜 Casais</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💜</text></svg>" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- LOGIN -->
+    <section id="view-login" class="view" hidden>
+      <div class="card center">
+        <div class="big-emoji">💜</div>
+        <h1>Casais</h1>
+        <p class="muted">Um espacinho só de vocês dois pra se conhecerem melhor.</p>
+        <p class="label-quem">Quem é você?</p>
+        <div class="person-grid">
+          <button class="person-btn" data-id="tamyris" data-name="Tamyris">
+            <span class="person-emoji">💜</span> Tamyris
+          </button>
+          <button class="person-btn" data-id="saulo" data-name="Saulo">
+            <span class="person-emoji">💙</span> Saulo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section id="view-intro" class="view" hidden>
+      <div class="card center">
+        <div class="big-emoji">✨</div>
+        <h1>Oi, <span id="intro-name"></span>!</h1>
+        <p class="muted">São 90 perguntinhas sobre você, sobre vocês dois e sobre a vida que imaginam construir juntos. Leva uns 20-25 minutos — mas pode fechar e continuar depois de onde parou, suas respostas ficam salvas nesse aparelho.</p>
+        <p class="muted">Responda com o que vem primeiro à cabeça, sem pensar demais 😊</p>
+        <button class="btn-primary" id="btn-start-quiz">Bora começar →</button>
+        <button class="btn-link" id="btn-switch-person-intro">Não sou eu, trocar pessoa</button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="view-quiz" class="view" hidden>
+      <div class="quiz-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="quiz-meta">
+          <span id="quiz-category-badge" class="badge"></span>
+          <span id="quiz-counter" class="muted small"></span>
+        </div>
+        <div class="card">
+          <p class="question-text" id="question-text"></p>
+          <div id="answer-area"></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn-link" id="btn-back">← Voltar</button>
+          <button class="btn-primary" id="btn-next" hidden>Próxima →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBMITTING / LOADING -->
+    <section id="view-loading" class="view" hidden>
+      <div class="card center">
+        <div class="spinner">💜</div>
+        <p id="loading-text">Só um instante, preparando tudo pra você...</p>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="view-result" class="view" hidden>
+      <div class="card center">
+        <div class="big-emoji">🎉</div>
+        <h1>Seu resultado</h1>
+        <div class="result-text" id="result-text"></div>
+        <button class="btn-primary" id="btn-goto-dashboard">Ver meu painel →</button>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view" hidden>
+      <div class="dashboard-wrap">
+        <header class="dash-header">
+          <span>💜 Oi, <b id="dash-name"></b></span>
+          <button class="btn-link small" id="btn-switch-person-dash">trocar</button>
+        </header>
+
+        <div class="card" id="partner-status-card">
+          <p id="partner-status-text" class="muted"></p>
+        </div>
+
+        <div class="card">
+          <h2>💌 Minhas dicas</h2>
+          <p class="muted small">Dicas pra você saber como fazer seu par se sentir mais amado — chegam 2x por semana até janeiro de 2027.</p>
+          <div id="tips-list" class="tips-list"></div>
+          <button class="btn-link small" id="btn-refresh-tips">🔄 Atualizar</button>
+        </div>
+
+        <div class="card">
+          <h2>📅 Receber no Google Agenda</h2>
+          <p class="muted small">Copie o link abaixo e cole no Google Agenda em <b>Outras agendas → Adicionar por URL</b>. As dicas passam a aparecer direto na sua agenda.</p>
+          <div class="copy-row">
+            <input type="text" id="ics-url" readonly />
+            <button class="btn-secondary" id="btn-copy-ics">Copiar</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🧠 Meu resultado</h2>
+          <div class="result-text small" id="dash-result-text"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
