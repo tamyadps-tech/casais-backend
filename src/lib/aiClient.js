@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const MODEL = process.env.CLAUDE_MODEL || 'claude-opus-4-1';
+const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5';
 
 function hasApiKey() {
   return Boolean(process.env.CLAUDE_API_KEY);
@@ -18,25 +18,38 @@ async function ask(prompt, { maxTokens = 1500, system } = {}) {
     throw err;
   }
 
-  const response = await axios.post(
-    'https://api.anthropic.com/v1/messages',
-    {
-      model: MODEL,
-      max_tokens: maxTokens,
-      ...(system ? { system } : {}),
-      messages: [{ role: 'user', content: prompt }]
-    },
-    {
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json'
+  try {
+    const response = await axios.post(
+      'https://api.anthropic.com/v1/messages',
+      {
+        model: MODEL,
+        max_tokens: maxTokens,
+        ...(system ? { system } : {}),
+        messages: [{ role: 'user', content: prompt }]
       },
-      timeout: 60000
-    }
-  );
+      {
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+          'content-type': 'application/json'
+        },
+        timeout: 60000
+      }
+    );
 
-  return response.data.content[0].text;
+    return response.data.content[0].text;
+  } catch (error) {
+    // A mensagem padrão do axios ("Request failed with status code 400")
+    // esconde o motivo real — a Anthropic manda o detalhe no corpo da
+    // resposta. Sem isso, um erro de configuração (ex: nome de modelo
+    // errado) vira um mistério até alguém olhar os logs do servidor.
+    const detalhe = error.response && error.response.data && error.response.data.error
+      ? error.response.data.error.message
+      : error.message;
+    const err = new Error(`Claude API: ${detalhe}`);
+    err.cause = error;
+    throw err;
+  }
 }
 
 module.exports = { ask, hasApiKey, MODEL };
