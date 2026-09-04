@@ -22,7 +22,7 @@ router.get('/:id1/:id2/:targetFile', (req, res) => {
       id: `${cId}-${target}-${date}`,
       date,
       hour: DELIVERY_HOUR,
-      title: tip ? `💜 Dica pra você, ${target}` : '💜 Sua dica de relacionamento chega hoje',
+      title: tip ? `Dica pra você, ${target}` : 'Sua dica de relacionamento chega hoje',
       description: tip ? tip.texto : 'Abra o app pra ver sua dica personalizada de hoje.'
     };
   });

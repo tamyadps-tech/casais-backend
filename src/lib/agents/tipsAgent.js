@@ -14,7 +14,7 @@ const RUBRIC = [
   'Usa o FATO fornecido no contexto, sem inventar nenhum dado novo sobre o casal',
   'Transforma a sugestão de ação fornecida numa ação concreta, pequena e executável ainda hoje ou nessa semana',
   'Tom de mensagem calorosa de um amigo(a) torcendo pelo casal, jamais como laudo ou relatório',
-  'Usa entre 1 e 3 emojis, com naturalidade',
+  'Não usa emojis em nenhum ponto do texto',
   'Tem entre 35 e 90 palavras',
   'Se o tipo for "papo_valores", a dica é um convite tranquilo pra conversar, nunca soa como alarme ou cobrança'
 ];
@@ -28,13 +28,13 @@ function mockTip(targetName, partnerName, finding) {
     papo_valores: `${targetName}, uma reflexão pra essa semana: ${finding.fato}.`
   }[finding.tipo] || `${targetName}, ${finding.fato}.`;
 
-  return `${inicio} ${finding.sugestao_acao} 💜`;
+  return `${inicio} ${finding.sugestao_acao}`;
 }
 
 async function generateTip({ targetName, partnerName, finding }) {
   if (!finding) {
     return {
-      texto: `${targetName}, hoje é um bom dia pra perguntar pro(a) ${partnerName} como ele(a) está se sentindo de verdade — sem pressa, só ouvindo 💜`,
+      texto: `${targetName}, hoje é um bom dia pra perguntar pro(a) ${partnerName} como ele(a) está se sentindo de verdade — sem pressa, só ouvindo.`,
       status: 'sem_finding',
       attempts: 0
     };
@@ -59,7 +59,7 @@ TIPO DA DICA: ${finding.tipo}
 TAREFA: Escreva UMA dica curta (35 a 90 palavras) para ${targetName}, no estilo:
 "${targetName}, sabia que [fato, reformulado com naturalidade]? [ação prática, pequena e executável hoje ou essa semana, baseada na sugestão]"
 
-Se o tipo for "papo_valores", não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom. Use 1 a 3 emojis. Tom de amigo(a) torcendo por eles.${correcoes}`;
+Se o tipo for "papo_valores", não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom. NÃO use emojis. Tom de amigo(a) torcendo por eles.${correcoes}`;
 
     return ask(prompt, { maxTokens: 400 });
   };

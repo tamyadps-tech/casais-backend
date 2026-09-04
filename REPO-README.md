@@ -1,4 +1,4 @@
-# 💜 Casais Backend
+# Casais Backend
 
 App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 90 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas quinzenais personalizadas até janeiro de 2027, pelo app ou pelo Google Agenda.
 
@@ -65,8 +65,15 @@ As perguntas foram escritas de forma contextualizada (cenários do dia a dia, nu
 ### Google Agenda
 - `GET /api/calendar/:id1/:id2/:target.ics` — feed assinável. No Google Agenda: **Outras agendas → Adicionar por URL** e colar o link (ex.: `https://seu-servidor/api/calendar/tamyris/saulo/tamyris.ics` pra Tamyris ver as dicas sobre o Saulo, e trocando o `target` pra `saulo` no link dele). Não precisa configurar nada no Google, só assinar a URL — por isso essa foi a rota mais simples, sem depender de OAuth.
 
+### Admin
+- `GET /api/admin/reset/:id1/:id2?key=SUA_CHAVE&confirm=SIM` — apaga respostas, resultado, análise cruzada e dicas de um casal (pra zerar dados de teste antes da rodada de verdade). Só funciona se `ADMIN_RESET_KEY` estiver configurada no servidor; sem essa variável, o endpoint fica sempre desligado (403). Pensado pra colar direto na barra de endereço do navegador.
+
 ### Outros
 - `GET /api/health`
+
+## Frontend
+
+`public/` é servido direto pelo Express (sem build step, sem Netlify). Visual clean e neutro, sem emojis — paleta em tons de cinza com um único acento, mobile-first, com suporte a tema escuro via `prefers-color-scheme`.
 
 ## Variáveis de ambiente
 
@@ -75,6 +82,7 @@ Veja `env.example`. As principais novas:
 - `TIPS_START_DATE` / `TIPS_END_DATE` — janela de entrega (padrão: hoje até 2027-01-31)
 - `TIPS_DELIVERY_HOUR` — horário do cron (padrão 9h)
 - `CLAUDE_API_KEY` — liga os agentes de verdade; sem ela, tudo roda em modo mock
+- `ADMIN_RESET_KEY` — opcional, liga o endpoint de reset de dados de teste (veja acima)
 
 ## Deploy no Railway
 
