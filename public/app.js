@@ -317,6 +317,7 @@
     $('#ics-url').value = `${window.location.origin}/api/calendar/${me.id}/${partner.id}/${encodeURIComponent(me.name)}.ics`;
 
     await refreshTips();
+    await refreshPushButtonState();
     showView('dashboard');
   }
 
@@ -349,6 +350,92 @@
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  }
+
+  // ---------- notificações push ----------
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+  function isIos() {
+    return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+  }
+
+  async function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return null;
+    try {
+      return await navigator.serviceWorker.register('/sw.js');
+    } catch (e) {
+      console.error('Falha ao registrar service worker', e);
+      return null;
+    }
+  }
+
+  function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    return Uint8Array.from([...rawData].map((c) => c.charCodeAt(0)));
+  }
+
+  async function refreshPushButtonState() {
+    const btn = $('#btn-enable-push');
+    const explainer = $('#push-explainer');
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      btn.hidden = true;
+      explainer.textContent = 'Esse navegador não suporta notificações. No iPhone, use o Safari.';
+      return;
+    }
+    if (isIos() && !isStandalone()) {
+      btn.textContent = 'Ativar notificações';
+      explainer.textContent = 'No iPhone: toque em Compartilhar e depois em "Adicionar à Tela de Início". Abra o app por esse ícone e volte aqui pra ativar.';
+      return;
+    }
+    try {
+      const reg = await registerServiceWorker();
+      const sub = reg ? await reg.pushManager.getSubscription() : null;
+      if (sub) {
+        btn.textContent = 'Notificações ativadas';
+        btn.disabled = true;
+        explainer.textContent = 'Tudo certo — as dicas novas vão te avisar direto nesse aparelho.';
+      } else {
+        btn.textContent = 'Ativar notificações';
+        btn.disabled = false;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function enablePush() {
+    const btn = $('#btn-enable-push');
+    try {
+      const { enabled, publicKey } = await api('/api/push/public-key');
+      if (!enabled) {
+        $('#push-explainer').textContent = 'Notificações ainda não foram configuradas no servidor.';
+        return;
+      }
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') {
+        $('#push-explainer').textContent = 'Permissão não concedida — dá pra ativar depois nas configurações do navegador.';
+        return;
+      }
+      const reg = await registerServiceWorker();
+      const subscription = await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicKey)
+      });
+      await api('/api/push/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ personId: state.person.id, subscription: subscription.toJSON() })
+      });
+      btn.textContent = 'Notificações ativadas';
+      btn.disabled = true;
+      $('#push-explainer').textContent = 'Tudo certo — as dicas novas vão te avisar direto nesse aparelho.';
+    } catch (e) {
+      console.error(e);
+      $('#push-explainer').textContent = 'Não consegui ativar agora. Tenta de novo em instantes.';
+    }
   }
 
   // ---------- eventos ----------
@@ -385,6 +472,10 @@
     refreshTips().catch(console.error);
   });
 
+  $('#btn-enable-push').addEventListener('click', () => {
+    enablePush().catch(console.error);
+  });
+
   $('#btn-copy-ics').addEventListener('click', async () => {
     const input = $('#ics-url');
     input.select();
@@ -398,6 +489,8 @@
     btn.textContent = 'Copiado';
     setTimeout(() => { btn.textContent = original; }, 1500);
   });
+
+  registerServiceWorker();
 
   init().catch((e) => {
     console.error(e);

@@ -85,6 +85,34 @@ function markFindingUsed(cId, personName, findingId, whenIso) {
   return log;
 }
 
+// Inscrições de notificação push (Web Push), por pessoa. Um mesmo aparelho
+// pode reinscrever (endpoint muda raramente, mas o browser pode trocar) —
+// dedupe por endpoint.
+function pushFilePath(personId) {
+  const dir = path.join(DATA_DIR, 'push');
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  return path.join(dir, `${safeId(personId)}.json`);
+}
+
+function getPushSubscriptions(personId) {
+  const p = pushFilePath(personId);
+  if (!fs.existsSync(p)) return [];
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function savePushSubscription(personId, subscription) {
+  const list = getPushSubscriptions(personId).filter((s) => s.endpoint !== subscription.endpoint);
+  list.push(subscription);
+  fs.writeFileSync(pushFilePath(personId), JSON.stringify(list, null, 2));
+  return list;
+}
+
+function removePushSubscription(personId, endpoint) {
+  const list = getPushSubscriptions(personId).filter((s) => s.endpoint !== endpoint);
+  fs.writeFileSync(pushFilePath(personId), JSON.stringify(list, null, 2));
+  return list;
+}
+
 // Apaga tudo (respostas, resultados, análise cruzada, dicas e histórico de
 // rotação) de um casal — usado pra zerar dados de teste antes da rodada
 // "de verdade". Sempre por trás de um endpoint protegido, nunca chamado
@@ -129,5 +157,8 @@ module.exports = {
   readTips,
   readFindingsLog,
   markFindingUsed,
-  resetCouple
+  resetCouple,
+  getPushSubscriptions,
+  savePushSubscription,
+  removePushSubscription
 };

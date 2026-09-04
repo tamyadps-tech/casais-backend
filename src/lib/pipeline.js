@@ -9,6 +9,28 @@ const { buildResult } = require('./agents/resultAgent');
 const { analyzeCouple, describePessoa } = require('./agents/crossAnalysisAgent');
 const { generateTip } = require('./agents/tipsAgent');
 const { generateScheduleDates } = require('./scheduler');
+const { sendToSubscription } = require('./push');
+
+// Manda push pra todos os aparelhos inscritos dessa pessoa. Silencioso se
+// push não estiver configurado (sem VAPID) ou a pessoa não tiver nenhuma
+// inscrição — o app funciona normalmente sem isso, é só um extra.
+async function notifyPush(personId, tip) {
+  const subscriptions = store.getPushSubscriptions(personId);
+  if (!subscriptions.length) return;
+
+  const payload = {
+    title: 'Nova dica pra você',
+    body: tip.texto.length > 140 ? `${tip.texto.slice(0, 137)}...` : tip.texto,
+    url: '/'
+  };
+
+  await Promise.all(
+    subscriptions.map(async (sub) => {
+      const { expired } = await sendToSubscription(sub, payload);
+      if (expired) store.removePushSubscription(personId, sub.endpoint);
+    })
+  );
+}
 
 async function submitResponses(personId, name, responses) {
   const data = { respondent_id: personId, name, responses, submitted_at: new Date().toISOString() };
@@ -138,6 +160,9 @@ async function generateDueTips(id1, id2, { force = false } = {}) {
   entries.forEach((entry) => store.appendTip(cId, entry));
   if (finding1) store.markFindingUsed(cId, nome1, finding1.id, new Date().toISOString());
   if (finding2) store.markFindingUsed(cId, nome2, finding2.id, new Date().toISOString());
+
+  const idPorNome = { [nome1]: id1, [nome2]: id2 };
+  await Promise.all(entries.map((entry) => notifyPush(idPorNome[entry.target], entry)));
 
   if (force) {
     return { generated: true, date: today, tips: entries, forced: true };
