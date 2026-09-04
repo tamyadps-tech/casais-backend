@@ -1,24 +1,26 @@
 // ==========================================
-// BANCO DE 90 PERGUNTAS
+// BANCO DE PERGUNTAS
 // ==========================================
-// Estrutura por categoria:
-//  - personalidade      (12: 10 múltipla escolha + 2 escala)
-//  - temperamento        (12: 10 múltipla escolha + 2 escala)
-//  - apego                (14: 10 múltipla escolha + 4 escala)
-//  - feridas_infancia    (13: 10 múltipla escolha + 3 escala)
-//  - linguagem_amor      (12: 10 múltipla escolha + 2 escala)
-//  - valores_vida        (12: 12 múltipla escolha)
-//  - conhecer_melhor     (15: 6 múltipla escolha + 9 abertas)
+// Tipos de pergunta:
+//  - multipla_escolha  — escolhe 1 opção
+//  - selecao_multipla  — escolhe até `max_selecoes` opções (usado em
+//                        valores_vida e conhecer_melhor, onde faz sentido
+//                        a pessoa marcar mais de uma coisa)
+//  - escala            — 1 a 5, com as duas pontas explicadas
+//  - aberta            — texto livre
 //
-// Total: 90 perguntas | 68 múltipla escolha (~75%) | 13 escala (~14%) | 9 abertas (10%)
-//
-// Cada opção de múltipla escolha carrega uma "tag" interna (não exibida ao
+// Cada opção de múltipla/seleção carrega uma "tag" interna (não exibida ao
 // usuário) usada pelo motor de pontuação (src/lib/scoring.js). Perguntas de
 // escala carregam "dimensao" com o mesmo propósito. As perguntas de
 // valores_vida e conhecer_melhor guardam a resposta literal, sem pontuação
 // psicológica — servem para cruzamento de informações entre o casal.
+//
+// `ativa: false` tira a pergunta do banco realmente usado sem apagá-la do
+// código-fonte — é assim que reservamos perguntas que não fazem sentido
+// pro uso pessoal de hoje, mas podem valer a pena numa futura versão
+// comercial/multi-casal do app (ver VAL10 abaixo).
 
-const questions = [
+const allQuestions = [
   // ==========================================
   // PERSONALIDADE
   // ==========================================
@@ -919,8 +921,9 @@ const questions = [
     id: 'VAL01',
     categoria: 'valores_vida',
     subcategoria: 'valores',
-    tipo: 'multipla_escolha',
-    texto: 'Qual desses valores você diria que é o mais inegociável pra guiar sua vida hoje?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Quais desses valores você diria que são os mais importantes pra guiar sua vida hoje? (escolha até 5)',
     opcoes: [
       { texto: 'Honestidade' }, { texto: 'Lealdade' }, { texto: 'Liberdade' },
       { texto: 'Família' }, { texto: 'Fé / espiritualidade' }, { texto: 'Ambição e crescimento' },
@@ -931,8 +934,9 @@ const questions = [
     id: 'VAL02',
     categoria: 'valores_vida',
     subcategoria: 'condutas_inegociaveis',
-    tipo: 'multipla_escolha',
-    texto: 'Qual dessas atitudes você considera completamente inegociável numa relação — motivo real de ruptura?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Quais dessas atitudes você considera completamente inegociáveis numa relação — motivo real de ruptura? (escolha até 5)',
     opcoes: [
       { texto: 'Traição física' }, { texto: 'Mentira constante' }, { texto: 'Agressão física ou verbal' },
       { texto: 'Desrespeito com a minha família' }, { texto: 'Falta de parceria financeira' },
@@ -945,8 +949,9 @@ const questions = [
     id: 'VAL03',
     categoria: 'valores_vida',
     subcategoria: 'sonhos',
-    tipo: 'multipla_escolha',
-    texto: 'Dos sonhos abaixo, qual é o que mais mexe com você quando imagina seu futuro?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Dos sonhos abaixo, quais são os que mais mexem com você quando imagina seu futuro? (escolha até 5)',
     opcoes: [
       { texto: 'Ter uma casa própria' }, { texto: 'Viajar o mundo' }, { texto: 'Montar meu próprio negócio' },
       { texto: 'Construir uma família grande' }, { texto: 'Alcançar estabilidade financeira' },
@@ -983,8 +988,9 @@ const questions = [
     id: 'VAL06',
     categoria: 'valores_vida',
     subcategoria: 'moradia',
-    tipo: 'multipla_escolha',
-    texto: 'Se pudesse escolher hoje onde construir sua vida, você escolheria...',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Se pudesse escolher hoje onde construir sua vida, o que mais combinaria com você? (escolha até 5)',
     opcoes: [
       { texto: 'Uma cidade grande e agitada' }, { texto: 'Uma cidade do interior, mais calma' },
       { texto: 'O campo, longe da correria' }, { texto: 'Uma casa com quintal' },
@@ -997,8 +1003,9 @@ const questions = [
     id: 'VAL07',
     categoria: 'valores_vida',
     subcategoria: 'cuidado_idosos',
-    tipo: 'multipla_escolha',
-    texto: 'Como você imagina que deveria ser o cuidado com os pais quando eles ficarem idosos?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Como você imagina que deveria ser o cuidado com os pais quando eles ficarem idosos? (escolha até 5)',
     opcoes: [
       { texto: 'Morar perto pra poder ajudar no dia a dia' }, { texto: 'Trazer pra morar com a gente' },
       { texto: 'Contratar cuidador(a) de confiança, mesmo morando perto' },
@@ -1014,8 +1021,9 @@ const questions = [
     id: 'VAL08',
     categoria: 'valores_vida',
     subcategoria: 'financas',
-    tipo: 'multipla_escolha',
-    texto: 'Sobre dinheiro no relacionamento, o que mais combina com você?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Sobre dinheiro no relacionamento, o que mais combina com você? (escolha até 5)',
     opcoes: [
       { texto: 'Conta conjunta pra tudo' }, { texto: 'Contas separadas, cada um paga sua parte' },
       { texto: 'Conta conjunta só pras despesas da casa' }, { texto: 'Quem ganha mais deveria contribuir mais' },
@@ -1027,8 +1035,9 @@ const questions = [
     id: 'VAL09',
     categoria: 'valores_vida',
     subcategoria: 'fe',
-    tipo: 'multipla_escolha',
-    texto: 'Qual o papel da fé ou espiritualidade na vida que você imagina construir?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Qual o papel da fé ou espiritualidade na vida que você imagina construir? (escolha até 5)',
     opcoes: [
       { texto: 'Central — quero viver e criar filhos dentro de uma fé' },
       { texto: 'Importante, mas de forma leve, sem rigidez' }, { texto: 'Respeito, mas não pratico' },
@@ -1038,10 +1047,14 @@ const questions = [
     ]
   },
   {
+    // Não faz sentido pro uso pessoal de Tamyris e Saulo agora — fica
+    // desativada (não entra no banco ativo) mas guardada aqui pronta pra
+    // uma futura versão comercial/multi-casal do app.
     id: 'VAL10',
     categoria: 'valores_vida',
     subcategoria: 'tempo_noivado',
     tipo: 'multipla_escolha',
+    ativa: false,
     texto: 'Sobre o tempo entre noivado e casamento, o que faz mais sentido pra você?',
     opcoes: [
       { texto: 'O quanto antes, não vejo motivo pra esperar' }, { texto: 'Cerca de 1 ano, tempo de organizar bem' },
@@ -1054,8 +1067,9 @@ const questions = [
     id: 'VAL11',
     categoria: 'valores_vida',
     subcategoria: 'tarefas_casa',
-    tipo: 'multipla_escolha',
-    texto: 'Como você imagina a divisão das tarefas de casa no dia a dia?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Como você imagina a divisão das tarefas de casa no dia a dia? (escolha até 5)',
     opcoes: [
       { texto: 'Dividido igualmente, sem exceção' }, { texto: 'Cada um assume o que tem mais facilidade' },
       { texto: 'Quem trabalha menos horas assume mais tarefas' }, { texto: 'Contratar ajuda sempre que possível' },
@@ -1067,8 +1081,9 @@ const questions = [
     id: 'VAL12',
     categoria: 'valores_vida',
     subcategoria: 'casamento',
-    tipo: 'multipla_escolha',
-    texto: 'Se fosse pensar no dia do casamento hoje, o que mais combina com você?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Se fosse pensar no dia do casamento hoje, o que mais combina com você? (escolha até 5)',
     opcoes: [
       { texto: 'Uma festa grande, com todo mundo que amamos' }, { texto: 'Algo pequeno e íntimo, só os mais próximos' },
       { texto: 'Simples no civil, sem grande cerimônia' }, { texto: 'Uma celebração ao ar livre, fora do convencional' },
@@ -1083,8 +1098,9 @@ const questions = [
   {
     id: 'CON01',
     categoria: 'conhecer_melhor',
-    tipo: 'multipla_escolha',
-    texto: 'O que seu parceiro(a) faz que faz seu coração se aquecer?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'O que seu parceiro(a) faz que faz seu coração se aquecer? (escolha até 5)',
     // tag = qual linguagem do amor esse gesto representa (usado pro cruzamento
     // de "o que o parceiro já faz hoje" vs "o que a pessoa mais precisa")
     opcoes: [
@@ -1099,28 +1115,33 @@ const questions = [
     ]
   },
   {
+    // Separada da antiga "se afastar ou se fechar" — são reações
+    // diferentes (uma é dar mais distância no dia a dia, a outra é fechar
+    // por dentro/ficar na defensiva), então viraram duas perguntas.
     id: 'CON02',
     categoria: 'conhecer_melhor',
-    tipo: 'multipla_escolha',
-    texto: 'O que faz você se afastar ou se fechar numa relação?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'O que faz você se afastar numa relação — dar mais distância no dia a dia? (escolha até 5)',
     // tag = ferida da infância mais associada a esse gatilho (usado pros
     // "cuidados por ferida" no cruzamento de dados)
     opcoes: [
       { texto: 'Sentir que não estou sendo ouvido(a)', tag: 'rejeicao' },
-      { texto: 'Brigas que viram gritaria', tag: 'humilhacao' },
-      { texto: 'Promessas que não se cumprem', tag: 'traicao' },
+      { texto: 'Perceber que só eu estou correndo atrás', tag: 'abandono' },
       { texto: 'Falta de atenção no dia a dia', tag: 'abandono' },
-      { texto: 'Críticas em público', tag: 'humilhacao' },
-      { texto: 'Silêncio prolongado depois de uma briga', tag: 'abandono' },
       { texto: 'Sentir que estou sozinho(a) nas decisões', tag: 'injustica' },
-      { texto: 'Comparações com outras pessoas', tag: 'rejeicao' }
+      { texto: 'Perceber desinteresse repetido pelo que eu conto', tag: 'rejeicao' },
+      { texto: 'Comparações com outras pessoas', tag: 'rejeicao' },
+      { texto: 'Promessas que não se cumprem', tag: 'traicao' },
+      { texto: 'Sentir que meu espaço não é respeitado', tag: 'neutro' }
     ]
   },
   {
     id: 'CON03',
     categoria: 'conhecer_melhor',
-    tipo: 'multipla_escolha',
-    texto: 'O que te faz sentir amado(a) de verdade, na prática do dia a dia?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'O que te faz sentir amado(a) de verdade, na prática do dia a dia? (escolha até 5)',
     // tag = mesma linguagem do amor do bloco LIN — este é o 2º sinal direto
     // (o 3º é o teste de 10 perguntas) usado pra triangular a confiança
     opcoes: [
@@ -1161,8 +1182,9 @@ const questions = [
   {
     id: 'CON08',
     categoria: 'conhecer_melhor',
-    tipo: 'multipla_escolha',
-    texto: 'Qual desses programas descreve seu lazer favorito ao lado do parceiro(a)?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Quais desses programas descrevem seu lazer favorito ao lado do parceiro(a)? (escolha até 5)',
     opcoes: [
       { texto: 'Maratonar séries e filmes' }, { texto: 'Sair pra comer fora' }, { texto: 'Viajar pra lugares novos' },
       { texto: 'Praticar esporte ou atividade física juntos' }, { texto: 'Ficar em casa jogando ou cozinhando' },
@@ -1172,8 +1194,9 @@ const questions = [
   {
     id: 'CON09',
     categoria: 'conhecer_melhor',
-    tipo: 'multipla_escolha',
-    texto: 'Se pudessem aprender uma habilidade nova juntos, qual vocês escolheriam?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Se pudessem aprender uma habilidade nova juntos, quais te interessariam? (escolha até 5)',
     opcoes: [
       { texto: 'Dançar' }, { texto: 'Cozinhar pratos novos' }, { texto: 'Um idioma' }, { texto: 'Um instrumento musical' },
       { texto: 'Algum esporte' }, { texto: 'Artesanato ou pintura' }, { texto: 'Meditação ou yoga' },
@@ -1183,10 +1206,11 @@ const questions = [
   {
     id: 'CON10',
     categoria: 'conhecer_melhor',
-    tipo: 'multipla_escolha',
-    texto: 'Qual desses combinaria mais com a vida de vocês?',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Quais desses combinariam mais com a vida de vocês? (escolha até 5)',
     opcoes: [
-      { texto: 'Ter um cachorro' }, { texto: 'Ter um gato' }, { texto: 'Os dois' },
+      { texto: 'Ter um cachorro' }, { texto: 'Ter um gato' },
       { texto: 'Um peixe ou aquário' }, { texto: 'Nenhum, prefiro plantas' }, { texto: 'Um pássaro' },
       { texto: 'Algo mais exótico, tipo réptil' }
     ]
@@ -1220,7 +1244,30 @@ const questions = [
     categoria: 'conhecer_melhor',
     tipo: 'aberta',
     texto: 'Se pudesse escrever uma frase que resume o que você deseja para esse relacionamento, qual seria?'
+  },
+  {
+    // A outra metade da antiga CON02 — "se fechar" é diferente de "se
+    // afastar": aqui é sobre ficar na defensiva / guardar o que sente,
+    // não sobre criar distância física no dia a dia.
+    id: 'CON16',
+    categoria: 'conhecer_melhor',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'O que faz você se fechar numa relação — ficar na defensiva ou guardar o que sente? (escolha até 5)',
+    opcoes: [
+      { texto: 'Brigas que viram gritaria', tag: 'humilhacao' },
+      { texto: 'Críticas em público', tag: 'humilhacao' },
+      { texto: 'Sentir que serei julgado(a) pelo que sinto', tag: 'humilhacao' },
+      { texto: 'Medo de que usem isso contra mim depois', tag: 'traicao' },
+      { texto: 'Silêncio prolongado depois de uma briga', tag: 'abandono' },
+      { texto: 'Sentir que meus sentimentos são minimizados', tag: 'rejeicao' },
+      { texto: 'Já ter me magoado por me abrir antes', tag: 'traicao' },
+      { texto: 'Prefiro processar sozinho(a) antes de falar', tag: 'neutro' }
+    ]
   }
 ];
 
+const questions = allQuestions.filter((q) => q.ativa !== false);
+
 module.exports = questions;
+module.exports.all = allQuestions;

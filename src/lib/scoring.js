@@ -18,12 +18,15 @@ function tally(responses, categoria) {
     const question = questionsById.get(questionId);
     if (!question || question.categoria !== categoria) return;
 
-    if (question.tipo === 'multipla_escolha') {
-      const opcao = question.opcoes.find((o) => o.texto === resposta || o.tag === resposta);
-      const tag = opcao && opcao.tag;
-      if (tag && tag !== 'neutro') {
-        counts[tag] = (counts[tag] || 0) + 1;
-      }
+    if (question.tipo === 'multipla_escolha' || question.tipo === 'selecao_multipla') {
+      const selecionadas = Array.isArray(resposta) ? resposta : [resposta];
+      selecionadas.forEach((valor) => {
+        const opcao = question.opcoes.find((o) => o.texto === valor || o.tag === valor);
+        const tag = opcao && opcao.tag;
+        if (tag && tag !== 'neutro') {
+          counts[tag] = (counts[tag] || 0) + 1;
+        }
+      });
     } else if (question.tipo === 'escala') {
       const valor = Number(resposta);
       if (!Number.isNaN(valor)) {
@@ -83,16 +86,25 @@ function scoreLinguagemAmor(responses) {
   return { dominantes: topTags(counts, 2), ranking, contagens: counts };
 }
 
-// Sinal direto de uma única pergunta (ex: CON01/CON02/CON03) — usado pra
+// Sinal direto de uma única pergunta (ex: CON01/CON03) — usado pra
 // triangular confiança e pra saber "o que o parceiro já faz hoje" sem
-// depender só do bloco de 10 perguntas de linguagem do amor.
-function getOptionTag(responses, questionId) {
+// depender só do bloco de 10 perguntas de linguagem do amor. Funciona
+// tanto pra perguntas de escolha única (resposta = string) quanto de
+// seleção múltipla (resposta = array de strings), sempre devolvendo um
+// array de tags (vazio se nada bater ou a pergunta não tiver sido
+// respondida).
+function getOptionTags(responses, questionId) {
   const question = questionsById.get(questionId);
-  if (!question || !responses || responses[questionId] === undefined) return null;
+  if (!question || !responses || responses[questionId] === undefined) return [];
   const resposta = responses[questionId];
-  const opcao = (question.opcoes || []).find((o) => o.texto === resposta || o.tag === resposta);
-  const tag = opcao && opcao.tag;
-  return tag && tag !== 'neutro' ? tag : null;
+  const selecionadas = Array.isArray(resposta) ? resposta : [resposta];
+  const tags = selecionadas
+    .map((valor) => {
+      const opcao = (question.opcoes || []).find((o) => o.texto === valor || o.tag === valor);
+      return opcao && opcao.tag;
+    })
+    .filter((tag) => tag && tag !== 'neutro');
+  return [...new Set(tags)];
 }
 
 // Resposta literal de UMA pergunta específica por id — usado pelo motor de
@@ -136,6 +148,6 @@ module.exports = {
   scoreFeridas,
   scoreLinguagemAmor,
   collectRespostasLiterais,
-  getOptionTag,
+  getOptionTags,
   getLiteralById
 };

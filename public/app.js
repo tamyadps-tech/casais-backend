@@ -160,6 +160,47 @@
         wrap.appendChild(btn);
       });
       area.appendChild(wrap);
+    } else if (q.tipo === 'selecao_multipla') {
+      const maxSel = q.max_selecoes || 5;
+      const selected = Array.isArray(existing) ? [...existing] : [];
+
+      const hint = document.createElement('p');
+      hint.className = 'muted small select-hint';
+      const updateHint = () => { hint.textContent = `${selected.length}/${maxSel} selecionadas`; };
+      updateHint();
+      area.appendChild(hint);
+
+      const nextBtn = $('#btn-next');
+      nextBtn.hidden = false;
+      const updateNextState = () => { nextBtn.disabled = selected.length === 0; };
+
+      const wrap = document.createElement('div');
+      wrap.className = 'options-list';
+      q.opcoes.forEach((texto) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn' + (selected.includes(texto) ? ' selected' : '');
+        btn.textContent = texto;
+        btn.addEventListener('click', () => {
+          const idx = selected.indexOf(texto);
+          if (idx >= 0) {
+            selected.splice(idx, 1);
+          } else {
+            if (selected.length >= maxSel) return;
+            selected.push(texto);
+          }
+          btn.classList.toggle('selected');
+          updateHint();
+          updateNextState();
+        });
+        wrap.appendChild(btn);
+      });
+      area.appendChild(wrap);
+      updateNextState();
+
+      nextBtn.onclick = () => {
+        if (!selected.length) return;
+        answerAndAdvance(q.id, [...selected]);
+      };
     } else if (q.tipo === 'escala') {
       const wrap = document.createElement('div');
       wrap.className = 'scale-wrap';

@@ -6,8 +6,11 @@ const router = express.Router();
 // Nunca expõe as tags internas de pontuação — só o texto que a pessoa vê.
 function publicView(q) {
   const base = { id: q.id, categoria: q.categoria, tipo: q.tipo, texto: q.texto };
-  if (q.tipo === 'multipla_escolha') {
+  if (q.tipo === 'multipla_escolha' || q.tipo === 'selecao_multipla') {
     base.opcoes = q.opcoes.map((o) => o.texto);
+  }
+  if (q.tipo === 'selecao_multipla') {
+    base.max_selecoes = q.max_selecoes;
   }
   if (q.tipo === 'escala') {
     base.escala = q.escala;
