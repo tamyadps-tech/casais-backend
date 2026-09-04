@@ -10,6 +10,18 @@ const { ask, hasApiKey } = require('./aiClient');
 const DEFAULT_MAX_ATTEMPTS = 4;
 const APPROVAL_THRESHOLD = 8; // nota de 0 a 10
 
+// AGENTE DE HUMANIDADE — critérios que valem pra QUALQUER texto que a IA
+// escreve no app (resultado individual, dicas quinzenais, o que vier
+// depois). Todo agente de geração de conteúdo deve espalhar isto na sua
+// própria RUBRIC (ver resultAgent.js e tipsAgent.js) — é o coordenador de
+// qualidade quem cobra isso na prática, rejeitando o texto até atender.
+const HUMANITY_RUBRIC = [
+  'Soa como algo que uma pessoa que ama de verdade escreveria pra outra — nunca como um sistema, um relatório ou um teste avaliando alguém',
+  'Frases simples e diretas, do jeito que se fala, sem jargão técnico nem termo de teste psicológico (nunca "linguagem do amor", "apego", "ferida" ou nomes de categoria — traduza tudo em vivência real)',
+  'Transmite amor e cuidado genuíno pelas duas pessoas do casal, nunca julgamento, ironia ou tom de "acerto/erro"',
+  'Respeita quem recebe: não expõe fragilidade de forma vexatória, não soa como cobrança disfarçada nem como queixa do parceiro(a) sobre a pessoa'
+];
+
 function buildJudgePrompt(rubric, candidate) {
   return `Você é o coordenador de qualidade de um app de relacionamento pessoal, feito para o casal Tamyris e Saulo.
 
@@ -90,4 +102,4 @@ function feedbackSuffix(feedback) {
   return `\n\nA versão anterior teve estes problemas, corrija-os: ${feedback.problemas.join('; ')}`;
 }
 
-module.exports = { runQualityLoop, feedbackSuffix, APPROVAL_THRESHOLD, DEFAULT_MAX_ATTEMPTS };
+module.exports = { runQualityLoop, feedbackSuffix, HUMANITY_RUBRIC, APPROVAL_THRESHOLD, DEFAULT_MAX_ATTEMPTS };

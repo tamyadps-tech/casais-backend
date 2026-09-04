@@ -7,16 +7,16 @@
 // coordenador de qualidade antes de ser liberada.
 
 const { hasApiKey, ask } = require('../aiClient');
-const { runQualityLoop, feedbackSuffix } = require('../qualityCoordinator');
+const { runQualityLoop, feedbackSuffix, HUMANITY_RUBRIC } = require('../qualityCoordinator');
 
 const RUBRIC = [
   'Começa chamando a pessoa pelo nome (ex: "Tamyris, ...")',
   'Usa o FATO fornecido no contexto, sem inventar nenhum dado novo sobre o casal',
   'Transforma a sugestão de ação fornecida numa ação concreta, pequena e executável ainda hoje ou nessa semana',
-  'Tom de mensagem calorosa de um amigo(a) torcendo pelo casal, jamais como laudo ou relatório',
   'Não usa emojis em nenhum ponto do texto',
   'Tem entre 35 e 90 palavras',
-  'Se o tipo for "papo_valores", a dica é um convite tranquilo pra conversar, nunca soa como alarme ou cobrança'
+  'Se o tipo for "papo_valores", a dica é um convite tranquilo pra conversar, nunca soa como alarme ou cobrança',
+  ...HUMANITY_RUBRIC
 ];
 
 function mockTip(targetName, partnerName, finding) {
@@ -59,7 +59,7 @@ TIPO DA DICA: ${finding.tipo}
 TAREFA: Escreva UMA dica curta (35 a 90 palavras) para ${targetName}, no estilo:
 "${targetName}, sabia que [fato, reformulado com naturalidade]? [ação prática, pequena e executável hoje ou essa semana, baseada na sugestão]"
 
-Se o tipo for "papo_valores", não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom. NÃO use emojis. Tom de amigo(a) torcendo por eles.${correcoes}`;
+Se o tipo for "papo_valores", não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom. NÃO use emojis, NÃO use termos técnicos (nada de "linguagem do amor", "apego" etc — fale como gente fala). Escreva com simplicidade, amor e respeito pelos dois, como um amigo(a) de verdade torcendo por eles.${correcoes}`;
 
     return ask(prompt, { maxTokens: 400 });
   };

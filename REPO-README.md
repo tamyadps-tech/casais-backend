@@ -9,6 +9,7 @@ Não existem robôs autônomos rodando sozinhos por aí — é uma orquestraçã
 | Agente pedido | Onde vive no código |
 |---|---|
 | Especialista em português informal | Embutido na rubrica de todo `qualityCoordinator` (tom, informalidade, não ser diagnóstico) |
+| Agente de humanidade (simplicidade, amor, respeito) | `HUMANITY_RUBRIC` em `src/lib/qualityCoordinator.js` — critérios que todo agente de texto (resultado e dicas) herda na própria rubrica, cobrados pelo coordenador em toda revisão |
 | Testes de personalidade / temperamento / apego | `src/data/questions.js` (perguntas) + `src/lib/scoring.js` (pontuação) |
 | Feridas da infância | idem |
 | Valores, condutas, sonhos, filhos, moradia, cuidado com idosos | `src/data/questions.js` (categoria `valores_vida`) |
