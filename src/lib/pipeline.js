@@ -43,8 +43,7 @@ async function getOrBuildCoupleAnalysis(id1, id2, { force = false } = {}) {
     if (cached) return cached;
   }
 
-  const result1 = await getOrBuildResult(id1);
-  const result2 = await getOrBuildResult(id2);
+  const [result1, result2] = await Promise.all([getOrBuildResult(id1), getOrBuildResult(id2)]);
   if (!result1 || !result2) return null;
 
   const submission1 = store.readJson('responses', id1);
@@ -53,14 +52,13 @@ async function getOrBuildCoupleAnalysis(id1, id2, { force = false } = {}) {
   const pessoa1 = { name: result1.name, scores: result1.scores, responses: submission1.responses };
   const pessoa2 = { name: result2.name, scores: result2.scores, responses: submission2.responses };
 
-  const { analysis, status, attempts } = await analyzeCouple(pessoa1, pessoa2);
+  const { analysis, status } = await analyzeCouple(pessoa1, pessoa2);
   const payload = {
     couple_id: cId,
     pessoa1: describePessoa(pessoa1),
     pessoa2: describePessoa(pessoa2),
     analysis,
     status,
-    attempts,
     generated_at: new Date().toISOString()
   };
   store.writeJson('analysis', cId, payload);
@@ -76,9 +74,11 @@ function selectFinding(findings, targetName, usedLog) {
   const candidatos = findings.filter((f) => f.alvo === targetName);
   if (!candidatos.length) return null;
 
+  // usedLog vem de store.readFindingsLog(): { [pessoa]: { [findingId]: isoDate } }
+  const usados = usedLog[targetName] || {};
   const agora = Date.now();
   const disponiveis = candidatos.filter((f) => {
-    const ultimoUso = usedLog[f.id];
+    const ultimoUso = usados[f.id];
     if (!ultimoUso) return true;
     const diasDesde = (agora - new Date(ultimoUso).getTime()) / 86400000;
     return diasDesde >= COOLDOWN_DIAS;
@@ -86,8 +86,8 @@ function selectFinding(findings, targetName, usedLog) {
 
   const pool = disponiveis.length ? disponiveis : candidatos;
   pool.sort((a, b) => {
-    const la = usedLog[a.id] ? new Date(usedLog[a.id]).getTime() : 0;
-    const lb = usedLog[b.id] ? new Date(usedLog[b.id]).getTime() : 0;
+    const la = usados[a.id] ? new Date(usados[a.id]).getTime() : 0;
+    const lb = usados[b.id] ? new Date(usados[b.id]).getTime() : 0;
     return la - lb;
   });
   return pool[0];
@@ -115,8 +115,10 @@ async function generateDueTips(id1, id2) {
   const finding1 = selectFinding(findings, nome1, usedLog);
   const finding2 = selectFinding(findings, nome2, usedLog);
 
-  const tip1 = await generateTip({ targetName: nome1, partnerName: nome2, finding: finding1 });
-  const tip2 = await generateTip({ targetName: nome2, partnerName: nome1, finding: finding2 });
+  const [tip1, tip2] = await Promise.all([
+    generateTip({ targetName: nome1, partnerName: nome2, finding: finding1 }),
+    generateTip({ targetName: nome2, partnerName: nome1, finding: finding2 })
+  ]);
 
   const entries = [
     { tip: tip1, target: nome1, finding: finding1 },

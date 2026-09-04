@@ -82,4 +82,12 @@ async function runQualityLoop(generate, rubric, opts = {}) {
   return { text: best.text, status: 'melhor_esforco', attempts: maxAttempts, nota: best.nota };
 }
 
-module.exports = { runQualityLoop, APPROVAL_THRESHOLD, DEFAULT_MAX_ATTEMPTS };
+// Formata o feedback de uma rodada reprovada como sufixo de prompt — usado
+// por todo agente que chama runQualityLoop, pra não duplicar essa string
+// em cada um deles.
+function feedbackSuffix(feedback) {
+  if (!feedback) return '';
+  return `\n\nA versão anterior teve estes problemas, corrija-os: ${feedback.problemas.join('; ')}`;
+}
+
+module.exports = { runQualityLoop, feedbackSuffix, APPROVAL_THRESHOLD, DEFAULT_MAX_ATTEMPTS };

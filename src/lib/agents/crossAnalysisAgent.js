@@ -49,13 +49,10 @@ async function analyzeCouple(pessoa1, pessoa2) {
   const findings = buildFindings(pessoa1, pessoa2);
   const resumo = await buildResumo(findings, pessoa1.name, pessoa2.name);
 
+  // pessoa1/pessoa2 descritos não entram aqui: pipeline.js já os grava no
+  // nível de cima do payload (via describePessoa), sem precisar duplicar.
   return {
-    analysis: {
-      resumo,
-      findings,
-      pessoa1: describePessoa(pessoa1),
-      pessoa2: describePessoa(pessoa2)
-    },
+    analysis: { resumo, findings },
     status: 'aprovado' // as regras são determinísticas — não há "reprovar" aqui
   };
 }

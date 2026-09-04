@@ -8,7 +8,7 @@
 const { scoreAll } = require('../scoring');
 const profiles = require('../../data/profiles');
 const { hasApiKey, ask } = require('../aiClient');
-const { runQualityLoop } = require('../qualityCoordinator');
+const { runQualityLoop, feedbackSuffix } = require('../qualityCoordinator');
 
 const RUBRIC = [
   'Tom 100% informal, como uma amiga ou amigo próximo escrevendo, nunca como um laudo psicológico',
@@ -55,9 +55,7 @@ async function buildResult({ name, responses }) {
   );
 
   const generate = async (feedback) => {
-    const correcoes = feedback
-      ? `\n\nA versão anterior teve estes problemas, corrija-os: ${feedback.problemas.join('; ')}`
-      : '';
+    const correcoes = feedbackSuffix(feedback);
     const prompt = `Você é um especialista em relacionamentos escrevendo para ${name}, que acabou de terminar um teste de autoconhecimento dentro de um app pessoal (feito pelo casal para uso próprio).
 
 DADOS DO PERFIL DE ${name.toUpperCase()} (uso interno, não cite os nomes técnicos como "apego ansioso" — traduza em linguagem natural):

@@ -7,7 +7,7 @@
 // coordenador de qualidade antes de ser liberada.
 
 const { hasApiKey, ask } = require('../aiClient');
-const { runQualityLoop } = require('../qualityCoordinator');
+const { runQualityLoop, feedbackSuffix } = require('../qualityCoordinator');
 
 const RUBRIC = [
   'Começa chamando a pessoa pelo nome (ex: "Tamyris, ...")',
@@ -45,9 +45,7 @@ async function generateTip({ targetName, partnerName, finding }) {
   }
 
   const generate = async (feedback) => {
-    const correcoes = feedback
-      ? `\n\nA versão anterior teve estes problemas, corrija-os: ${feedback.problemas.join('; ')}`
-      : '';
+    const correcoes = feedbackSuffix(feedback);
     const prompt = `Você escreve dicas quinzenais para um app pessoal de um casal (${targetName} e ${partnerName}, noivos). Esta dica é para ${targetName}.
 
 FATO VERIFICADO (não invente nada além disso):
