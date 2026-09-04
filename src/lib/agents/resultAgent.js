@@ -8,15 +8,15 @@
 const { scoreAll } = require('../scoring');
 const profiles = require('../../data/profiles');
 const { hasApiKey, ask } = require('../aiClient');
-const { runQualityLoop, feedbackSuffix } = require('../qualityCoordinator');
+const { runQualityLoop, feedbackSuffix, HUMANITY_RUBRIC } = require('../qualityCoordinator');
 
 const RUBRIC = [
-  'Tom 100% informal, como uma amiga ou amigo próximo escrevendo, nunca como um laudo psicológico',
   'Usa o nome da pessoa e faz referência a pelo menos 2 dados concretos do perfil dela',
   'Não usa termos clínicos/diagnósticos (nada de "transtorno", "patologia", "disfunção")',
   'Traz 1 dica prática de autoconhecimento, curta e acionável, para a própria pessoa',
   'Não usa emojis em nenhum ponto do texto — tom caloroso, mas sóbrio e direto',
-  'Tem entre 80 e 180 palavras'
+  'Tem entre 80 e 180 palavras',
+  ...HUMANITY_RUBRIC
 ];
 
 function mockResult(name, scores) {
@@ -61,7 +61,7 @@ async function buildResult({ name, responses }) {
 DADOS DO PERFIL DE ${name.toUpperCase()} (uso interno, não cite os nomes técnicos como "apego ansioso" — traduza em linguagem natural):
 ${contexto}
 
-TAREFA: Escreva um resultado pessoal, carinhoso e informal para ${name}, como se fosse uma mensagem de um amigo(a) que entende de relacionamentos. Fale sobre o jeito dela(e) de ser e de amar, sem usar termos técnicos/clínicos. Termine com UMA dica prática de autoconhecimento. NÃO use emojis. Entre 80 e 180 palavras.${correcoes}`;
+TAREFA: Escreva um resultado pessoal para ${name}, como se fosse uma mensagem de um amigo(a) querido que entende de relacionamentos. Fale sobre o jeito dela(e) de ser e de amar, sem usar termos técnicos/clínicos — traduza tudo em linguagem simples e humana, de vivência real. Termine com UMA dica prática de autoconhecimento. Escreva com simplicidade, amor e respeito — nunca como quem está avaliando ou diagnosticando alguém. NÃO use emojis. Entre 80 e 180 palavras.${correcoes}`;
 
     return ask(prompt, { maxTokens: 700 });
   };

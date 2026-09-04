@@ -17,24 +17,28 @@
 //   confianca   — 'alta' | 'media' (quantos sinais independentes concordam)
 //   fato        — o dado verificado, em linguagem simples
 //   sugestao_acao — ação concreta sugerida, ainda em linguagem de rascunho
-//                    (o tipsAgent reescreve isso com calor humano + emoji)
+//                    (o tipsAgent reescreve isso com calor humano e empatia)
 
 const { getOptionTags, getLiteralById } = require('./scoring');
 
+// Rótulos em linguagem humana, não em termo técnico — "presentes" soa a
+// obrigação/compra; o que realmente importa aqui é o gesto pensado, não o
+// objeto. O mesmo cuidado vale pros outros quatro, pra tudo soar como algo
+// que uma pessoa sentiria, não uma categoria de teste.
 const LINGUAGEM_LABEL = {
-  palavras_afirmacao: 'palavras de afirmação',
-  tempo_qualidade: 'tempo de qualidade',
-  presentes: 'presentes',
-  atos_servico: 'atos de serviço',
-  toque_fisico: 'toque físico'
+  palavras_afirmacao: 'palavras de carinho e reconhecimento',
+  tempo_qualidade: 'tempo de qualidade, só a dois',
+  presentes: 'pequenos mimos e gestos pensados',
+  atos_servico: 'gestos de cuidado no dia a dia',
+  toque_fisico: 'carinho físico'
 };
 
 const LINGUAGEM_ACAO = {
-  palavras_afirmacao: 'Manda uma mensagem ou fala pessoalmente um elogio sincero sobre algo específico que ele(a) fez recentemente',
-  tempo_qualidade: 'Separa um tempo sem celular, só os dois — nem que sejam 20 minutos sem distração',
-  presentes: 'Um mimo pequeno e pensado, não precisa ser caro — precisa mostrar que você pensou nele(a) especificamente',
-  atos_servico: 'Resolve alguma tarefa que é dele(a) sem que precise pedir',
-  toque_fisico: 'Busca mais contato físico no dia a dia — um abraço mais longo, ficar de mãos dadas sem motivo'
+  palavras_afirmacao: 'Manda uma mensagem ou fala pessoalmente algo específico que você admira nele(a) — não um elogio genérico, um de verdade, sobre algo que ele(a) fez ou é',
+  tempo_qualidade: 'Separa um tempinho só de vocês dois, sem celular — nem que sejam 20 minutos de conversa de verdade, olho no olho',
+  presentes: 'Um mimo pequeno e pensado — um bilhetinho escondido, o docinho que ele(a) ama, alguma coisinha que mostre que você prestou atenção no que faz ele(a) feliz. Não precisa ser caro, precisa ser sentido',
+  atos_servico: 'Resolve algo que é dele(a) sem que precise pedir — um gesto de cuidado silencioso vale mais que mil palavras',
+  toque_fisico: 'Busca mais contato físico no dia a dia — um abraço mais longo, a mão na dele(a) sem motivo nenhum, só porque sim'
 };
 
 const FERIDA_LABEL = {
@@ -118,7 +122,7 @@ function buildGestosDeAmor(alvo, sobre) {
         sobre: sobre.name,
         confianca,
         fato: `${sobre.name} se sente amado(a) principalmente por ${label}, e já reconhece isso em algo que ${alvo.name} faz hoje`,
-        sugestao_acao: `Continue assim e, de vez em quando, nomeie isso em voz alta: diga que sabe que ${label} é importante pra ${sobre.name} e que faz por escolha`
+        sugestao_acao: `Continue assim e, de vez em quando, nomeie isso em voz alta: diga que percebe o quanto isso importa pra ${sobre.name} e que escolhe fazer por amor, não por obrigação`
       });
     } else if (idx === 0) {
       findings.push({
