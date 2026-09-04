@@ -196,6 +196,7 @@ h2 { font-size: 16px; margin: 0 0 8px; font-weight: 650; }
   margin: 0 0 18px;
 }
 
+.select-hint { margin: 0 0 10px; }
 .options-list { display: flex; flex-direction: column; gap: 9px; }
 .option-btn {
   text-align: left;

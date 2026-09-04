@@ -19,7 +19,7 @@
 //   sugestao_acao — ação concreta sugerida, ainda em linguagem de rascunho
 //                    (o tipsAgent reescreve isso com calor humano + emoji)
 
-const { getOptionTag, getLiteralById } = require('./scoring');
+const { getOptionTags, getLiteralById } = require('./scoring');
 
 const LINGUAGEM_LABEL = {
   palavras_afirmacao: 'palavras de afirmação',
@@ -76,10 +76,24 @@ const VALORES_LABEL = {
   casamento: 'como imaginam o dia do casamento'
 };
 
-const VAL_QUESTION_IDS = ['VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL10', 'VAL11', 'VAL12'];
+// VAL10 (tempo de noivado) fica de fora por enquanto — não fazia sentido
+// pro uso pessoal de Tamyris e Saulo, mas continua no banco de perguntas
+// (com ativa: false) reservada pra uma futura versão comercial do app.
+const VAL_QUESTION_IDS = ['VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL11', 'VAL12'];
 
 function normalizar(texto) {
   return String(texto || '').trim().toLowerCase();
+}
+
+// Compara duas respostas que podem ser string única (escolha simples) ou
+// array (seleção múltipla) de forma uniforme: devolve o que as duas
+// pessoas têm em comum e o que cada uma respondeu só pra si. Uma escolha
+// única "empata" naturalmente quando os dois arrays de 1 item coincidem.
+function compareRespostas(respostaA, respostaB) {
+  const arrA = Array.isArray(respostaA) ? respostaA : [respostaA];
+  const arrB = Array.isArray(respostaB) ? respostaB : [respostaB];
+  const comuns = arrA.filter((item) => arrB.some((outro) => normalizar(outro) === normalizar(item)));
+  return { comuns, arrA, arrB };
 }
 
 // ---------- Lente 1: linguagem do amor (gap + reforço) ----------
@@ -88,12 +102,12 @@ function buildGestosDeAmor(alvo, sobre) {
   const ranking = (sobre.scores.linguagem_amor.ranking || []).filter(
     (lang) => (sobre.scores.linguagem_amor.contagens[lang] || 0) > 0
   );
-  const con03Tag = getOptionTag(sobre.responses, 'CON03'); // sinal direto de "sobre"
-  const con01TagDoAlvo = getOptionTag(sobre.responses, 'CON01'); // o que "sobre" diz que "alvo" já faz
+  const con03Tags = getOptionTags(sobre.responses, 'CON03'); // sinal direto de "sobre" (seleção múltipla)
+  const con01TagsDoAlvo = getOptionTags(sobre.responses, 'CON01'); // o que "sobre" diz que "alvo" já faz
 
   ranking.forEach((linguagem, idx) => {
-    const confianca = idx === 0 && con03Tag === linguagem ? 'alta' : 'media';
-    const jaFaz = con01TagDoAlvo === linguagem;
+    const confianca = idx === 0 && con03Tags.includes(linguagem) ? 'alta' : 'media';
+    const jaFaz = con01TagsDoAlvo.includes(linguagem);
     const label = LINGUAGEM_LABEL[linguagem];
 
     if (jaFaz) {
@@ -190,16 +204,19 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
     if (!respA || !respB) return;
 
     const label = VALORES_LABEL[respA.subcategoria] || respA.subcategoria;
-    const iguais = normalizar(respA.resposta) === normalizar(respB.resposta);
+    const { comuns, arrA, arrB } = compareRespostas(respA.resposta, respB.resposta);
 
-    if (iguais) {
+    if (comuns.length) {
       findings.push({
         id: `valor_sintonia_${alvo.name}_${id}`,
         tipo: 'reforco',
         alvo: alvo.name,
         sobre: sobre.name,
         confianca: 'alta',
-        fato: `Vocês dois responderam a mesma coisa sobre ${label}: "${respA.resposta}"`,
+        fato:
+          comuns.length === arrA.length && comuns.length === arrB.length
+            ? `Vocês dois responderam a mesma coisa sobre ${label}: "${comuns.join(', ')}"`
+            : `Sobre ${label}, vocês dois têm em comum: "${comuns.join(', ')}"`,
         sugestao_acao: 'Vale lembrar disso quando bater alguma insegurança sobre o futuro — nesse ponto vocês já remam juntos'
       });
     } else {
@@ -209,7 +226,7 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
         alvo: alvo.name,
         sobre: sobre.name,
         confianca: 'alta',
-        fato: `Sobre ${label}, ${pessoaA.name} respondeu "${respA.resposta}" e ${pessoaB.name} respondeu "${respB.resposta}" — visões diferentes`,
+        fato: `Sobre ${label}, ${pessoaA.name} respondeu "${arrA.join(', ')}" e ${pessoaB.name} respondeu "${arrB.join(', ')}" — visões diferentes`,
         sugestao_acao: 'Não precisa resolver hoje, mas vale abrir essa conversa com calma, sem cobrança, só pra entender o que pesa pra cada um'
       });
     }

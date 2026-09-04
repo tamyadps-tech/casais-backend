@@ -34,15 +34,18 @@ Essa é a parte mais importante do sistema, então ela é **determinística** �
 
 **Anti-repetição:** cada finding tem um id estável, e o sistema guarda (por pessoa, por casal) quando cada um foi usado pela última vez. Toda vez que uma dica precisa ser gerada, o agente gerente escolhe o finding aplicável àquela pessoa que está há mais tempo sem ser usado (ou nunca foi usado), com um cooldown de 6 semanas antes de repetir o mesmo fato — isso garante variedade e rotação entre os 5 tipos de dica ao longo das ~21 semanas de entrega.
 
-## Banco de perguntas (90 no total)
+## Banco de perguntas (90 ativas no total)
 
-- **68 múltipla escolha** (6 a 10 opções cada) — ~75%
-- **13 de escala 1 a 5** (cada uma explica o que o 1 e o 5 significam) — ~14%
-- **9 abertas** — 10%
+- **múltipla escolha** (6 a 10 opções, escolhe 1)
+- **seleção múltipla** (6 a 10 opções, escolhe até `max_selecoes` — usado em `valores_vida` e `conhecer_melhor`, onde faz sentido marcar mais de uma coisa)
+- **escala 1 a 5** (cada uma explica o que o 1 e o 5 significam)
+- **abertas**
 
-Categorias: `personalidade` (12), `temperamento` (12), `apego` (14), `feridas_infancia` (13), `linguagem_amor` (12), `valores_vida` (12), `conhecer_melhor` (15).
+Categorias: `personalidade` (12), `temperamento` (12), `apego` (14), `feridas_infancia` (13), `linguagem_amor` (12), `valores_vida` (11 ativas), `conhecer_melhor` (16).
 
 As perguntas foram escritas de forma contextualizada (cenários do dia a dia, nunca "você é ansioso(a)?") pra não entregar o que está sendo medido nem soar como diagnóstico.
+
+Uma pergunta (`VAL10`, tempo entre noivado e casamento) fica marcada `ativa: false` em `src/data/questions.js` — não faz sentido pro uso pessoal de hoje, mas continua no código, reservada pra uma futura versão comercial/multi-casal do app. `require('./src/data/questions')` já devolve só as ativas; `questions.all` traz o banco completo, inativas incluídas.
 
 ## Endpoints
 
@@ -60,7 +63,7 @@ As perguntas foram escritas de forma contextualizada (cenários do dia a dia, nu
 - `GET /api/tips/schedule/:id1/:id2` — calendário completo de datas de entrega
 - `GET /api/tips/:id1/:id2` — todas as dicas já entregues
 - `GET /api/tips/:id1/:id2/mine/:target` — só as dicas de uma pessoa
-- `POST /api/tips/generate/:id1/:id2` — gera a dica do dia na mão (o cron já faz isso sozinho todo dia, no horário configurado, mas só entrega de fato se hoje for segunda ou quinta)
+- `GET`/`POST /api/tips/generate/:id1/:id2` — gera a dica do dia na mão (o cron já faz isso sozinho todo dia, no horário configurado, mas só entrega de fato se hoje for segunda ou quinta). Com `?force=true&key=SUA_ADMIN_RESET_KEY` ignora o calendário e gera uma dica na hora, útil pra testar o cruzamento sem esperar o próximo dia programado — não conta como a entrega oficial do dia, então a entrega automática de verdade continua acontecendo normalmente depois.
 
 ### Google Agenda
 - `GET /api/calendar/:id1/:id2/:target.ics` — feed assinável. No Google Agenda: **Outras agendas → Adicionar por URL** e colar o link (ex.: `https://seu-servidor/api/calendar/tamyris/saulo/tamyris.ics` pra Tamyris ver as dicas sobre o Saulo, e trocando o `target` pra `saulo` no link dele). Não precisa configurar nada no Google, só assinar a URL — por isso essa foi a rota mais simples, sem depender de OAuth.

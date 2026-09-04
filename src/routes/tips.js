@@ -35,9 +35,20 @@ router.get('/schedule/:id1/:id2', (req, res) => {
 
 // Dispara a geração da dica do dia manualmente (o cron já faz isso sozinho,
 // esta rota existe pra testar ou pra rodar na mão se o servidor cair no dia).
-router.post('/generate/:id1/:id2', async (req, res) => {
+// Aceita GET e POST pra poder ser colada direto na barra de endereço.
+// Com ?force=true ignora o calendário (exige ?key=ADMIN_RESET_KEY, já que
+// gera uma dica de verdade via IA fora do horário programado) — pensado
+// pra conferir o cruzamento de dados sem esperar a próxima segunda/quinta.
+router.all('/generate/:id1/:id2', async (req, res) => {
   try {
-    const result = await pipeline.generateDueTips(req.params.id1, req.params.id2);
+    const force = req.query.force === 'true';
+    if (force) {
+      const adminKey = process.env.ADMIN_RESET_KEY;
+      if (!adminKey || req.query.key !== adminKey) {
+        return res.status(403).json({ error: 'Geração forçada exige ?key=SUA_CHAVE igual à ADMIN_RESET_KEY configurada no servidor.' });
+      }
+    }
+    const result = await pipeline.generateDueTips(req.params.id1, req.params.id2, { force });
     res.json({ success: true, ...result });
   } catch (error) {
     console.error('Error in /api/tips/generate:', error);

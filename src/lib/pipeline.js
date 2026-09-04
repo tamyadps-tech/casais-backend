@@ -93,13 +93,16 @@ function selectFinding(findings, targetName, usedLog) {
   return pool[0];
 }
 
-async function generateDueTips(id1, id2) {
+// force=true ignora o calendário (pensado só pra testar o cruzamento sem
+// esperar a próxima segunda/quinta) e não marca o dia como entregue — a
+// entrega automática de verdade continua acontecendo normalmente depois.
+async function generateDueTips(id1, id2, { force = false } = {}) {
   const cId = store.coupleId(id1, id2);
   const schedule = store.readTipsSchedule(cId);
   const today = new Date().toISOString().slice(0, 10);
   const scheduleDates = generateScheduleDates();
 
-  if (!scheduleDates.includes(today) || schedule.delivered.includes(today)) {
+  if (!force && (!scheduleDates.includes(today) || schedule.delivered.includes(today))) {
     return { generated: false, reason: 'not_due_today', date: today };
   }
 
@@ -124,16 +127,21 @@ async function generateDueTips(id1, id2) {
     { tip: tip1, target: nome1, finding: finding1 },
     { tip: tip2, target: nome2, finding: finding2 }
   ].map(({ tip, target, finding }) => ({
-    id: `${today}-${target}`,
+    id: force ? `${today}-${target}-forcado-${Date.now()}` : `${today}-${target}`,
     date: today,
     target,
     tipo: finding ? finding.tipo : null,
+    forcado: force || undefined,
     ...tip
   }));
 
   entries.forEach((entry) => store.appendTip(cId, entry));
   if (finding1) store.markFindingUsed(cId, nome1, finding1.id, new Date().toISOString());
   if (finding2) store.markFindingUsed(cId, nome2, finding2.id, new Date().toISOString());
+
+  if (force) {
+    return { generated: true, date: today, tips: entries, forced: true };
+  }
 
   schedule.delivered.push(today);
   store.writeTipsSchedule(cId, schedule);
