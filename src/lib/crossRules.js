@@ -10,8 +10,12 @@
 // Cada finding tem:
 //   id          — chave estável, usada pro controle de repetição (o mesmo
 //                 finding não deve virar dica de novo antes do cooldown)
-//   tipo        — 'gesto_de_amor' | 'reforco' | 'dinamica_apego' |
-//                 'cuidado_ferida' | 'papo_valores'
+//   tipo        — 'intro_linguagem' (só a 1ª dica de cada pessoa) |
+//                 'gesto_de_amor' | 'reforco' | 'dinamica_apego' |
+//                 'cuidado_ferida' | 'papo_valores' | 'auto_reflexao'
+//                 (auto_reflexao nunca é o finding principal — é sempre
+//                 combinado com outro na hora de montar a dica, ver
+//                 pipeline.js)
 //   alvo        — nome de quem VAI RECEBER a dica (quem deve agir)
 //   sobre       — nome do parceiro(a) a quem a dica se refere
 //   confianca   — 'alta' | 'media' (quantos sinais independentes concordam)
@@ -65,6 +69,26 @@ const APEGO_CUIDADO = {
   desorganizado: 'Seja o mais previsível e paciente possível, evite ultimatos — dê tempo mesmo quando ele(a) se afastar sem explicar'
 };
 
+// Como a PRÓPRIA pessoa tende a viver o apego — vira a "dica extra sobre a
+// própria vida", uma reflexão pra ela mesma, não uma instrução sobre o
+// parceiro(a).
+const APEGO_AUTO_REFLEXAO = {
+  seguro: 'você lida naturalmente bem com intimidade e com distância — isso é uma base sólida. Vale lembrar que nem todo mundo tem essa mesma facilidade, e ter paciência com quem tem mais dificuldade faz toda diferença',
+  ansioso: 'você tende a buscar reafirmação com frequência e pode sentir o silêncio do outro como distância, mesmo quando não é. Perceber esse padrão no momento em que ele aparece já ajuda a não reagir no automático',
+  evitativo: 'você tende a valorizar muito a própria independência, e abrir mão de um pouco de controle emocional pode ser desconfortável. Notar isso ajuda a não fechar a porta bem na hora em que alguém se aproxima de verdade',
+  desorganizado: 'você pode sentir vontade de se aproximar e, ao mesmo tempo, vontade de recuar — é mais comum do que parece, e só reconhecer esse padrão já ajuda a suavizá-lo com o tempo'
+};
+
+// Mesma lógica, mas sobre a ferida da infância mais forte da PRÓPRIA
+// pessoa — uma sensibilidade sua, não um cuidado que o outro precisa ter.
+const FERIDA_AUTO_REFLEXAO = {
+  rejeicao: 'você carrega uma sensibilidade grande a se sentir rejeitado(a). Vale observar quando isso te faz interpretar como rejeição algo que, no fundo, nem era sobre você',
+  abandono: 'você tende a temer ser deixado(a) — reconhecer isso na hora ajuda a diferenciar um medo antigo de um sinal real do presente',
+  humilhacao: 'você é sensível a julgamento e exposição. Vale notar quando isso te faz reagir mais forte do que a situação realmente pede',
+  traicao: 'confiar plenamente não é fácil pra você. Perceber essa dificuldade é o primeiro passo pra não colocar na conta do outro algo que é uma ferida sua',
+  injustica: 'situações de injustiça mexem fundo com você. Vale notar quando essa sensibilidade acaba ampliando um conflito que, sozinho, seria pequeno'
+};
+
 const VALORES_LABEL = {
   valores: 'os valores mais importantes na vida',
   condutas_inegociaveis: 'o que é inegociável numa relação',
@@ -98,6 +122,71 @@ function compareRespostas(respostaA, respostaB) {
   const arrB = Array.isArray(respostaB) ? respostaB : [respostaB];
   const comuns = arrA.filter((item) => arrB.some((outro) => normalizar(outro) === normalizar(item)));
   return { comuns, arrA, arrB };
+}
+
+// ---------- Lente 0: introdução — a própria linguagem do amor ----------
+// Reservada pra PRIMEIRA dica que cada pessoa recebe (ver pipeline.js):
+// ensina o princípio central antes de qualquer conselho específico — amar
+// bem é amar na língua do outro, não na própria.
+function buildIntroLinguagem(alvo, sobre) {
+  const ownRanking = (alvo.scores.linguagem_amor.ranking || []).filter(
+    (lang) => (alvo.scores.linguagem_amor.contagens[lang] || 0) > 0
+  );
+  const partnerRanking = (sobre.scores.linguagem_amor.ranking || []).filter(
+    (lang) => (sobre.scores.linguagem_amor.contagens[lang] || 0) > 0
+  );
+  const ownTop = ownRanking[0];
+  const partnerTop = partnerRanking[0];
+  if (!ownTop || !partnerTop) return [];
+
+  return [
+    {
+      id: `intro_linguagem_${alvo.name}`,
+      tipo: 'intro_linguagem',
+      alvo: alvo.name,
+      sobre: sobre.name,
+      confianca: 'alta',
+      fato: `Você se sente mais amado(a) por ${LINGUAGEM_LABEL[ownTop]}, mas ${sobre.name} se sente mais amado(a) por ${LINGUAGEM_LABEL[partnerTop]}`,
+      sugestao_acao: `Amar bem não é amar do jeito que a gente gosta de ser amado — é amar na língua do outro. Essa semana, experimente pelo menos um gesto na linguagem de ${sobre.name}: ${LINGUAGEM_ACAO[partnerTop]}`
+    }
+  ];
+}
+
+// ---------- Lente extra: autorreflexão (sobre a própria vida) ----------
+// Não é sobre o parceiro(a) — é uma dica extra pra própria pessoa pensar
+// sobre o jeito dela de ver o mundo e sua própria dificuldade em
+// relacionamentos. Sempre combinada com um finding "principal" na hora de
+// montar a dica (ver pipeline.js + tipsAgent.js).
+function buildAutoReflexao(pessoa) {
+  const findings = [];
+
+  const estiloApego = pessoa.scores.apego.dominante;
+  if (APEGO_AUTO_REFLEXAO[estiloApego]) {
+    findings.push({
+      id: `auto_apego_${pessoa.name}`,
+      tipo: 'auto_reflexao',
+      alvo: pessoa.name,
+      sobre: pessoa.name,
+      confianca: 'alta',
+      fato: APEGO_AUTO_REFLEXAO[estiloApego],
+      sugestao_acao: 'Essa semana, quando notar esse padrão surgindo, só perceba — sem se cobrar, apenas observando'
+    });
+  }
+
+  const feridaPrincipal = pessoa.scores.feridas_infancia.dominantes[0];
+  if (FERIDA_AUTO_REFLEXAO[feridaPrincipal]) {
+    findings.push({
+      id: `auto_ferida_${pessoa.name}_${feridaPrincipal}`,
+      tipo: 'auto_reflexao',
+      alvo: pessoa.name,
+      sobre: pessoa.name,
+      confianca: 'alta',
+      fato: FERIDA_AUTO_REFLEXAO[feridaPrincipal],
+      sugestao_acao: 'Da próxima vez que sentir isso, tenta nomear pra você mesmo(a) o que está por trás da reação, antes de agir'
+    });
+  }
+
+  return findings;
 }
 
 // ---------- Lente 1: linguagem do amor (gap + reforço) ----------
@@ -246,12 +335,16 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
  */
 function buildFindings(pessoaA, pessoaB) {
   const findings = [
+    ...buildIntroLinguagem(pessoaA, pessoaB),
+    ...buildIntroLinguagem(pessoaB, pessoaA),
     ...buildGestosDeAmor(pessoaA, pessoaB),
     ...buildGestosDeAmor(pessoaB, pessoaA),
     ...buildDinamicaApego(pessoaA, pessoaB),
     ...buildDinamicaApego(pessoaB, pessoaA),
     ...buildCuidadosFeridas(pessoaA, pessoaB),
     ...buildCuidadosFeridas(pessoaB, pessoaA),
+    ...buildAutoReflexao(pessoaA),
+    ...buildAutoReflexao(pessoaB),
     ...buildPontosValores(pessoaA, pessoaB, pessoaA, pessoaB),
     ...buildPontosValores(pessoaB, pessoaA, pessoaA, pessoaB)
   ];
