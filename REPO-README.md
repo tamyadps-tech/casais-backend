@@ -71,12 +71,26 @@ Uma pergunta (`VAL10`, tempo entre noivado e casamento) fica marcada `ativa: fal
 ### Admin
 - `GET /api/admin/reset/:id1/:id2?key=SUA_CHAVE&confirm=SIM` — apaga respostas, resultado, análise cruzada e dicas de um casal (pra zerar dados de teste antes da rodada de verdade). Só funciona se `ADMIN_RESET_KEY` estiver configurada no servidor; sem essa variável, o endpoint fica sempre desligado (403). Pensado pra colar direto na barra de endereço do navegador.
 
+### Notificações push
+- `GET /api/push/public-key` — chave pública VAPID (o app usa isso no navegador; não é segredo)
+- `POST /api/push/subscribe` — `{ personId, subscription }`, salva a inscrição desse aparelho
+- `POST /api/push/unsubscribe` — `{ personId, endpoint }`
+
 ### Outros
 - `GET /api/health`
 
 ## Frontend
 
 `public/` é servido direto pelo Express (sem build step, sem Netlify). Visual clean e neutro, sem emojis — paleta em tons de cinza com um único acento, mobile-first, com suporte a tema escuro via `prefers-color-scheme`.
+
+### App instalável + notificações push
+
+O app é um PWA (`manifest.json` + `sw.js`): dá pra instalar na tela de início do celular e, uma vez instalado, ativar notificações de verdade (card "Notificações no aparelho" no painel) — chegam via Web Push, sem depender do Google Agenda.
+
+- **Android/Chrome**: funciona direto no navegador, nem precisa instalar pra notificar (mas instalar dá a experiência de app).
+- **iPhone/Safari**: a Apple só libera notificação push pra apps **instalados** (Compartilhar → Adicionar à Tela de Início) — a UI já detecta isso e mostra essa instrução antes de deixar ativar.
+- Requer `VAPID_PUBLIC_KEY` e `VAPID_PRIVATE_KEY` configuradas (veja `env.example` — já vem um par pronto pra usar, ou gere o seu com `npx web-push generate-vapid-keys`). Sem essas variáveis, essa parte fica desligada e o resto do app funciona igual.
+- Inscrições inválidas/expiradas (ex.: app desinstalado) são detectadas e removidas automaticamente na próxima tentativa de envio.
 
 ## Variáveis de ambiente
 
