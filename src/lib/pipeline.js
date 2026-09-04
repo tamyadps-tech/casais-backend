@@ -115,6 +115,28 @@ function selectFinding(findings, targetName, usedLog) {
   return pool[0];
 }
 
+// Decide o que vai na dica de uma pessoa: na primeiríssima vez, é a
+// introdução sobre a própria linguagem do amor (ensina o princípio antes
+// de qualquer conselho específico). Das próximas em diante, é um finding
+// "principal" (sobre o parceiro) + um de autorreflexão (sobre a própria
+// vida) — as duas partes que a dica final vai juntar.
+function pickTipInputs(targetName, findings, usedLog) {
+  const jaRecebeuDica = Boolean(usedLog[targetName] && Object.keys(usedLog[targetName]).length);
+
+  if (!jaRecebeuDica) {
+    const intro = findings.find((f) => f.alvo === targetName && f.tipo === 'intro_linguagem');
+    if (intro) return { finding: intro, autoFinding: null };
+  }
+
+  const poolPrincipal = findings.filter((f) => f.alvo === targetName && f.tipo !== 'intro_linguagem' && f.tipo !== 'auto_reflexao');
+  const poolAuto = findings.filter((f) => f.alvo === targetName && f.tipo === 'auto_reflexao');
+
+  return {
+    finding: selectFinding(poolPrincipal, targetName, usedLog),
+    autoFinding: selectFinding(poolAuto, targetName, usedLog)
+  };
+}
+
 // force=true ignora o calendário (pensado só pra testar o cruzamento sem
 // esperar a próxima segunda/quinta) e não marca o dia como entregue — a
 // entrega automática de verdade continua acontecendo normalmente depois.
@@ -137,12 +159,12 @@ async function generateDueTips(id1, id2, { force = false } = {}) {
   const findings = coupleAnalysis.analysis.findings || [];
   const usedLog = store.readFindingsLog(cId);
 
-  const finding1 = selectFinding(findings, nome1, usedLog);
-  const finding2 = selectFinding(findings, nome2, usedLog);
+  const { finding: finding1, autoFinding: autoFinding1 } = pickTipInputs(nome1, findings, usedLog);
+  const { finding: finding2, autoFinding: autoFinding2 } = pickTipInputs(nome2, findings, usedLog);
 
   const [tip1, tip2] = await Promise.all([
-    generateTip({ targetName: nome1, partnerName: nome2, finding: finding1 }),
-    generateTip({ targetName: nome2, partnerName: nome1, finding: finding2 })
+    generateTip({ targetName: nome1, partnerName: nome2, finding: finding1, autoFinding: autoFinding1 }),
+    generateTip({ targetName: nome2, partnerName: nome1, finding: finding2, autoFinding: autoFinding2 })
   ]);
 
   const entries = [
@@ -158,8 +180,11 @@ async function generateDueTips(id1, id2, { force = false } = {}) {
   }));
 
   entries.forEach((entry) => store.appendTip(cId, entry));
-  if (finding1) store.markFindingUsed(cId, nome1, finding1.id, new Date().toISOString());
-  if (finding2) store.markFindingUsed(cId, nome2, finding2.id, new Date().toISOString());
+  const agoraIso = new Date().toISOString();
+  if (finding1) store.markFindingUsed(cId, nome1, finding1.id, agoraIso);
+  if (autoFinding1) store.markFindingUsed(cId, nome1, autoFinding1.id, agoraIso);
+  if (finding2) store.markFindingUsed(cId, nome2, finding2.id, agoraIso);
+  if (autoFinding2) store.markFindingUsed(cId, nome2, autoFinding2.id, agoraIso);
 
   const idPorNome = { [nome1]: id1, [nome2]: id2 };
   await Promise.all(entries.map((entry) => notifyPush(idPorNome[entry.target], entry)));

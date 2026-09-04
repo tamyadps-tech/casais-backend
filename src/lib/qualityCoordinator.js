@@ -17,7 +17,7 @@ const APPROVAL_THRESHOLD = 8; // nota de 0 a 10
 // qualidade quem cobra isso na prática, rejeitando o texto até atender.
 const HUMANITY_RUBRIC = [
   'Soa como algo que uma pessoa que ama de verdade escreveria pra outra — nunca como um sistema, um relatório ou um teste avaliando alguém',
-  'Frases simples e diretas, do jeito que se fala, sem jargão técnico nem termo de teste psicológico (nunca "linguagem do amor", "apego", "ferida" ou nomes de categoria — traduza tudo em vivência real)',
+  'Frases simples e diretas, do jeito que se fala. Nunca usa rótulo de diagnóstico sobre a pessoa (nada de "você tem apego ansioso" ou "sua ferida é rejeição" — descreva o comportamento, não o rótulo da categoria). "Linguagem do amor" pode ser citado normalmente quando for o assunto central da dica — é um conceito conhecido, não um diagnóstico',
   'Transmite amor e cuidado genuíno pelas duas pessoas do casal, nunca julgamento, ironia ou tom de "acerto/erro"',
   'Respeita quem recebe: não expõe fragilidade de forma vexatória, não soa como cobrança disfarçada nem como queixa do parceiro(a) sobre a pessoa'
 ];
