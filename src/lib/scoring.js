@@ -73,9 +73,35 @@ function scoreFeridas(responses) {
   return { dominantes: topTags(counts, 2), contagens: counts };
 }
 
+const LINGUAGENS = ['palavras_afirmacao', 'tempo_qualidade', 'presentes', 'atos_servico', 'toque_fisico'];
+
 function scoreLinguagemAmor(responses) {
   const { counts } = tally(responses, 'linguagem_amor');
-  return { dominantes: topTags(counts, 2), contagens: counts };
+  // ranking completo (as 5 linguagens, mesmo as com pontuação 0) — essencial
+  // pro cruzamento de gap: precisamos saber a ordem inteira, não só o topo
+  const ranking = [...LINGUAGENS].sort((a, b) => (counts[b] || 0) - (counts[a] || 0));
+  return { dominantes: topTags(counts, 2), ranking, contagens: counts };
+}
+
+// Sinal direto de uma única pergunta (ex: CON01/CON02/CON03) — usado pra
+// triangular confiança e pra saber "o que o parceiro já faz hoje" sem
+// depender só do bloco de 10 perguntas de linguagem do amor.
+function getOptionTag(responses, questionId) {
+  const question = questionsById.get(questionId);
+  if (!question || !responses || responses[questionId] === undefined) return null;
+  const resposta = responses[questionId];
+  const opcao = (question.opcoes || []).find((o) => o.texto === resposta || o.tag === resposta);
+  const tag = opcao && opcao.tag;
+  return tag && tag !== 'neutro' ? tag : null;
+}
+
+// Resposta literal de UMA pergunta específica por id — usado pelo motor de
+// regras de cruzamento (src/lib/crossRules.js) pra comparar tópico a tópico
+// (ex: VAL04 de uma pessoa com VAL04 da outra).
+function getLiteralById(responses, questionId) {
+  const question = questionsById.get(questionId);
+  if (!question || !responses || responses[questionId] === undefined) return null;
+  return { id: questionId, texto: question.texto, subcategoria: question.subcategoria, resposta: responses[questionId] };
 }
 
 function collectRespostasLiterais(responses, categoria) {
@@ -109,5 +135,7 @@ module.exports = {
   scoreApego,
   scoreFeridas,
   scoreLinguagemAmor,
-  collectRespostasLiterais
+  collectRespostasLiterais,
+  getOptionTag,
+  getLiteralById
 };

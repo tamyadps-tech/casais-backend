@@ -23,6 +23,17 @@ Não existem robôs autônomos rodando sozinhos por aí — é uma orquestraçã
 
 Sem `CLAUDE_API_KEY` configurada, tudo roda em **modo mock** (textos simples baseados nos dados, sem chamar IA) — assim dá pra testar o fluxo inteiro de graça antes de ligar a chave de verdade.
 
+## Como o cruzamento de dados vira dica assertiva
+
+Essa é a parte mais importante do sistema, então ela é **determinística** — regras fixas em `src/lib/crossRules.js`, sem IA inventando fato nenhum. A IA (`tipsAgent.js`) só entra depois, pra escrever a mensagem em cima de UM fato já verificado. O motor roda 4 lentes de cruzamento e devolve uma lista de *findings* (fato + ação sugerida + confiança):
+
+1. **Linguagem do amor — com 3 sinais, não 1.** Cruza o ranking do teste de 10 perguntas com a resposta direta "o que te faz sentir amado" (CON03) e com "o que seu parceiro já faz que você gosta" (CON01). Se os 3 sinais concordam → confiança **alta**. Também calcula o **gap**: se o parceiro já demonstra a linguagem certa (via CON01), vira dica de **reforço** ("continue assim"); se não, vira dica de **gesto de amor** com uma ação concreta pra aquela linguagem específica.
+2. **Dinâmica de apego.** Tabela fixa por estilo do parceiro (seguro/ansioso/evitativo/desorganizado) com o cuidado certo pra cada um. Detecta especificamente o padrão perseguidor-distanciador (ansioso + evitativo) e gera uma orientação diferente pra cada lado da dupla.
+3. **Cuidados por ferida da infância.** Dicionário fixo (rejeição, abandono, humilhação, traição, injustiça) do que evitar e o que fazer — cruzado com o temperamento de quem recebe a dica (se a pessoa é mais direta/colérica, o texto ganha um adendo sobre cuidar do tom).
+4. **Valores e vida a dois.** Compara literalmente as 12 respostas de cada um. Resposta igual → dica de **reforço** (celebrar o alinhamento). Resposta diferente → dica tipo **papo de valores**, sempre como convite tranquilo pra conversar, nunca como alarme.
+
+**Anti-repetição:** cada finding tem um id estável, e o sistema guarda (por pessoa, por casal) quando cada um foi usado pela última vez. Toda vez que uma dica precisa ser gerada, o agente gerente escolhe o finding aplicável àquela pessoa que está há mais tempo sem ser usado (ou nunca foi usado), com um cooldown de 6 semanas antes de repetir o mesmo fato — isso garante variedade e rotação entre os 5 tipos de dica ao longo das ~21 semanas de entrega.
+
 ## Banco de perguntas (90 no total)
 
 - **68 múltipla escolha** (6 a 10 opções cada) — ~75%

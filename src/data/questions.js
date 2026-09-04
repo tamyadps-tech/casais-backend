@@ -1085,11 +1085,17 @@ const questions = [
     categoria: 'conhecer_melhor',
     tipo: 'multipla_escolha',
     texto: 'O que seu parceiro(a) faz que faz seu coração se aquecer?',
+    // tag = qual linguagem do amor esse gesto representa (usado pro cruzamento
+    // de "o que o parceiro já faz hoje" vs "o que a pessoa mais precisa")
     opcoes: [
-      { texto: 'Elogia e valoriza o que eu faço' }, { texto: 'Separa um tempo só pra mim, sem distrações' },
-      { texto: 'Me surpreende com pequenos mimos' }, { texto: 'Resolve algo por mim sem eu pedir' },
-      { texto: 'Me abraça e busca contato físico' }, { texto: 'Ri das minhas piadas, mesmo quando não são tão boas' },
-      { texto: 'Me apoia nas minhas decisões, mesmo discordando' }, { texto: 'Puxa assunto sobre meu dia com interesse genuíno' }
+      { texto: 'Elogia e valoriza o que eu faço', tag: 'palavras_afirmacao' },
+      { texto: 'Separa um tempo só pra mim, sem distrações', tag: 'tempo_qualidade' },
+      { texto: 'Me surpreende com pequenos mimos', tag: 'presentes' },
+      { texto: 'Resolve algo por mim sem eu pedir', tag: 'atos_servico' },
+      { texto: 'Me abraça e busca contato físico', tag: 'toque_fisico' },
+      { texto: 'Ri das minhas piadas, mesmo quando não são tão boas', tag: 'neutro' },
+      { texto: 'Me apoia nas minhas decisões, mesmo discordando', tag: 'neutro' },
+      { texto: 'Puxa assunto sobre meu dia com interesse genuíno', tag: 'tempo_qualidade' }
     ]
   },
   {
@@ -1097,11 +1103,17 @@ const questions = [
     categoria: 'conhecer_melhor',
     tipo: 'multipla_escolha',
     texto: 'O que faz você se afastar ou se fechar numa relação?',
+    // tag = ferida da infância mais associada a esse gatilho (usado pros
+    // "cuidados por ferida" no cruzamento de dados)
     opcoes: [
-      { texto: 'Sentir que não estou sendo ouvido(a)' }, { texto: 'Brigas que viram gritaria' },
-      { texto: 'Promessas que não se cumprem' }, { texto: 'Falta de atenção no dia a dia' },
-      { texto: 'Críticas em público' }, { texto: 'Silêncio prolongado depois de uma briga' },
-      { texto: 'Sentir que estou sozinho(a) nas decisões' }, { texto: 'Comparações com outras pessoas' }
+      { texto: 'Sentir que não estou sendo ouvido(a)', tag: 'rejeicao' },
+      { texto: 'Brigas que viram gritaria', tag: 'humilhacao' },
+      { texto: 'Promessas que não se cumprem', tag: 'traicao' },
+      { texto: 'Falta de atenção no dia a dia', tag: 'abandono' },
+      { texto: 'Críticas em público', tag: 'humilhacao' },
+      { texto: 'Silêncio prolongado depois de uma briga', tag: 'abandono' },
+      { texto: 'Sentir que estou sozinho(a) nas decisões', tag: 'injustica' },
+      { texto: 'Comparações com outras pessoas', tag: 'rejeicao' }
     ]
   },
   {
@@ -1109,11 +1121,17 @@ const questions = [
     categoria: 'conhecer_melhor',
     tipo: 'multipla_escolha',
     texto: 'O que te faz sentir amado(a) de verdade, na prática do dia a dia?',
+    // tag = mesma linguagem do amor do bloco LIN — este é o 2º sinal direto
+    // (o 3º é o teste de 10 perguntas) usado pra triangular a confiança
     opcoes: [
-      { texto: 'Ouvir palavras carinhosas com frequência' }, { texto: 'Ter tempo de qualidade garantido' },
-      { texto: 'Receber gestos e mimos inesperados' }, { texto: 'Ver o parceiro(a) se esforçando nas tarefas do dia a dia' },
-      { texto: 'Sentir contato físico e carinho' }, { texto: 'Ser incluído(a) nos planos e decisões' },
-      { texto: 'Ser ouvido(a) sem julgamento' }, { texto: 'Ser apoiado(a) na frente de outras pessoas' }
+      { texto: 'Ouvir palavras carinhosas com frequência', tag: 'palavras_afirmacao' },
+      { texto: 'Ter tempo de qualidade garantido', tag: 'tempo_qualidade' },
+      { texto: 'Receber gestos e mimos inesperados', tag: 'presentes' },
+      { texto: 'Ver o parceiro(a) se esforçando nas tarefas do dia a dia', tag: 'atos_servico' },
+      { texto: 'Sentir contato físico e carinho', tag: 'toque_fisico' },
+      { texto: 'Ser incluído(a) nos planos e decisões', tag: 'neutro' },
+      { texto: 'Ser ouvido(a) sem julgamento', tag: 'neutro' },
+      { texto: 'Ser apoiado(a) na frente de outras pessoas', tag: 'neutro' }
     ]
   },
   {

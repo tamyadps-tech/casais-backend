@@ -68,6 +68,23 @@ function readTips(cId) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
+// Log de findings (do cruzamento de dados, ver src/lib/crossRules.js) já
+// usados como dica, por pessoa — evita repetir o mesmo fato antes do
+// cooldown e permite escolher sempre o menos usado recentemente.
+function readFindingsLog(cId) {
+  const p = path.join(tipsDir(cId), 'findings-log.json');
+  if (!fs.existsSync(p)) return {};
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function markFindingUsed(cId, personName, findingId, whenIso) {
+  const log = readFindingsLog(cId);
+  if (!log[personName]) log[personName] = {};
+  log[personName][findingId] = whenIso;
+  fs.writeFileSync(path.join(tipsDir(cId), 'findings-log.json'), JSON.stringify(log, null, 2));
+  return log;
+}
+
 module.exports = {
   DATA_DIR,
   readJson,
@@ -76,5 +93,7 @@ module.exports = {
   readTipsSchedule,
   writeTipsSchedule,
   appendTip,
-  readTips
+  readTips,
+  readFindingsLog,
+  markFindingUsed
 };

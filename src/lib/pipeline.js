@@ -47,8 +47,11 @@ async function getOrBuildCoupleAnalysis(id1, id2, { force = false } = {}) {
   const result2 = await getOrBuildResult(id2);
   if (!result1 || !result2) return null;
 
-  const pessoa1 = { name: result1.name, scores: result1.scores };
-  const pessoa2 = { name: result2.name, scores: result2.scores };
+  const submission1 = store.readJson('responses', id1);
+  const submission2 = store.readJson('responses', id2);
+
+  const pessoa1 = { name: result1.name, scores: result1.scores, responses: submission1.responses };
+  const pessoa2 = { name: result2.name, scores: result2.scores, responses: submission2.responses };
 
   const { analysis, status, attempts } = await analyzeCouple(pessoa1, pessoa2);
   const payload = {
@@ -62,6 +65,32 @@ async function getOrBuildCoupleAnalysis(id1, id2, { force = false } = {}) {
   };
   store.writeJson('analysis', cId, payload);
   return payload;
+}
+
+// Escolhe, entre os findings do cruzamento de dados que se aplicam a esta
+// pessoa, o que faz mais tempo não vira dica (ou nunca virou) — garante
+// rotação entre os tipos de dica (gesto de amor, cuidado com ferida,
+// dinâmica de apego, papo de valores, reforço) ao longo das ~21 semanas.
+const COOLDOWN_DIAS = 42; // ~6 semanas — não repete o mesmo fato antes disso
+function selectFinding(findings, targetName, usedLog) {
+  const candidatos = findings.filter((f) => f.alvo === targetName);
+  if (!candidatos.length) return null;
+
+  const agora = Date.now();
+  const disponiveis = candidatos.filter((f) => {
+    const ultimoUso = usedLog[f.id];
+    if (!ultimoUso) return true;
+    const diasDesde = (agora - new Date(ultimoUso).getTime()) / 86400000;
+    return diasDesde >= COOLDOWN_DIAS;
+  });
+
+  const pool = disponiveis.length ? disponiveis : candidatos;
+  pool.sort((a, b) => {
+    const la = usedLog[a.id] ? new Date(usedLog[a.id]).getTime() : 0;
+    const lb = usedLog[b.id] ? new Date(usedLog[b.id]).getTime() : 0;
+    return la - lb;
+  });
+  return pool[0];
 }
 
 async function generateDueTips(id1, id2) {
@@ -79,21 +108,15 @@ async function generateDueTips(id1, id2) {
     return { generated: false, reason: 'missing_data' };
   }
 
-  const weekIndex = Math.ceil((scheduleDates.indexOf(today) + 1) / 2);
   const [nome1, nome2] = [coupleAnalysis.pessoa1.nome, coupleAnalysis.pessoa2.nome];
+  const findings = coupleAnalysis.analysis.findings || [];
+  const usedLog = store.readFindingsLog(cId);
 
-  const tip1 = await generateTip({
-    targetName: nome1,
-    partnerName: nome2,
-    analysis: coupleAnalysis.analysis,
-    weekIndex
-  });
-  const tip2 = await generateTip({
-    targetName: nome2,
-    partnerName: nome1,
-    analysis: coupleAnalysis.analysis,
-    weekIndex
-  });
+  const finding1 = selectFinding(findings, nome1, usedLog);
+  const finding2 = selectFinding(findings, nome2, usedLog);
+
+  const tip1 = await generateTip({ targetName: nome1, partnerName: nome2, finding: finding1 });
+  const tip2 = await generateTip({ targetName: nome2, partnerName: nome1, finding: finding2 });
 
   const entries = [tip1, tip2].map((tip, idx) => ({
     id: `${today}-${idx === 0 ? nome1 : nome2}`,
@@ -103,6 +126,8 @@ async function generateDueTips(id1, id2) {
   }));
 
   entries.forEach((entry) => store.appendTip(cId, entry));
+  if (finding1) store.markFindingUsed(cId, nome1, finding1.id, new Date().toISOString());
+  if (finding2) store.markFindingUsed(cId, nome2, finding2.id, new Date().toISOString());
 
   schedule.delivered.push(today);
   store.writeTipsSchedule(cId, schedule);
@@ -114,5 +139,6 @@ module.exports = {
   submitResponses,
   getOrBuildResult,
   getOrBuildCoupleAnalysis,
-  generateDueTips
+  generateDueTips,
+  selectFinding
 };
