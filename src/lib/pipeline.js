@@ -16,13 +16,13 @@ const { sendToSubscription } = require('./push');
 // Manda push pra todos os aparelhos inscritos dessa pessoa. Silencioso se
 // push não estiver configurado (sem VAPID) ou a pessoa não tiver nenhuma
 // inscrição — o app funciona normalmente sem isso, é só um extra.
-async function notifyPush(personId, tip) {
+async function sendPush(personId, { title, body }) {
   const subscriptions = store.getPushSubscriptions(personId);
   if (!subscriptions.length) return;
 
   const payload = {
-    title: 'Nova dica pra você',
-    body: tip.texto.length > 140 ? `${tip.texto.slice(0, 137)}...` : tip.texto,
+    title,
+    body: body.length > 140 ? `${body.slice(0, 137)}...` : body,
     url: '/'
   };
 
@@ -32,6 +32,17 @@ async function notifyPush(personId, tip) {
       if (expired) store.removePushSubscription(personId, sub.endpoint);
     })
   );
+}
+
+function notifyPush(personId, tip) {
+  return sendPush(personId, { title: 'Nova dica pra você', body: tip.texto });
+}
+
+function notifyResultReady(personId, name) {
+  return sendPush(personId, {
+    title: 'Seu resultado está pronto',
+    body: `${name}, seu perfil de autoconhecimento já foi gerado — dá uma olhada no app.`
+  });
 }
 
 async function submitResponses(personId, name, responses) {
@@ -81,6 +92,7 @@ async function getOrBuildResult(personId, { force = false } = {}) {
     generated_at: new Date().toISOString()
   };
   store.writeJson('results', personId, payload);
+  await notifyResultReady(personId, submission.name);
   return payload;
 }
 
