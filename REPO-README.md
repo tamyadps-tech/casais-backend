@@ -105,7 +105,7 @@ O app é um PWA (`manifest.json` + `sw.js`): dá pra instalar na tela de início
 - **iPhone/Safari**: a Apple só libera notificação push pra apps **instalados** (Compartilhar → Adicionar à Tela de Início) — a UI já detecta isso e mostra essa instrução antes de deixar ativar.
 - Requer `VAPID_PUBLIC_KEY` e `VAPID_PRIVATE_KEY` configuradas (veja `env.example` — já vem um par pronto pra usar, ou gere o seu com `npx web-push generate-vapid-keys`). Sem essas variáveis, essa parte fica desligada e o resto do app funciona igual.
 - Inscrições inválidas/expiradas (ex.: app desinstalado) são detectadas e removidas automaticamente na próxima tentativa de envio.
-- Duas notificações automáticas: **dica nova** (a cada entrega quinzenal) e **resultado pronto** (assim que o resultado individual é gerado pela primeira vez, seja porque a própria pessoa abriu o painel ou porque o resultado dela precisou ser calculado como parte da análise cruzada do casal).
+- Três notificações automáticas: **dica nova** (a cada entrega quinzenal), **resultado pronto** (assim que o resultado individual é gerado pela primeira vez, seja porque a própria pessoa abriu o painel ou porque o resultado dela precisou ser calculado como parte da análise cruzada do casal) e **parceiro(a) respondeu** (assim que uma pessoa termina o questionário, a outra é avisada — usa `COUPLE_PERSON_1_ID`/`COUPLE_PERSON_2_ID` do `env.example` pra saber quem é quem).
 
 ## Variáveis de ambiente
 

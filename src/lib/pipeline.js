@@ -45,9 +45,31 @@ function notifyResultReady(personId, name) {
   });
 }
 
+// IDs fixos do casal (mesmo par usado pelo agendamento automático em
+// server.js) — usados só pra saber quem avisar quando o outro responde o
+// questionário. App pessoal de duas pessoas só, não precisa de algo mais
+// genérico que isso.
+const PERSON_1_ID = process.env.COUPLE_PERSON_1_ID || 'tamyris';
+const PERSON_2_ID = process.env.COUPLE_PERSON_2_ID || 'saulo';
+function partnerIdOf(personId) {
+  if (personId === PERSON_1_ID) return PERSON_2_ID;
+  if (personId === PERSON_2_ID) return PERSON_1_ID;
+  return null;
+}
+
+function notifyPartnerSubmitted(personId, name) {
+  const partnerId = partnerIdOf(personId);
+  if (!partnerId) return Promise.resolve();
+  return sendPush(partnerId, {
+    title: 'Questionário respondido!',
+    body: `${name} acabou de responder o questionário — em breve as dicas cruzadas de vocês dois começam a chegar.`
+  });
+}
+
 async function submitResponses(personId, name, responses) {
   const data = { respondent_id: personId, name, responses, submitted_at: new Date().toISOString() };
   store.writeJson('responses', personId, data);
+  await notifyPartnerSubmitted(personId, name);
   return data;
 }
 
