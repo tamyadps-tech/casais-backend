@@ -1143,6 +1143,83 @@ const allQuestions = [
       { texto: 'Ainda estou formando minha opinião sobre isso' }
     ]
   },
+  {
+    id: 'VAL16',
+    categoria: 'valores_vida',
+    subcategoria: 'suporte_financeiro',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre suporte financeiro dentro do casal, qual frase mais representa o que você pensa?',
+    opcoes: [
+      { texto: 'Os dois devem se sustentar financeiramente, sem que um dependa do outro' },
+      { texto: 'Tudo bem se um sustentar o outro por um tempo, dependendo da fase da vida' },
+      { texto: 'Faz sentido o homem ser a principal fonte de sustento financeiro' },
+      { texto: 'A mulher deveria ter liberdade de decidir se quer trabalhar fora ou não' },
+      { texto: 'Cada um se sustenta, mesmo morando junto' },
+      { texto: 'Depende muito da situação de cada um no momento' },
+      { texto: 'Ainda não tenho uma opinião formada sobre isso' }
+    ]
+  },
+  {
+    id: 'VAL17',
+    categoria: 'valores_vida',
+    subcategoria: 'cuidado_filhos',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre o cuidado com os filhos no dia a dia, o que mais representa como você pensa?',
+    opcoes: [
+      { texto: 'Deve ser dividido igualmente entre os dois, desde o início' },
+      { texto: 'A mãe naturalmente assume mais essa parte, mesmo trabalhando fora' },
+      { texto: 'Quem tiver mais flexibilidade de horário assume mais essa parte' },
+      { texto: 'O pai deveria se envolver tanto quanto a mãe nos cuidados diários' },
+      { texto: 'Prefiro contratar ajuda pra dividir essa responsabilidade' },
+      { texto: 'Ainda não parei pra pensar nisso com profundidade' },
+      { texto: 'Depende muito da fase e da rotina de trabalho de cada um' }
+    ]
+  },
+  {
+    id: 'VAL18',
+    categoria: 'valores_vida',
+    subcategoria: 'provimento',
+    tipo: 'multipla_escolha',
+    texto: "Sobre a ideia de quem é o(a) principal provedor(a) da casa, o que mais representa sua opinião?",
+    opcoes: [
+      { texto: 'Não acredito que deva existir um único provedor — os dois dividem essa responsabilidade' },
+      { texto: 'Acho natural que o homem seja visto como o principal provedor' },
+      { texto: 'Quem ganha mais deveria ser considerado o provedor principal, seja quem for' },
+      { texto: "Prefiro que os dois se sintam igualmente responsáveis, sem rótulo de 'provedor'" },
+      { texto: 'Isso pode mudar ao longo da relação, sem precisar ser fixo' },
+      { texto: 'Ainda não tenho uma opinião formada sobre isso' }
+    ]
+  },
+  {
+    id: 'VAL19',
+    categoria: 'valores_vida',
+    subcategoria: 'cuidados_pesados',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre tarefas mais pesadas do dia a dia (consertos, carregar peso, manutenção da casa, segurança), o que mais faz sentido pra você?',
+    opcoes: [
+      { texto: 'Cabe a quem tiver mais facilidade física ou técnica, seja homem ou mulher' },
+      { texto: 'Acho natural que o homem assuma essa parte' },
+      { texto: 'Prefiro contratar alguém pra resolver, quando possível' },
+      { texto: 'Os dois deveriam aprender e dividir, mesmo que um tenha mais afinidade' },
+      { texto: 'Ainda não conversamos sobre isso' },
+      { texto: 'Depende da situação e de quem está disponível no momento' }
+    ]
+  },
+  {
+    id: 'VAL20',
+    categoria: 'valores_vida',
+    subcategoria: 'casa_e_beleza',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre cuidados da casa e da própria aparência (limpeza, organização, cuidados pessoais), o que mais representa como você pensa?',
+    opcoes: [
+      { texto: 'Deve ser dividido igualmente entre os dois, sem depender de gênero' },
+      { texto: 'Acho natural que a mulher cuide mais dessa parte' },
+      { texto: 'Cada um cuida da própria aparência, e a casa é dividida igualmente' },
+      { texto: 'Prefiro contratar ajuda pra dividir essa responsabilidade' },
+      { texto: 'Depende de quem tem mais tempo disponível no momento' },
+      { texto: 'Ainda não parei pra pensar nisso' }
+    ]
+  },
 
   // ==========================================
   // CONHECER MELHOR

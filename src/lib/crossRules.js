@@ -104,7 +104,12 @@ const VALORES_LABEL = {
   casamento: 'como imaginam o dia do casamento',
   patrimonio: 'como juntar patrimônio como casal',
   regime_casamento: 'o regime de bens do casamento',
-  papel_financeiro: 'o papel de cada um na vida financeira'
+  papel_financeiro: 'o papel de cada um na vida financeira',
+  suporte_financeiro: 'suporte financeiro entre vocês',
+  cuidado_filhos: 'o cuidado com os filhos no dia a dia',
+  provimento: 'quem é o(a) principal provedor(a)',
+  cuidados_pesados: 'as tarefas mais pesadas do dia a dia',
+  casa_e_beleza: 'cuidados da casa e da própria aparência'
 };
 
 // VAL10 (tempo de noivado) fica de fora por enquanto — não fazia sentido
@@ -112,7 +117,7 @@ const VALORES_LABEL = {
 // (com ativa: false) reservada pra uma futura versão comercial do app.
 const VAL_QUESTION_IDS = [
   'VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL11', 'VAL12',
-  'VAL13', 'VAL14', 'VAL15'
+  'VAL13', 'VAL14', 'VAL15', 'VAL16', 'VAL17', 'VAL18', 'VAL19', 'VAL20'
 ];
 
 function normalizar(texto) {
