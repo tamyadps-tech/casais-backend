@@ -15,7 +15,7 @@ Não existem robôs autônomos rodando sozinhos por aí — é uma orquestraçã
 | Valores, condutas, sonhos, filhos, moradia, cuidado com idosos | `src/data/questions.js` (categoria `valores_vida`) |
 | Perguntas pra se conhecerem melhor | `src/data/questions.js` (categoria `conhecer_melhor`) |
 | Linguagem do amor | `src/data/questions.js` (categoria `linguagem_amor`) |
-| Resultado + dica de autoconhecimento | `src/lib/agents/resultAgent.js` |
+| Resultado + dica de autoconhecimento | `src/lib/agents/resultAgent.js` — sempre cobre 4 partes: perfil geral, personalidade/temperamento, forma de amar (apego + linguagem do amor) e uma dica prática |
 | Cruzamento de dados do casal | `src/lib/agents/crossAnalysisAgent.js` |
 | Dicas quinzenais personalizadas | `src/lib/agents/tipsAgent.js` |
 | Comunicação automática 2x/semana | `node-cron` em `server.js` + feed `.ics` |
@@ -35,7 +35,7 @@ Essa é a parte mais importante do sistema, então ela é **determinística** �
 4. **Valores e vida a dois.** Compara literalmente as 14 respostas de cada um. Sobreposição total → nível **alta** compatibilidade. Sobreposição parcial → nível **boa**. Nenhuma opção em comum → nível **atenção** (convite tranquilo pra conversar, nunca alarme).
 5. **Autorreflexão — a dica extra sobre a própria vida.** A partir da segunda dica, toda mensagem ganha uma segunda parte que não é sobre o parceiro(a): é sobre a própria pessoa — como ela tende a viver o apego e qual ferida da infância pesa mais pra ela, traduzido em reflexão sobre o próprio jeito de ver o mundo e a própria dificuldade em relacionamentos, não em rótulo técnico.
 
-Cada dica final, então, é: **1) como amar melhor o parceiro(a)** (baseado numa das lentes 1-4) **+ 2) uma reflexão sobre a própria vida** (lente 5) — exceto a primeira de cada pessoa, que é só a introdução (lente 0).
+Cada dica final, então, mistura **dois findings principais** (de lentes/tipos diferentes quando possível — ex: um papo de valores + um gesto de amor) emendados com naturalidade logo no início, sem repetir o nome da pessoa a cada um, **+ uma reflexão sobre a própria vida** (lente 5) — exceto a primeira de cada pessoa, que é só a introdução (lente 0).
 
 **Anti-repetição (do fato):** cada finding tem um id estável, e o sistema guarda (por pessoa, por casal) quando cada um foi usado pela última vez. Toda vez que uma dica precisa ser gerada, o agente gerente escolhe o finding aplicável àquela pessoa que está há mais tempo sem ser usado (ou nunca foi usado), com um cooldown de 6 semanas antes de repetir o mesmo fato — isso garante variedade e rotação entre os 5 tipos de dica ao longo das ~21 semanas de entrega.
 
@@ -105,6 +105,7 @@ O app é um PWA (`manifest.json` + `sw.js`): dá pra instalar na tela de início
 - **iPhone/Safari**: a Apple só libera notificação push pra apps **instalados** (Compartilhar → Adicionar à Tela de Início) — a UI já detecta isso e mostra essa instrução antes de deixar ativar.
 - Requer `VAPID_PUBLIC_KEY` e `VAPID_PRIVATE_KEY` configuradas (veja `env.example` — já vem um par pronto pra usar, ou gere o seu com `npx web-push generate-vapid-keys`). Sem essas variáveis, essa parte fica desligada e o resto do app funciona igual.
 - Inscrições inválidas/expiradas (ex.: app desinstalado) são detectadas e removidas automaticamente na próxima tentativa de envio.
+- Duas notificações automáticas: **dica nova** (a cada entrega quinzenal) e **resultado pronto** (assim que o resultado individual é gerado pela primeira vez, seja porque a própria pessoa abriu o painel ou porque o resultado dela precisou ser calculado como parte da análise cruzada do casal).
 
 ## Variáveis de ambiente
 
