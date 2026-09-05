@@ -88,6 +88,28 @@ function readTips(cId) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
+// Rotação round-robin por categoria de frase (ex: 'valores_alta',
+// 'ferida_rejeicao') — ver src/lib/phraseBank.js. Cada vez que uma frase
+// dessa categoria é usada, avança pro próximo índice, garantindo que as
+// variações do banco não se repitam em sequência.
+function phraseIndexPath(cId) {
+  return path.join(tipsDir(cId), 'phrase-index.json');
+}
+
+function readPhraseIndex(cId) {
+  const p = phraseIndexPath(cId);
+  if (!fs.existsSync(p)) return {};
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function nextPhraseVariant(cId, key, poolSize) {
+  const idx = readPhraseIndex(cId);
+  const current = (idx[key] || 0) % poolSize;
+  idx[key] = (current + 1) % poolSize;
+  fs.writeFileSync(phraseIndexPath(cId), JSON.stringify(idx, null, 2));
+  return current;
+}
+
 // Log de findings (do cruzamento de dados, ver src/lib/crossRules.js) já
 // usados como dica, por pessoa — evita repetir o mesmo fato antes do
 // cooldown e permite escolher sempre o menos usado recentemente.
@@ -179,6 +201,7 @@ module.exports = {
   readTips,
   readFindingsLog,
   markFindingUsed,
+  nextPhraseVariant,
   resetCouple,
   getPushSubscriptions,
   savePushSubscription,

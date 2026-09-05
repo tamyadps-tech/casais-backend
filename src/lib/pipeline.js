@@ -6,6 +6,7 @@
 
 const store = require('./store');
 const questions = require('../data/questions');
+const { resolveConselho } = require('./phraseBank');
 const { buildResult } = require('./agents/resultAgent');
 const { analyzeCouple, describePessoa } = require('./agents/crossAnalysisAgent');
 const { generateTip } = require('./agents/tipsAgent');
@@ -186,6 +187,13 @@ async function generateDueTips(id1, id2, { force = false } = {}) {
 
   const { finding: finding1, autoFinding: autoFinding1 } = pickTipInputs(nome1, findings, usedLog);
   const { finding: finding2, autoFinding: autoFinding2 } = pickTipInputs(nome2, findings, usedLog);
+
+  // Troca o sugestao_acao padrão por uma variação rotacionada do banco de
+  // frases (ver phraseBank.js) — garante que o mesmo conselho não se
+  // repita toda vez que o mesmo finding voltar a ser escolhido.
+  [finding1, autoFinding1, finding2, autoFinding2].forEach((f) => {
+    if (f) f.sugestao_acao = resolveConselho(f, cId);
+  });
 
   const [tip1, tip2] = await Promise.all([
     generateTip({ targetName: nome1, partnerName: nome2, finding: finding1, autoFinding: autoFinding1 }),

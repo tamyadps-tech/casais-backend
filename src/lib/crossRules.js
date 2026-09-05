@@ -130,6 +130,16 @@ function compareRespostas(respostaA, respostaB) {
   return { comuns, arrA, arrB };
 }
 
+// Nível de compatibilidade nesse tema — usado só pra escolher o banco de
+// frases certo (ver src/lib/phraseBank.js), nunca exposto como rótulo pro
+// usuário. 'alta' = respostas idênticas, 'boa' = alguma sobreposição,
+// 'atencao' = nenhuma opção em comum.
+function classificarCompatibilidade(comuns, arrA, arrB) {
+  if (!comuns.length) return 'atencao';
+  const completo = comuns.length === arrA.length && comuns.length === arrB.length;
+  return completo ? 'alta' : 'boa';
+}
+
 // ---------- Lente 0: introdução — a própria linguagem do amor ----------
 // Reservada pra PRIMEIRA dica que cada pessoa recebe (ver pipeline.js):
 // ensina o princípio central antes de qualquer conselho específico — amar
@@ -171,6 +181,7 @@ function buildAutoReflexao(pessoa) {
     findings.push({
       id: `auto_apego_${pessoa.name}`,
       tipo: 'auto_reflexao',
+      variant_key: 'auto_apego_closing',
       alvo: pessoa.name,
       sobre: pessoa.name,
       confianca: 'alta',
@@ -184,6 +195,7 @@ function buildAutoReflexao(pessoa) {
     findings.push({
       id: `auto_ferida_${pessoa.name}_${feridaPrincipal}`,
       tipo: 'auto_reflexao',
+      variant_key: 'auto_ferida_closing',
       alvo: pessoa.name,
       sobre: pessoa.name,
       confianca: 'alta',
@@ -213,6 +225,7 @@ function buildGestosDeAmor(alvo, sobre) {
       findings.push({
         id: `reforco_${alvo.name}_${linguagem}`,
         tipo: 'reforco',
+        variant_key: 'reforco_linguagem',
         alvo: alvo.name,
         sobre: sobre.name,
         confianca,
@@ -223,6 +236,7 @@ function buildGestosDeAmor(alvo, sobre) {
       findings.push({
         id: `gesto_${alvo.name}_${linguagem}`,
         tipo: 'gesto_de_amor',
+        variant_key: `gesto_${linguagem}`,
         alvo: alvo.name,
         sobre: sobre.name,
         confianca,
@@ -243,6 +257,7 @@ function buildDinamicaApego(alvo, sobre) {
 
   let fato = `O jeito de ${sobre.name} amar tende ao apego mais ${estiloSobre === 'seguro' ? 'seguro' : estiloSobre}`;
   let sugestao = baseAcao;
+  let variantKey = `apego_estilo_${estiloSobre}`;
 
   // Padrão perseguidor-distanciador: o combo mais comum de gerar atrito
   if (
@@ -252,9 +267,11 @@ function buildDinamicaApego(alvo, sobre) {
     if (estiloAlvo === 'ansioso') {
       fato = `Vocês dois tendem a cair num padrão de perseguir-afastar: quanto mais ${alvo.name} busca proximidade rápido, mais ${sobre.name} tende a recuar`;
       sugestao = `Dá um respiro antes de cobrar resposta ou proximidade — ${sobre.name} tende a se aproximar mais quando não sente pressão`;
+      variantKey = 'apego_persegue_ansioso';
     } else {
       fato = `Quando ${alvo.name} se afasta pra processar algo, ${sobre.name} pode sentir que está sendo deixado(a) de lado`;
       sugestao = `Avise que precisa de um tempo, com um prazo curto ("preciso de uma hora, já volto") — isso evita que ${sobre.name} entre em pânico`;
+      variantKey = 'apego_persegue_evitativo';
     }
   }
 
@@ -262,6 +279,7 @@ function buildDinamicaApego(alvo, sobre) {
     {
       id: `apego_${alvo.name}`,
       tipo: 'dinamica_apego',
+      variant_key: variantKey,
       alvo: alvo.name,
       sobre: sobre.name,
       confianca: 'alta',
@@ -277,14 +295,21 @@ function buildCuidadosFeridas(alvo, sobre) {
   if (!feridaPrincipal || feridaPrincipal === 'neutro') return [];
 
   let sugestao = FERIDA_CUIDADO[feridaPrincipal];
+  let extraNota = null;
   if (alvo.scores.temperamento.dominantes[0] === 'colerico') {
-    sugestao += '. Como seu jeito costuma ser mais direto, vale um cuidado extra com o tom nessas horas';
+    extraNota = 'Como seu jeito costuma ser mais direto, vale um cuidado extra com o tom nessas horas';
+    sugestao += `. ${extraNota}`;
   }
 
   return [
     {
       id: `ferida_${alvo.name}_${feridaPrincipal}`,
       tipo: 'cuidado_ferida',
+      variant_key: `ferida_${feridaPrincipal}`,
+      // Guardado à parte pra sobreviver à troca de sugestao_acao por uma
+      // variação do banco de frases (ver phraseBank.js) — o cuidado extra
+      // com o tom continua valendo não importa qual frase for sorteada.
+      extra_nota: extraNota,
       alvo: alvo.name,
       sobre: sobre.name,
       confianca: 'alta',
@@ -304,16 +329,19 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
 
     const label = VALORES_LABEL[respA.subcategoria] || respA.subcategoria;
     const { comuns, arrA, arrB } = compareRespostas(respA.resposta, respB.resposta);
+    const nivel = classificarCompatibilidade(comuns, arrA, arrB);
 
     if (comuns.length) {
       findings.push({
         id: `valor_sintonia_${alvo.name}_${id}`,
         tipo: 'reforco',
+        nivel,
+        variant_key: `valores_${nivel}`,
         alvo: alvo.name,
         sobre: sobre.name,
         confianca: 'alta',
         fato:
-          comuns.length === arrA.length && comuns.length === arrB.length
+          nivel === 'alta'
             ? `Vocês dois responderam a mesma coisa sobre ${label}: "${comuns.join(', ')}"`
             : `Sobre ${label}, vocês dois têm em comum: "${comuns.join(', ')}"`,
         sugestao_acao: 'Vale lembrar disso quando bater alguma insegurança sobre o futuro — nesse ponto vocês já remam juntos'
@@ -322,6 +350,8 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
       findings.push({
         id: `valor_atencao_${alvo.name}_${id}`,
         tipo: 'papo_valores',
+        nivel,
+        variant_key: `valores_${nivel}`,
         alvo: alvo.name,
         sobre: sobre.name,
         confianca: 'alta',
