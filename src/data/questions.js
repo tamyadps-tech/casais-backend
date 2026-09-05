@@ -1091,6 +1091,58 @@ const allQuestions = [
       { texto: 'Ainda não pensei sobre isso' }, { texto: 'Depende do que fizer sentido financeiramente na época' }
     ]
   },
+  {
+    id: 'VAL13',
+    categoria: 'valores_vida',
+    subcategoria: 'patrimonio',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Sobre como juntar patrimônio como casal, o que mais faz sentido pra você? (escolha até 5)',
+    opcoes: [
+      { texto: 'Colocar os bens no nome dos dois desde o início' },
+      { texto: 'Cada um constrói o seu, dividindo as despesas do casal' },
+      { texto: 'Priorizar comprar a casa própria juntos antes de qualquer outro investimento' },
+      { texto: 'Investir junto, sempre em nome dos dois' },
+      { texto: 'Cada um investe separado, mas com metas combinadas' },
+      { texto: 'Manter uma parte do patrimônio individual, mesmo casados' },
+      { texto: 'Considerar a contribuição de cada um na hora de decidir de quem é o quê' },
+      { texto: 'Ainda não conversamos sobre isso a fundo' }
+    ]
+  },
+  {
+    id: 'VAL14',
+    categoria: 'valores_vida',
+    subcategoria: 'regime_casamento',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre o regime de bens do casamento, o que mais representa sua opinião hoje?',
+    opcoes: [
+      { texto: 'Comunhão parcial de bens — o que é de cada um antes do casamento continua individual, o que vier depois é dos dois' },
+      { texto: 'Comunhão universal de bens — tudo se torna do casal, inclusive o que cada um já tinha antes' },
+      { texto: 'Separação total de bens — cada um mantém o que é seu, antes e depois do casamento' },
+      { texto: 'Ainda não conheço bem as opções, quero entender melhor antes de decidir' },
+      { texto: 'Prefiro que um advogado ou contador nos oriente sobre isso' },
+      { texto: 'Não faz muita diferença pra mim, sigo o que for mais prático' },
+      { texto: 'Depende do que fizer mais sentido financeiramente pra nós dois' }
+    ]
+  },
+  {
+    id: 'VAL15',
+    categoria: 'valores_vida',
+    subcategoria: 'papel_financeiro',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Sobre o papel de cada um (homem e mulher) na vida financeira do casal, o que mais representa como você pensa? (escolha até 5)',
+    opcoes: [
+      { texto: 'Os dois devem contribuir igualmente, independente de quem é homem ou mulher' },
+      { texto: 'Quem ganha mais deveria assumir mais despesas, seja homem ou mulher' },
+      { texto: 'Faz sentido o homem assumir as despesas maiores da casa' },
+      { texto: 'É importante a mulher ter liberdade pra escolher trabalhar fora ou não' },
+      { texto: 'Não acredito que o papel financeiro deva depender de ser homem ou mulher' },
+      { texto: 'Os dois devem manter independência financeira, mesmo casados' },
+      { texto: 'Prefiro decidir isso conforme a fase da vida, sem regra fixa' },
+      { texto: 'Ainda estou formando minha opinião sobre isso' }
+    ]
+  },
 
   // ==========================================
   // CONHECER MELHOR

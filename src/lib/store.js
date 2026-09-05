@@ -33,6 +33,26 @@ function writeJson(sub, name, data) {
   fs.writeFileSync(filePath(sub, name), JSON.stringify(data, null, 2));
 }
 
+function removeJson(sub, name) {
+  const p = filePath(sub, name);
+  if (fs.existsSync(p)) fs.unlinkSync(p);
+}
+
+// Soma respostas novas (ex: uma pergunta adicionada depois que a pessoa já
+// tinha respondido tudo) às já salvas, sem apagar nada do que já existia —
+// usado pelo fluxo de "completar" (ver pipeline.js).
+function mergeResponses(personId, extraResponses) {
+  const existing = readJson('responses', personId);
+  if (!existing) return null;
+  const merged = {
+    ...existing,
+    responses: { ...existing.responses, ...extraResponses },
+    updated_at: new Date().toISOString()
+  };
+  writeJson('responses', personId, merged);
+  return merged;
+}
+
 function coupleId(id1, id2) {
   return [safeId(id1), safeId(id2)].sort().join('__');
 }
@@ -150,6 +170,8 @@ module.exports = {
   DATA_DIR,
   readJson,
   writeJson,
+  removeJson,
+  mergeResponses,
   coupleId,
   readTipsSchedule,
   writeTipsSchedule,

@@ -5,6 +5,7 @@
 // tentativas e liberar o melhor esforço, registrando isso no status).
 
 const store = require('./store');
+const questions = require('../data/questions');
 const { buildResult } = require('./agents/resultAgent');
 const { analyzeCouple, describePessoa } = require('./agents/crossAnalysisAgent');
 const { generateTip } = require('./agents/tipsAgent');
@@ -36,6 +37,30 @@ async function submitResponses(personId, name, responses) {
   const data = { respondent_id: personId, name, responses, submitted_at: new Date().toISOString() };
   store.writeJson('responses', personId, data);
   return data;
+}
+
+// Perguntas ativas ainda sem resposta — usado quando uma pergunta nova é
+// adicionada ao banco depois que a pessoa já respondeu tudo (ver rota
+// /api/test/complete): permite oferecer só o que falta, sem reabrir o
+// questionário inteiro nem tocar no que já foi respondido.
+function pendingQuestionIds(responses) {
+  return questions.filter((q) => (responses || {})[q.id] === undefined).map((q) => q.id);
+}
+
+// Soma respostas de pergunta(s) nova(s) às já salvas e invalida o
+// resultado individual (e a análise do casal, se o parceiro(a) for
+// informado) em cache, pra que sejam recalculados incorporando a resposta
+// nova — sem apagar nenhuma resposta anterior.
+async function completeResponses(personId, partnerId, extraResponses) {
+  const updated = store.mergeResponses(personId, extraResponses);
+  if (!updated) return null;
+
+  store.removeJson('results', personId);
+  if (partnerId) {
+    store.removeJson('analysis', store.coupleId(personId, partnerId));
+  }
+
+  return { ...updated, pending: pendingQuestionIds(updated.responses) };
 }
 
 async function getOrBuildResult(personId, { force = false } = {}) {
@@ -204,5 +229,7 @@ module.exports = {
   getOrBuildResult,
   getOrBuildCoupleAnalysis,
   generateDueTips,
-  selectFinding
+  selectFinding,
+  pendingQuestionIds,
+  completeResponses
 };
