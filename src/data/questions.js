@@ -1316,6 +1316,12 @@ const allQuestions = [
       { texto: 'Já ter me magoado por me abrir antes', tag: 'traicao' },
       { texto: 'Prefiro processar sozinho(a) antes de falar', tag: 'neutro' }
     ]
+  },
+  {
+    id: 'CON17',
+    categoria: 'conhecer_melhor',
+    tipo: 'aberta',
+    texto: 'Qual gesto (por menor que seja) faz você se sentir mais amado(a) de verdade?'
   }
 ];
 
