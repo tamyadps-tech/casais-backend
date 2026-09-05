@@ -98,12 +98,17 @@ const BANKS = {
   gesto_presentes: [
     'Um mimo pequeno e pensado — um bilhetinho escondido, o docinho que {{sobre}} ama, alguma coisinha que mostre que você prestou atenção no que faz ele(a) feliz. Não precisa ser caro, precisa ser sentido',
     'Leva pra casa aquele docinho ou lanchinho que {{sobre}} sempre comenta que gosta — sem ocasião especial, só porque sim',
-    'Deixa um bilhetinho escondido em algum lugar que {{sobre}} vá encontrar sozinho(a), com uma frase simples de carinho'
+    'Deixa um bilhetinho escondido em algum lugar que {{sobre}} vá encontrar sozinho(a), com uma frase simples de carinho',
+    'Manda entregar (ou leva você mesmo) uma flor pra {{sobre}} sem nenhuma data especial — só pra ver a reação na hora',
+    'Escreve à mão um motivo específico de hoje pra amar {{sobre}} e esconde o bilhete onde ele(a) vá achar sozinho(a)',
+    'Compra ou faz algo pequeno que lembre um gosto específico de {{sobre}} — o que importa é mostrar que você prestou atenção, não o valor'
   ],
   gesto_atos_servico: [
     'Resolve algo que é de {{sobre}} sem que precise pedir — um gesto de cuidado silencioso vale mais que mil palavras',
     'Adianta uma tarefa que você sabe que {{sobre}} andava adiando, sem avisar antes — só faz',
-    'Pergunta o que está pesando na rotina de {{sobre}} essa semana e assume uma dessas coisas sem que precise pedir duas vezes'
+    'Pergunta o que está pesando na rotina de {{sobre}} essa semana e assume uma dessas coisas sem que precise pedir duas vezes',
+    'Cozinha (ou pede) o prato favorito de {{sobre}} num dia qualquer da semana, sem esperar nenhuma ocasião especial',
+    'Organiza algo que {{sobre}} vinha adiando — mesmo que pequeno, o efeito de "alguém cuidou disso pra mim" é grande'
   ],
   gesto_toque_fisico: [
     'Busca mais contato físico no dia a dia — um abraço mais longo, a mão na de {{sobre}} sem motivo nenhum, só porque sim',
