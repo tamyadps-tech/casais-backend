@@ -408,7 +408,8 @@
         const card = document.createElement('div');
         card.className = 'tip-card';
         const date = new Date(`${tip.date}T00:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' });
-        const tipoLabel = TIP_TIPO_LABEL[tip.tipo] || '';
+        const tipos = Array.isArray(tip.tipo) ? tip.tipo : [tip.tipo];
+        const tipoLabel = tipos.map((t) => TIP_TIPO_LABEL[t]).filter(Boolean).join(' + ');
         card.innerHTML = `<span class="tip-date"><span>${date}</span>${tipoLabel ? `<span class="tip-tipo">${tipoLabel}</span>` : ''}</span>${escapeHtml(tip.texto)}`;
         list.appendChild(card);
       });

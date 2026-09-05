@@ -143,22 +143,28 @@ function selectFinding(findings, targetName, usedLog) {
 
 // Decide o que vai na dica de uma pessoa: na primeiríssima vez, é a
 // introdução sobre a própria linguagem do amor (ensina o princípio antes
-// de qualquer conselho específico). Das próximas em diante, é um finding
-// "principal" (sobre o parceiro) + um de autorreflexão (sobre a própria
-// vida) — as duas partes que a dica final vai juntar.
+// de qualquer conselho específico). Das próximas em diante, são DOIS
+// findings "principais" (sobre o parceiro, de tipos diferentes quando
+// possível — ex: um papo de valores + um gesto de amor) misturados no
+// início da dica, seguidos de um de autorreflexão (sobre a própria vida)
+// — as partes que a dica final vai juntar.
 function pickTipInputs(targetName, findings, usedLog) {
   const jaRecebeuDica = Boolean(usedLog[targetName] && Object.keys(usedLog[targetName]).length);
 
   if (!jaRecebeuDica) {
     const intro = findings.find((f) => f.alvo === targetName && f.tipo === 'intro_linguagem');
-    if (intro) return { finding: intro, autoFinding: null };
+    if (intro) return { findings: [intro], autoFinding: null };
   }
 
   const poolPrincipal = findings.filter((f) => f.alvo === targetName && f.tipo !== 'intro_linguagem' && f.tipo !== 'auto_reflexao');
   const poolAuto = findings.filter((f) => f.alvo === targetName && f.tipo === 'auto_reflexao');
 
+  const principal1 = selectFinding(poolPrincipal, targetName, usedLog);
+  const restante = poolPrincipal.filter((f) => !principal1 || f.id !== principal1.id);
+  const principal2 = selectFinding(restante, targetName, usedLog);
+
   return {
-    finding: selectFinding(poolPrincipal, targetName, usedLog),
+    findings: [principal1, principal2].filter(Boolean),
     autoFinding: selectFinding(poolAuto, targetName, usedLog)
   };
 }
@@ -185,38 +191,38 @@ async function generateDueTips(id1, id2, { force = false } = {}) {
   const findings = coupleAnalysis.analysis.findings || [];
   const usedLog = store.readFindingsLog(cId);
 
-  const { finding: finding1, autoFinding: autoFinding1 } = pickTipInputs(nome1, findings, usedLog);
-  const { finding: finding2, autoFinding: autoFinding2 } = pickTipInputs(nome2, findings, usedLog);
+  const { findings: findings1, autoFinding: autoFinding1 } = pickTipInputs(nome1, findings, usedLog);
+  const { findings: findings2, autoFinding: autoFinding2 } = pickTipInputs(nome2, findings, usedLog);
 
   // Troca o sugestao_acao padrão por uma variação rotacionada do banco de
   // frases (ver phraseBank.js) — garante que o mesmo conselho não se
   // repita toda vez que o mesmo finding voltar a ser escolhido.
-  [finding1, autoFinding1, finding2, autoFinding2].forEach((f) => {
+  [...findings1, autoFinding1, ...findings2, autoFinding2].forEach((f) => {
     if (f) f.sugestao_acao = resolveConselho(f, cId);
   });
 
   const [tip1, tip2] = await Promise.all([
-    generateTip({ targetName: nome1, partnerName: nome2, finding: finding1, autoFinding: autoFinding1 }),
-    generateTip({ targetName: nome2, partnerName: nome1, finding: finding2, autoFinding: autoFinding2 })
+    generateTip({ targetName: nome1, partnerName: nome2, findings: findings1, autoFinding: autoFinding1 }),
+    generateTip({ targetName: nome2, partnerName: nome1, findings: findings2, autoFinding: autoFinding2 })
   ]);
 
   const entries = [
-    { tip: tip1, target: nome1, finding: finding1 },
-    { tip: tip2, target: nome2, finding: finding2 }
-  ].map(({ tip, target, finding }) => ({
+    { tip: tip1, target: nome1, findings: findings1 },
+    { tip: tip2, target: nome2, findings: findings2 }
+  ].map(({ tip, target, findings: principais }) => ({
     id: force ? `${today}-${target}-forcado-${Date.now()}` : `${today}-${target}`,
     date: today,
     target,
-    tipo: finding ? finding.tipo : null,
+    tipo: principais.map((f) => f.tipo),
     forcado: force || undefined,
     ...tip
   }));
 
   entries.forEach((entry) => store.appendTip(cId, entry));
   const agoraIso = new Date().toISOString();
-  if (finding1) store.markFindingUsed(cId, nome1, finding1.id, agoraIso);
+  findings1.forEach((f) => store.markFindingUsed(cId, nome1, f.id, agoraIso));
   if (autoFinding1) store.markFindingUsed(cId, nome1, autoFinding1.id, agoraIso);
-  if (finding2) store.markFindingUsed(cId, nome2, finding2.id, agoraIso);
+  findings2.forEach((f) => store.markFindingUsed(cId, nome2, f.id, agoraIso));
   if (autoFinding2) store.markFindingUsed(cId, nome2, autoFinding2.id, agoraIso);
 
   const idPorNome = { [nome1]: id1, [nome2]: id2 };
