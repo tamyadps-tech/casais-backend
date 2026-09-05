@@ -23,7 +23,34 @@ router.post('/submit', async (req, res) => {
 router.get('/status/:id', (req, res) => {
   const data = store.readJson('responses', req.params.id);
   if (!data) return res.json({ status: 'not_found' });
-  res.json({ status: 'submitted', respondent_id: req.params.id, name: data.name, submitted_at: data.submitted_at });
+  res.json({
+    status: 'submitted',
+    respondent_id: req.params.id,
+    name: data.name,
+    submitted_at: data.submitted_at,
+    pending: pipeline.pendingQuestionIds(data.responses)
+  });
+});
+
+// Completa pergunta(s) nova(s) que foram adicionadas ao banco depois que a
+// pessoa já tinha respondido tudo — nunca altera respostas já dadas, só
+// soma a(s) nova(s). Invalida o resultado (e a análise do casal, se
+// partner_id vier) em cache pra recalcular com o dado novo.
+router.post('/complete', async (req, res) => {
+  try {
+    const { respondent_id, responses, partner_id } = req.body;
+    if (!respondent_id || !responses || typeof responses !== 'object' || Array.isArray(responses)) {
+      return res.status(400).json({ error: 'Missing required fields: respondent_id, responses' });
+    }
+    const updated = await pipeline.completeResponses(respondent_id, partner_id, responses);
+    if (!updated) {
+      return res.status(404).json({ error: 'Respostas não encontradas para este respondent_id — complete o questionário primeiro' });
+    }
+    res.json({ success: true, pending: updated.pending });
+  } catch (error) {
+    console.error('Error in /api/test/complete:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Resultado individual (agente de resultado + coordenador de qualidade)

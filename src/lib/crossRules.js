@@ -101,13 +101,19 @@ const VALORES_LABEL = {
   fe: 'o papel da fé/espiritualidade',
   tempo_noivado: 'o tempo entre noivado e casamento',
   tarefas_casa: 'a divisão das tarefas de casa',
-  casamento: 'como imaginam o dia do casamento'
+  casamento: 'como imaginam o dia do casamento',
+  patrimonio: 'como juntar patrimônio como casal',
+  regime_casamento: 'o regime de bens do casamento',
+  papel_financeiro: 'o papel de cada um na vida financeira'
 };
 
 // VAL10 (tempo de noivado) fica de fora por enquanto — não fazia sentido
 // pro uso pessoal de Tamyris e Saulo, mas continua no banco de perguntas
 // (com ativa: false) reservada pra uma futura versão comercial do app.
-const VAL_QUESTION_IDS = ['VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL11', 'VAL12'];
+const VAL_QUESTION_IDS = [
+  'VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL11', 'VAL12',
+  'VAL13', 'VAL14', 'VAL15'
+];
 
 function normalizar(texto) {
   return String(texto || '').trim().toLowerCase();

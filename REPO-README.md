@@ -1,6 +1,6 @@
 # Casais Backend
 
-App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 90 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas quinzenais personalizadas até janeiro de 2027, pelo app ou pelo Google Agenda.
+App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 93 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas quinzenais personalizadas até janeiro de 2027, pelo app ou pelo Google Agenda.
 
 ## Como o sistema pensa (a "equipe de agentes")
 
@@ -39,18 +39,24 @@ Cada dica final, então, é: **1) como amar melhor o parceiro(a)** (baseado numa
 
 **Anti-repetição:** cada finding tem um id estável, e o sistema guarda (por pessoa, por casal) quando cada um foi usado pela última vez. Toda vez que uma dica precisa ser gerada, o agente gerente escolhe o finding aplicável àquela pessoa que está há mais tempo sem ser usado (ou nunca foi usado), com um cooldown de 6 semanas antes de repetir o mesmo fato — isso garante variedade e rotação entre os 5 tipos de dica ao longo das ~21 semanas de entrega.
 
-## Banco de perguntas (90 ativas no total)
+## Banco de perguntas (93 ativas no total)
 
 - **múltipla escolha** (6 a 10 opções, escolhe 1)
 - **seleção múltipla** (6 a 10 opções, escolhe até `max_selecoes` — usado em `valores_vida` e `conhecer_melhor`, onde faz sentido marcar mais de uma coisa)
 - **escala 1 a 5** (cada uma explica o que o 1 e o 5 significam)
 - **abertas**
 
-Categorias: `personalidade` (12), `temperamento` (12), `apego` (14), `feridas_infancia` (13), `linguagem_amor` (12), `valores_vida` (11 ativas), `conhecer_melhor` (16).
+Categorias: `personalidade` (12), `temperamento` (12), `apego` (14), `feridas_infancia` (13), `linguagem_amor` (12), `valores_vida` (14 ativas), `conhecer_melhor` (16).
 
 As perguntas foram escritas de forma contextualizada (cenários do dia a dia, nunca "você é ansioso(a)?") pra não entregar o que está sendo medido nem soar como diagnóstico.
 
 Uma pergunta (`VAL10`, tempo entre noivado e casamento) fica marcada `ativa: false` em `src/data/questions.js` — não faz sentido pro uso pessoal de hoje, mas continua no código, reservada pra uma futura versão comercial/multi-casal do app. `require('./src/data/questions')` já devolve só as ativas; `questions.all` traz o banco completo, inativas incluídas.
+
+`VAL13`/`VAL14`/`VAL15` (juntar patrimônio, regime de bens do casamento, papel de cada um na vida financeira) foram adicionadas depois que Tamyris e Saulo já tinham respondido tudo — ver "Completar pergunta(s) nova(s)" abaixo pra como isso funciona sem perder nenhuma resposta anterior.
+
+### Completar pergunta(s) nova(s) sem perder respostas antigas
+
+Quando uma pergunta é adicionada ao banco depois que alguém já respondeu tudo, ninguém precisa refazer o questionário: `GET /api/test/status/:id` passa a incluir `pending: [ids das perguntas ainda sem resposta]`. O app detecta isso no painel e mostra um card "tem pergunta nova pra responder" — ao responder, só aquela(s) pergunta(s) vai(ão) pra `POST /api/test/complete`, que soma ao que já existia (nunca sobrescreve respostas antigas) e invalida o resultado individual (e a análise do casal, se `partner_id` for informado) em cache, pra recalcular incorporando o dado novo.
 
 ## Endpoints
 
@@ -60,7 +66,8 @@ Uma pergunta (`VAL10`, tempo entre noivado e casamento) fica marcada `ativa: fal
 
 ### Testes
 - `POST /api/test/submit` — `{ respondent_id, name, responses: { "PER01": "...", ... } }`
-- `GET /api/test/status/:id`
+- `GET /api/test/status/:id` — inclui `pending: [ids]` com as perguntas ativas ainda sem resposta
+- `POST /api/test/complete` — `{ respondent_id, responses: { "VAL13": [...], ... }, partner_id? }` → soma resposta(s) de pergunta(s) nova(s) às já salvas (nunca sobrescreve), invalida resultado (e análise do casal, se `partner_id` vier) em cache
 - `GET /api/test/result/:id` — resultado individual + dica (roda o agente + coordenador na primeira vez, depois fica em cache; `?refresh=true` regenera)
 - `POST /api/test/process` — `{ respondent_id_1, respondent_id_2 }` → gera (ou lê do cache) a análise cruzada do casal
 

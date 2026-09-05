@@ -31,6 +31,8 @@
   let state = {
     person: null, // { id, name }
     questions: [],
+    allQuestions: null,
+    completing: false,
     index: 0,
     answers: {}
   };
@@ -115,12 +117,19 @@
   }
 
   // ---------- QUIZ ----------
+  async function loadAllQuestions() {
+    if (!state.allQuestions) {
+      const data = await api('/api/questions');
+      state.allQuestions = data.perguntas;
+    }
+    return state.allQuestions;
+  }
+
   async function startQuiz() {
     setLoading('Preparando suas perguntas...');
-    if (!state.questions.length) {
-      const data = await api('/api/questions');
-      state.questions = data.perguntas;
-    }
+    await loadAllQuestions();
+    state.completing = false;
+    state.questions = state.allQuestions;
     state.answers = loadAnswers(state.person.id);
     state.index = state.questions.findIndex((q) => state.answers[q.id] === undefined);
     if (state.index === -1) state.index = state.questions.length; // tudo respondido, finaliza
@@ -246,9 +255,13 @@
 
   function answerAndAdvance(questionId, value) {
     state.answers[questionId] = value;
-    saveAnswers(state.person.id, state.answers);
+    if (!state.completing) saveAnswers(state.person.id, state.answers);
     if (state.index >= state.questions.length - 1) {
-      finishQuiz();
+      if (state.completing) {
+        finishCompletion();
+      } else {
+        finishQuiz();
+      }
       return;
     }
     state.index += 1;
@@ -282,12 +295,69 @@
     }
   }
 
+  // ---------- COMPLETAR PERGUNTA(S) NOVA(S) ----------
+  // Quando uma pergunta nova é adicionada ao banco depois que a pessoa já
+  // respondeu tudo, ela não reabre o questionário inteiro — só mostra a(s)
+  // pergunta(s) ainda sem resposta, sem tocar em nada que já foi respondido.
+  async function startCompleteFlow(pendingIds) {
+    setLoading('Preparando pergunta nova...');
+    await loadAllQuestions();
+    state.completing = true;
+    state.questions = state.allQuestions.filter((q) => pendingIds.includes(q.id));
+    state.answers = {};
+    state.index = 0;
+    showView('quiz');
+    renderQuestion();
+  }
+
+  async function finishCompletion() {
+    setLoading('Salvando sua resposta...');
+    try {
+      const partner = partnerOf(state.person);
+      await api('/api/test/complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          respondent_id: state.person.id,
+          responses: state.answers,
+          partner_id: partner.id
+        })
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    state.completing = false;
+    await loadDashboard();
+  }
+
   // ---------- DASHBOARD ----------
   async function loadDashboard() {
     setLoading('Carregando seu painel...');
     const me = state.person;
     const partner = partnerOf(me);
     $('#dash-name').textContent = me.name;
+
+    try {
+      const myStatus = await api(`/api/test/status/${me.id}`);
+      const pending = myStatus.pending || [];
+      const pendingCard = $('#pending-card');
+      if (pending.length) {
+        $('#pending-text').textContent = pending.length === 1
+          ? 'Tem 1 pergunta nova pra você responder — não mexe em nada que você já respondeu.'
+          : `Tem ${pending.length} perguntas novas pra você responder — não mexe em nada que você já respondeu.`;
+        pendingCard.hidden = false;
+        $('#btn-complete-pending').onclick = () => {
+          startCompleteFlow(pending).catch((e) => {
+            console.error(e);
+            setLoading('Não consegui carregar a pergunta nova. Tenta de novo em instantes.');
+          });
+        };
+      } else {
+        pendingCard.hidden = true;
+      }
+    } catch (e) {
+      $('#pending-card').hidden = true;
+    }
 
     try {
       const resultData = await api(`/api/test/result/${me.id}`);
