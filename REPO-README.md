@@ -1,6 +1,6 @@
 # Casais Backend
 
-App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 93 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas quinzenais personalizadas até janeiro de 2027, pelo app ou pelo Google Agenda.
+App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 98 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas quinzenais personalizadas até janeiro de 2027, pelo app ou pelo Google Agenda.
 
 ## Como o sistema pensa (a "equipe de agentes")
 
@@ -41,20 +41,20 @@ Cada dica final, então, mistura **dois findings principais** (de lentes/tipos d
 
 **Anti-repetição (do conselho — banco de frases, `src/lib/phraseBank.js`):** cada finding carrega um `variant_key` (ex: `valores_alta`, `ferida_rejeicao`, `gesto_tempo_qualidade`) que aponta pra um banco de 3 a 20 variações escritas à mão do "conselho" final. Toda vez que um finding é usado, o sistema roda pra próxima variação daquela categoria (round-robin, por casal, guardado em `tips/<couple_id>/phrase-index.json`) — assim o mesmo fato nunca repete a mesma frase de conselho em sequência. Isso funciona **independente de ter `CLAUDE_API_KEY` configurada ou não**: com IA, ela reescreve o fato + a variação escolhida com calor humano; sem IA (modo mock), a variação já sai pronta e humanizada, sem custo de token nenhum. Os 129 textos foram calibrados pra cobrir ~3 meses de entregas (2x/semana) sem repetição perceptível.
 
-## Banco de perguntas (93 ativas no total)
+## Banco de perguntas (98 ativas no total)
 
 - **múltipla escolha** (6 a 10 opções, escolhe 1)
 - **seleção múltipla** (6 a 10 opções, escolhe até `max_selecoes` — usado em `valores_vida` e `conhecer_melhor`, onde faz sentido marcar mais de uma coisa)
 - **escala 1 a 5** (cada uma explica o que o 1 e o 5 significam)
 - **abertas**
 
-Categorias: `personalidade` (12), `temperamento` (12), `apego` (14), `feridas_infancia` (13), `linguagem_amor` (12), `valores_vida` (14 ativas), `conhecer_melhor` (16).
+Categorias: `personalidade` (12), `temperamento` (12), `apego` (14), `feridas_infancia` (13), `linguagem_amor` (12), `valores_vida` (19 ativas), `conhecer_melhor` (16).
 
 As perguntas foram escritas de forma contextualizada (cenários do dia a dia, nunca "você é ansioso(a)?") pra não entregar o que está sendo medido nem soar como diagnóstico.
 
 Uma pergunta (`VAL10`, tempo entre noivado e casamento) fica marcada `ativa: false` em `src/data/questions.js` — não faz sentido pro uso pessoal de hoje, mas continua no código, reservada pra uma futura versão comercial/multi-casal do app. `require('./src/data/questions')` já devolve só as ativas; `questions.all` traz o banco completo, inativas incluídas.
 
-`VAL13`/`VAL14`/`VAL15` (juntar patrimônio, regime de bens do casamento, papel de cada um na vida financeira) foram adicionadas depois que Tamyris e Saulo já tinham respondido tudo — ver "Completar pergunta(s) nova(s)" abaixo pra como isso funciona sem perder nenhuma resposta anterior.
+`VAL13`/`VAL14`/`VAL15` (juntar patrimônio, regime de bens do casamento, papel de cada um na vida financeira) e `VAL16`-`VAL20` (suporte financeiro, cuidado com filhos, provimento, tarefas mais pesadas, cuidados da casa e da própria aparência — todas sobre a ideia de papel de homem e mulher no casal) foram adicionadas depois que Tamyris já tinha respondido tudo — ver "Completar pergunta(s) nova(s)" abaixo pra como isso funciona sem perder nenhuma resposta anterior.
 
 ### Completar pergunta(s) nova(s) sem perder respostas antigas
 
