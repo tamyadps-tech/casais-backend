@@ -70,7 +70,17 @@ async function runQualityLoop(generate, rubric, opts = {}) {
   let feedback = null;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const candidate = await generate(feedback);
+    let candidate;
+    try {
+      candidate = await generate(feedback);
+    } catch (e) {
+      // Falha na própria geração (créditos, rede, modelo indisponível etc)
+      // nunca deve travar o app com um erro pra quem está usando — registra
+      // como tentativa reprovada e segue pro próximo attempt; se todas
+      // falharem, cai no fallback (mock) já usado pelo melhor_esforco.
+      feedback = { problemas: [`Erro ao gerar: ${e.message}`] };
+      continue;
+    }
 
     let judged;
     try {
