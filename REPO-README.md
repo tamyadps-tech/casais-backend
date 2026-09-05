@@ -22,7 +22,7 @@ Não existem robôs autônomos rodando sozinhos por aí — é uma orquestraçã
 | Agente gerente | `src/lib/pipeline.js` |
 | Coordenadores de qualidade (looping) | `src/lib/qualityCoordinator.js` |
 
-Sem `CLAUDE_API_KEY` configurada, tudo roda em **modo mock** (textos simples baseados nos dados, sem chamar IA) — assim dá pra testar o fluxo inteiro de graça antes de ligar a chave de verdade.
+**A IA está desligada por padrão** (`hasApiKey()` em `src/lib/aiClient.js` sempre retorna `false`, por pedido explícito) — o app roda 100% no banco de frases determinístico (`src/lib/phraseBank.js`) e nos textos-modelo (`mockResult`/`mockTip`), sem gastar nenhum crédito da Claude API, mesmo que `CLAUDE_API_KEY` esteja configurada no Railway (pode deixar configurada sem problema — só não é usada). Resultado individual, análise cruzada e dicas quinzenais saem instantâneos, sem depender de rede nem de saldo. Pra religar a IA (ela ainda existe, só está desativada), é só pedir — o código inteiro continua no repositório.
 
 ## Como o cruzamento de dados vira dica assertiva
 
