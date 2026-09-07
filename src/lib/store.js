@@ -188,6 +188,22 @@ function resetCouple(id1, id2) {
   return { couple_id: cId, removed };
 }
 
+// Apaga só o histórico de dicas entregues (tips.json, calendário de
+// entrega, log de rotação de findings e de frases) — mantém respostas,
+// resultado individual e análise cruzada intactos. Usado quando uma
+// mudança no formato das dicas precisa "reiniciar" o histórico sem
+// obrigar a pessoa a responder o questionário de novo.
+function resetTipsHistory(id1, id2) {
+  const cId = coupleId(id1, id2);
+  const tDir = path.join(DATA_DIR, 'tips', safeId(cId));
+  const removed = [];
+  if (fs.existsSync(tDir)) {
+    fs.rmSync(tDir, { recursive: true, force: true });
+    removed.push(`tips/${cId}`);
+  }
+  return { couple_id: cId, removed };
+}
+
 module.exports = {
   DATA_DIR,
   readJson,
@@ -203,6 +219,7 @@ module.exports = {
   markFindingUsed,
   nextPhraseVariant,
   resetCouple,
+  resetTipsHistory,
   getPushSubscriptions,
   savePushSubscription,
   removePushSubscription
