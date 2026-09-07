@@ -42,7 +42,7 @@ const LINGUAGEM_ACAO = {
   tempo_qualidade: 'Separa um tempinho só de vocês dois, sem celular — nem que sejam 20 minutos de conversa de verdade, olho no olho',
   presentes: 'Um mimo pequeno e pensado — um bilhetinho escondido, o docinho que ele(a) ama, alguma coisinha que mostre que você prestou atenção no que faz ele(a) feliz. Não precisa ser caro, precisa ser sentido',
   atos_servico: 'Resolve algo que é dele(a) sem que precise pedir — um gesto de cuidado silencioso vale mais que mil palavras',
-  toque_fisico: 'Busca mais contato físico no dia a dia — um abraço mais longo, a mão na dele(a) sem motivo nenhum, só porque sim'
+  toque_fisico: 'Busca mais contato físico no dia a dia — um abraço mais longo, a mão dada sem motivo nenhum, só porque sim'
 };
 
 const FERIDA_LABEL = {

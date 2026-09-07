@@ -111,7 +111,7 @@ const BANKS = {
     'Organiza algo que {{sobre}} vinha adiando — mesmo que pequeno, o efeito de "alguém cuidou disso pra mim" é grande'
   ],
   gesto_toque_fisico: [
-    'Busca mais contato físico no dia a dia — um abraço mais longo, a mão na de {{sobre}} sem motivo nenhum, só porque sim',
+    'Busca mais contato físico no dia a dia — um abraço mais longo, de mãos dadas com {{sobre}} sem motivo nenhum, só porque sim',
     'Antes de sair ou ao chegar em casa, troca um abraço de verdade, não só o de compromisso',
     'Senta perto, de conchinha ou de mãos dadas, nem que seja só durante uma série — o contato físico fala por si'
   ],
