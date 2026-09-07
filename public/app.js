@@ -7,7 +7,6 @@
   };
 
   const TIP_TIPO_LABEL = {
-    intro_linguagem: 'Boas-vindas',
     gesto_de_amor: 'Gesto de amor',
     reforco: 'Reforço',
     dinamica_apego: 'Conexão',

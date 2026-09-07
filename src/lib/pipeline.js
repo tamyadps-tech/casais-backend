@@ -175,22 +175,13 @@ function selectFinding(findings, targetName, usedLog) {
   return pool[0];
 }
 
-// Decide o que vai na dica de uma pessoa: na primeiríssima vez, é a
-// introdução sobre a própria linguagem do amor (ensina o princípio antes
-// de qualquer conselho específico). Das próximas em diante, são DOIS
-// findings "principais" (sobre o parceiro, de tipos diferentes quando
-// possível — ex: um papo de valores + um gesto de amor) misturados no
-// início da dica, seguidos de um de autorreflexão (sobre a própria vida)
-// — as partes que a dica final vai juntar.
+// Decide o que vai na dica de uma pessoa: sempre DOIS findings "principais"
+// (sobre o parceiro, de tipos diferentes quando possível — ex: um papo de
+// valores + um gesto de amor) misturados no início da dica, seguidos de um
+// de autorreflexão (sobre a própria vida) — desde a primeiríssima dica,
+// já completa, sem uma versão simplificada de "boas-vindas".
 function pickTipInputs(targetName, findings, usedLog) {
-  const jaRecebeuDica = Boolean(usedLog[targetName] && Object.keys(usedLog[targetName]).length);
-
-  if (!jaRecebeuDica) {
-    const intro = findings.find((f) => f.alvo === targetName && f.tipo === 'intro_linguagem');
-    if (intro) return { findings: [intro], autoFinding: null };
-  }
-
-  const poolPrincipal = findings.filter((f) => f.alvo === targetName && f.tipo !== 'intro_linguagem' && f.tipo !== 'auto_reflexao');
+  const poolPrincipal = findings.filter((f) => f.alvo === targetName && f.tipo !== 'auto_reflexao');
   const poolAuto = findings.filter((f) => f.alvo === targetName && f.tipo === 'auto_reflexao');
 
   const principal1 = selectFinding(poolPrincipal, targetName, usedLog);

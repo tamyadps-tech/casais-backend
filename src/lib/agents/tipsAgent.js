@@ -6,9 +6,7 @@
 // src/lib/crossRules.js, nunca o perfil inteiro solto. Monta UMA mensagem
 // construtiva: os dois principais misturados no início (como amar melhor
 // o parceiro, por dois ângulos), depois uma reflexão sobre a própria
-// pessoa. A primeiríssima dica de cada um foge dessa regra: é só sobre a
-// própria linguagem do amor e a importância de amar o outro na língua
-// dele(a), não na própria (tipo "intro_linguagem"). Passa pelo
+// pessoa — já completa desde a primeiríssima dica de cada um. Passa pelo
 // coordenador de qualidade antes de ser liberada.
 
 const { hasApiKey, ask } = require('../aiClient');
@@ -23,12 +21,10 @@ const RUBRIC = [
   'Não usa emojis em nenhum ponto do texto',
   'Tem entre 60 e 200 palavras',
   'Se algum fato for do tipo "papo_valores", essa parte é um convite tranquilo pra conversar, nunca soa como alarme ou cobrança',
-  'Se o tipo for "intro_linguagem", é a primeira dica que a pessoa recebe: fala sobre a própria linguagem do amor dela(e) e por que é importante amar o parceiro(a) na linguagem DELE(A), não na própria',
   ...HUMANITY_RUBRIC
 ];
 
 const INICIO_POR_TIPO = {
-  intro_linguagem: (nome, f) => `${nome}, antes de mais nada: ${f.fato}.`,
   gesto_de_amor: (nome, f) => `${nome}, sabia que ${f.fato}?`,
   reforco: (nome, f) => `${nome}, boa notícia: ${f.fato}.`,
   dinamica_apego: (nome, f) => `${nome}, uma coisa sobre vocês dois: ${f.fato}.`,
@@ -97,18 +93,15 @@ async function generateTip({ targetName, partnerName, findings, autoFinding }) {
       ? `\n\nDICA EXTRA SOBRE A PRÓPRIA VIDA DE ${targetName.toUpperCase()} (fato verificado, não invente nada além disso):\n"${autoFinding.fato}"\nReflexão/ação sugerida: "${autoFinding.sugestao_acao}"`
       : '';
 
-    const ehIntro = principais[0].tipo === 'intro_linguagem';
-
     const fatosBloco = principais
       .map(
         (f, idx) =>
-          `FATO PRINCIPAL ${idx + 1} SOBRE ${f.tipo === 'intro_linguagem' ? targetName.toUpperCase() : partnerName.toUpperCase()} (não invente nada além disso):\n"${f.fato}"\nSugestão de ação (transforme numa frase natural, pode adaptar a forma mas não o conteúdo): "${f.sugestao_acao}"\nTipo: ${f.tipo}`
+          `FATO PRINCIPAL ${idx + 1} SOBRE ${partnerName.toUpperCase()} (não invente nada além disso):\n"${f.fato}"\nSugestão de ação (transforme numa frase natural, pode adaptar a forma mas não o conteúdo): "${f.sugestao_acao}"\nTipo: ${f.tipo}`
       )
       .join('\n\n');
 
-    const tarefaEspecial = ehIntro
-      ? `Esta é a PRIMEIRA dica que ${targetName} recebe no app. Comece falando sobre a própria linguagem do amor dela(e) (pode nomear "linguagem do amor", é o conceito central aqui) e explique, com carinho, por que amar bem é amar ${partnerName} na linguagem DELE(A), não na própria. Termine com a ação sugerida.`
-      : principais.length > 1
+    const tarefaEspecial =
+      principais.length > 1
         ? `Escreva em partes: 1) misture os ${principais.length} fatos principais logo no início, emendados com naturalidade (um conectando no outro, sem repetir o nome de ${targetName} a cada um). ${autoFinding ? `2) uma reflexão breve sobre a própria vida de ${targetName} — o jeito dela(e) de ver o mundo ou sua própria dificuldade em relacionamentos — baseada na dica extra abaixo.` : ''}`
         : `Escreva em duas partes: 1) como amar melhor ${partnerName}, baseada no fato e na sugestão de ação. ${autoFinding ? `2) uma reflexão breve sobre a própria vida de ${targetName} — o jeito dela(e) de ver o mundo ou sua própria dificuldade em relacionamentos — baseada na dica extra abaixo.` : ''}`;
 
