@@ -10,8 +10,7 @@
 // Cada finding tem:
 //   id          — chave estável, usada pro controle de repetição (o mesmo
 //                 finding não deve virar dica de novo antes do cooldown)
-//   tipo        — 'intro_linguagem' (só a 1ª dica de cada pessoa) |
-//                 'gesto_de_amor' | 'reforco' | 'dinamica_apego' |
+//   tipo        — 'gesto_de_amor' | 'reforco' | 'dinamica_apego' |
 //                 'cuidado_ferida' | 'papo_valores' | 'auto_reflexao'
 //                 (auto_reflexao nunca é o finding principal — é sempre
 //                 combinado com outro na hora de montar a dica, ver
@@ -143,34 +142,6 @@ function classificarCompatibilidade(comuns, arrA, arrB) {
   if (!comuns.length) return 'atencao';
   const completo = comuns.length === arrA.length && comuns.length === arrB.length;
   return completo ? 'alta' : 'boa';
-}
-
-// ---------- Lente 0: introdução — a própria linguagem do amor ----------
-// Reservada pra PRIMEIRA dica que cada pessoa recebe (ver pipeline.js):
-// ensina o princípio central antes de qualquer conselho específico — amar
-// bem é amar na língua do outro, não na própria.
-function buildIntroLinguagem(alvo, sobre) {
-  const ownRanking = (alvo.scores.linguagem_amor.ranking || []).filter(
-    (lang) => (alvo.scores.linguagem_amor.contagens[lang] || 0) > 0
-  );
-  const partnerRanking = (sobre.scores.linguagem_amor.ranking || []).filter(
-    (lang) => (sobre.scores.linguagem_amor.contagens[lang] || 0) > 0
-  );
-  const ownTop = ownRanking[0];
-  const partnerTop = partnerRanking[0];
-  if (!ownTop || !partnerTop) return [];
-
-  return [
-    {
-      id: `intro_linguagem_${alvo.name}`,
-      tipo: 'intro_linguagem',
-      alvo: alvo.name,
-      sobre: sobre.name,
-      confianca: 'alta',
-      fato: `Você se sente mais amado(a) por ${LINGUAGEM_LABEL[ownTop]}, mas ${sobre.name} se sente mais amado(a) por ${LINGUAGEM_LABEL[partnerTop]}`,
-      sugestao_acao: `Amar bem não é amar do jeito que a gente gosta de ser amado — é amar na língua do outro. Essa semana, experimente pelo menos um gesto na linguagem de ${sobre.name}: ${LINGUAGEM_ACAO[partnerTop]}`
-    }
-  ];
 }
 
 // ---------- Lente extra: autorreflexão (sobre a própria vida) ----------
@@ -376,8 +347,6 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
  */
 function buildFindings(pessoaA, pessoaB) {
   const findings = [
-    ...buildIntroLinguagem(pessoaA, pessoaB),
-    ...buildIntroLinguagem(pessoaB, pessoaA),
     ...buildGestosDeAmor(pessoaA, pessoaB),
     ...buildGestosDeAmor(pessoaB, pessoaA),
     ...buildDinamicaApego(pessoaA, pessoaB),
