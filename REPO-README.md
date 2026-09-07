@@ -83,6 +83,7 @@ Quando uma pergunta é adicionada ao banco depois que alguém já respondeu tudo
 
 ### Admin
 - `GET /api/admin/reset/:id1/:id2?key=SUA_CHAVE&confirm=SIM` — apaga respostas, resultado, análise cruzada e dicas de um casal (pra zerar dados de teste antes da rodada de verdade). Só funciona se `ADMIN_RESET_KEY` estiver configurada no servidor; sem essa variável, o endpoint fica sempre desligado (403). Pensado pra colar direto na barra de endereço do navegador.
+- `GET /api/admin/reset-tips/:id1/:id2?key=SUA_CHAVE&confirm=SIM` — apaga só o histórico de dicas já entregues (calendário e rotação), mantendo respostas, resultado e análise intactos. Útil depois de uma mudança no formato das dicas, pra tirar do histórico uma dica que ficou no formato antigo. Mesma proteção do `/reset`.
 
 ### Notificações push
 - `GET /api/push/public-key` — chave pública VAPID (o app usa isso no navegador; não é segredo)

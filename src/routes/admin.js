@@ -27,4 +27,27 @@ router.get('/reset/:id1/:id2', (req, res) => {
   res.json({ success: true, message: 'Dados apagados.', ...result });
 });
 
+// Apaga só o histórico de dicas já entregues (calendário, rotação de
+// findings e de frases) — mantém respostas, resultado individual e
+// análise cruzada intactos. Útil depois de uma mudança no formato das
+// dicas, pra não deixar uma dica antiga (no formato velho) perdida no
+// meio do histórico. Mesma proteção do /reset: chave + ?confirm=SIM.
+router.get('/reset-tips/:id1/:id2', (req, res) => {
+  const adminKey = process.env.ADMIN_RESET_KEY;
+  if (!adminKey) {
+    return res.status(403).json({ error: 'Reset desligado: ADMIN_RESET_KEY não está configurada no servidor.' });
+  }
+  if (req.query.key !== adminKey) {
+    return res.status(403).json({ error: 'Chave inválida.' });
+  }
+  if (req.query.confirm !== 'SIM') {
+    return res.status(400).json({
+      error: 'Ação destrutiva. Adicione &confirm=SIM na URL pra confirmar que quer apagar o histórico de dicas desse casal (respostas e resultado continuam intactos).'
+    });
+  }
+
+  const result = store.resetTipsHistory(req.params.id1, req.params.id2);
+  res.json({ success: true, message: 'Histórico de dicas apagado — respostas e resultado continuam intactos.', ...result });
+});
+
 module.exports = router;
