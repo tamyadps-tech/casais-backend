@@ -510,6 +510,56 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
   margin-bottom: 4px;
 }
 
+.mission-box {
+  border-left: 4px solid var(--mint);
+  border-radius: var(--radius-sm);
+  background: var(--purple-soft);
+  padding: 14px 16px;
+  margin-top: 6px;
+}
+.mission-area {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-weight: 800;
+  color: var(--purple);
+  margin-bottom: 6px;
+}
+.mission-text { font-size: 14px; line-height: 1.55; margin: 0 0 14px; }
+.mission-actions { display: flex; gap: 8px; }
+.mission-actions button { flex: 1; }
+.btn-mission-done {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: none;
+  background: var(--mint);
+  color: #0b2b24;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-mission-skip {
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.mission-empty { color: var(--muted); font-size: 14px; padding: 4px 0; }
+.entry-status {
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.entry-status.feita { color: var(--mint); }
+.entry-status.nao_feita { color: var(--muted); }
+
 .mood-picker { display: flex; gap: 6px; margin-top: 6px; }
 .mood-btn {
   flex: 1;

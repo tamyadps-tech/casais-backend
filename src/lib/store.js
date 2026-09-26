@@ -3,7 +3,7 @@ const path = require('path');
 
 const DATA_DIR = process.env.DATA_DIR || '/tmp/casais-data';
 
-const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal'];
+const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal', 'missions'];
 
 function ensureDirs() {
   SUBDIRS.forEach((sub) => {
@@ -186,6 +186,24 @@ function removeJournalEntry(personId, entryId) {
   return list;
 }
 
+// Missão individual ativa de cada pessoa (desafio pequeno de autodesenvolvimento,
+// ver src/lib/missionBank.js) — uma por vez, com histórico das concluídas ou
+// puladas. poolIndex controla a rotação pra não repetir a mesma missão em
+// sequência antes de passar por todas as outras da área.
+function missionsPath(personId) {
+  return filePath('missions', personId);
+}
+
+function readMissionsState(personId) {
+  const p = missionsPath(personId);
+  if (!fs.existsSync(p)) return { current: null, history: [], poolIndex: 0 };
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function writeMissionsState(personId, state) {
+  writeJson('missions', personId, state);
+}
+
 // Apaga tudo (respostas, resultados, análise cruzada, dicas e histórico de
 // rotação) de um casal — usado pra zerar dados de teste antes da rodada
 // "de verdade". Sempre por trás de um endpoint protegido, nunca chamado
@@ -254,6 +272,8 @@ module.exports = {
   readJournal,
   addJournalEntry,
   removeJournalEntry,
+  readMissionsState,
+  writeMissionsState,
   getPushSubscriptions,
   savePushSubscription,
   removePushSubscription
