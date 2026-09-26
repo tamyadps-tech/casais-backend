@@ -103,6 +103,55 @@
           <button class="btn-secondary" id="btn-complete-pending">Responder agora</button>
         </div>
 
+        <div class="card" id="profile-card">
+          <h2>Seu perfil em números</h2>
+          <p class="muted small">Um resumo visual de como você respondeu — quanto mais forte a barra, mais isso apareceu nas suas respostas.</p>
+
+          <h3 class="chart-title">Linguagens do amor</h3>
+          <div id="chart-linguagem" class="bar-chart"></div>
+
+          <h3 class="chart-title">Seu jeito de ser</h3>
+          <div id="chart-personalidade" class="axis-chart"></div>
+
+          <div id="chart-badges" class="badge-row"></div>
+        </div>
+
+        <div class="card" id="growth-card">
+          <h2>Pontos a trabalhar</h2>
+          <p class="muted small">Convites pra crescer, a partir do que suas respostas mostraram — não são rótulos, são direções.</p>
+          <div id="growth-list" class="growth-list"></div>
+        </div>
+
+        <div class="card" id="mood-card">
+          <h2>Como você está hoje?</h2>
+          <div class="mood-picker" id="mood-picker"></div>
+          <div id="mood-trend" class="mood-trend"></div>
+        </div>
+
+        <div class="card" id="achievements-card">
+          <h2>Suas conquistas</h2>
+          <p class="muted small">Pequenas ou grandes — registre o que te deixou orgulhoso(a).</p>
+          <div class="add-row">
+            <input type="text" id="achievement-input" placeholder="Ex: terminei o curso que comecei em março" />
+            <button class="btn-secondary" id="btn-add-achievement">Adicionar</button>
+          </div>
+          <div id="achievements-list" class="entries-list"></div>
+        </div>
+
+        <div class="card" id="notes-card">
+          <h2>Notas sobre mim e sobre <span id="notes-partner-name"></span></h2>
+          <p class="muted small">Guarde percepções novas a qualquer momento, sem esperar o questionário.</p>
+          <div class="toggle-row" id="notes-toggle">
+            <button class="toggle-btn selected" data-sobre="mim">Sobre mim</button>
+            <button class="toggle-btn" data-sobre="parceiro">Sobre o parceiro</button>
+          </div>
+          <div class="add-row">
+            <textarea id="note-input" class="open-answer" placeholder="Escreva à vontade..."></textarea>
+          </div>
+          <button class="btn-secondary" id="btn-add-note">Salvar nota</button>
+          <div id="notes-list" class="entries-list"></div>
+        </div>
+
         <div class="card">
           <h2>Minhas dicas</h2>
           <p class="muted small">Dicas pra você saber como fazer seu par se sentir mais amado — chegam toda segunda e quinta, com uma extra de brinde no sábado, até janeiro de 2027.</p>

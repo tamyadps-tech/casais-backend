@@ -9,6 +9,7 @@ const { scoreAll } = require('../scoring');
 const profiles = require('../../data/profiles');
 const { ask } = require('../aiClient');
 const { runQualityLoop, feedbackSuffix, HUMANITY_RUBRIC } = require('../qualityCoordinator');
+const { buildGrowthPoints } = require('../growthPoints');
 
 // Continua desligado de propósito, independente de CLAUDE_API_KEY — só as
 // dicas quinzenais (tipsAgent.js) voltaram a usar IA. Resultado individual
@@ -52,9 +53,10 @@ Dica prática pra essa semana: separe 10 minutos sozinho(a) e escreva uma coisa 
 
 async function buildResult({ name, responses }) {
   const scores = scoreAll(responses);
+  const pontosCrescimento = buildGrowthPoints(scores);
 
   if (IA_DESLIGADA_AQUI) {
-    return { scores, texto: mockResult(name, scores), status: 'sem_revisao', nota: null, attempts: 1 };
+    return { scores, pontosCrescimento, texto: mockResult(name, scores), status: 'sem_revisao', nota: null, attempts: 1 };
   }
 
   const contexto = JSON.stringify(
@@ -88,7 +90,7 @@ Sem usar termos técnicos/clínicos — traduza tudo em linguagem simples e huma
   };
 
   const { text, status, nota, attempts } = await runQualityLoop(generate, RUBRIC);
-  return { scores, texto: text || mockResult(name, scores), status, nota, attempts };
+  return { scores, pontosCrescimento, texto: text || mockResult(name, scores), status, nota, attempts };
 }
 
 module.exports = { buildResult };

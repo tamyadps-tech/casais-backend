@@ -14,6 +14,33 @@
     papo_valores: 'Papo de valores'
   };
 
+  const LINGUAGEM_LABEL = {
+    palavras_afirmacao: 'Palavras de afirmação',
+    tempo_qualidade: 'Tempo de qualidade',
+    presentes: 'Presentes',
+    atos_servico: 'Atos de serviço',
+    toque_fisico: 'Toque físico'
+  };
+
+  const PERSONALIDADE_AXES = [
+    { key: 'eixo_energia', a: 'extrovertido', b: 'introvertido', labelA: 'Extrovertido(a)', labelB: 'Introvertido(a)' },
+    { key: 'eixo_decisao', a: 'racional', b: 'emocional', labelA: 'Racional', labelB: 'Emocional' },
+    { key: 'eixo_foco', a: 'pratico', b: 'idealista', labelA: 'Prático(a)', labelB: 'Idealista' },
+    { key: 'eixo_estilo', a: 'estruturado', b: 'espontaneo', labelA: 'Estruturado(a)', labelB: 'Espontâneo(a)' }
+  ];
+
+  const TEMPERAMENTO_NOME = { sanguineo: 'Sanguíneo', colerico: 'Colérico', melancolico: 'Melancólico', fleumatico: 'Fleumático' };
+  const APEGO_NOME = { seguro: 'Apego seguro', ansioso: 'Apego ansioso', evitativo: 'Apego evitativo', desorganizado: 'Apego desorganizado' };
+
+  const MOOD_OPTIONS = [
+    { key: 'dificil', label: 'Difícil', valor: 1 },
+    { key: 'cansado', label: 'Cansado(a)', valor: 2 },
+    { key: 'neutro', label: 'Neutro', valor: 3 },
+    { key: 'bem', label: 'Bem', valor: 4 },
+    { key: 'radiante', label: 'Radiante', valor: 5 }
+  ];
+  const MOOD_BY_KEY = Object.fromEntries(MOOD_OPTIONS.map((m) => [m.key, m]));
+
   const CATEGORY_META = {
     personalidade: { label: 'Seu jeito de ser' },
     temperamento: { label: 'Seu temperamento' },
@@ -33,7 +60,8 @@
     allQuestions: null,
     completing: false,
     index: 0,
-    answers: {}
+    answers: {},
+    notesFilter: 'mim'
   };
 
   function showView(name) {
@@ -335,6 +363,7 @@
     const me = state.person;
     const partner = partnerOf(me);
     $('#dash-name').textContent = me.name;
+    $('#notes-partner-name').textContent = partner.name;
 
     try {
       const myStatus = await api(`/api/test/status/${me.id}`);
@@ -361,6 +390,8 @@
     try {
       const resultData = await api(`/api/test/result/${me.id}`);
       $('#dash-result-text').textContent = resultData.result.texto;
+      renderProfileCharts(resultData.result.scores);
+      renderGrowthPoints(resultData.result.pontosCrescimento);
     } catch (e) {
       $('#dash-result-text').textContent = 'Ainda não deu pra gerar — tenta atualizar a página.';
     }
@@ -387,8 +418,211 @@
     $('#ics-url').value = `${window.location.origin}/api/calendar/${me.id}/${partner.id}/${encodeURIComponent(me.name)}.ics`;
 
     await refreshTips();
+    await loadJournal();
     await refreshPushButtonState();
     showView('dashboard');
+  }
+
+  // ---------- perfil em números (gráficos) ----------
+  function renderProfileCharts(scores) {
+    renderLinguagemChart(scores.linguagem_amor || {});
+    renderPersonalidadeChart(scores.personalidade || {});
+    renderBadges(scores);
+  }
+
+  function renderLinguagemChart(linguagem) {
+    const wrap = $('#chart-linguagem');
+    wrap.innerHTML = '';
+    const ranking = linguagem.ranking || [];
+    const contagens = linguagem.contagens || {};
+    const max = Math.max(1, ...ranking.map((tag) => contagens[tag] || 0));
+    ranking.forEach((tag) => {
+      const valor = contagens[tag] || 0;
+      const pct = Math.max(6, Math.round((valor / max) * 100));
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+      row.innerHTML = `
+        <div class="bar-row-label"><span>${escapeHtml(LINGUAGEM_LABEL[tag] || tag)}</span><span>${valor}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      `;
+      wrap.appendChild(row);
+    });
+  }
+
+  function renderPersonalidadeChart(personalidade) {
+    const wrap = $('#chart-personalidade');
+    wrap.innerHTML = '';
+    const contagens = personalidade.contagens || {};
+    PERSONALIDADE_AXES.forEach((eixo) => {
+      const va = contagens[eixo.a] || 0;
+      const vb = contagens[eixo.b] || 0;
+      const total = va + vb;
+      const pctA = total ? Math.round((va / total) * 100) : 50;
+      const pctB = 100 - pctA;
+      const row = document.createElement('div');
+      row.className = 'axis-row';
+      row.innerHTML = `
+        <div class="axis-labels"><span>${eixo.labelA} ${pctA}%</span><span>${pctB}% ${eixo.labelB}</span></div>
+        <div class="axis-track${total ? '' : ' empatado'}">
+          <div class="axis-fill-a" style="width:${pctA}%"></div>
+          <div class="axis-fill-b" style="width:${pctB}%"></div>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+  }
+
+  function renderBadges(scores) {
+    const wrap = $('#chart-badges');
+    wrap.innerHTML = '';
+    const temp = scores.temperamento && scores.temperamento.dominantes && scores.temperamento.dominantes[0];
+    const apegoDom = scores.apego && scores.apego.dominante;
+    [TEMPERAMENTO_NOME[temp], APEGO_NOME[apegoDom]].filter(Boolean).forEach((texto) => {
+      const span = document.createElement('span');
+      span.className = 'stat-badge';
+      span.textContent = texto;
+      wrap.appendChild(span);
+    });
+  }
+
+  function renderGrowthPoints(pontos) {
+    const wrap = $('#growth-list');
+    wrap.innerHTML = '';
+    if (!pontos || !pontos.length) {
+      wrap.innerHTML = '<p class="entries-empty">Ainda não deu pra calcular — tenta atualizar a página.</p>';
+      return;
+    }
+    pontos.forEach((p) => {
+      const div = document.createElement('div');
+      div.className = 'growth-item';
+      div.innerHTML = `<span class="growth-area">${escapeHtml(p.area)}</span>${escapeHtml(p.texto)}`;
+      wrap.appendChild(div);
+    });
+  }
+
+  // ---------- diário (humor, conquistas, notas) ----------
+  async function loadJournal() {
+    try {
+      const data = await api(`/api/journal/${state.person.id}`);
+      const entries = data.entries || [];
+      renderMoodPicker(entries);
+      renderMoodTrend(entries);
+      renderAchievements(entries);
+      renderNotes(entries);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function renderMoodPicker(entries) {
+    const wrap = $('#mood-picker');
+    wrap.innerHTML = '';
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const todaysMood = [...entries].reverse().find((e) => e.type === 'humor' && e.createdAt.slice(0, 10) === todayStr);
+    MOOD_OPTIONS.forEach((m) => {
+      const btn = document.createElement('button');
+      btn.className = 'mood-btn' + (todaysMood && todaysMood.mood === m.key ? ' selected' : '');
+      btn.textContent = m.label;
+      btn.addEventListener('click', () => {
+        addMoodEntry(m.key).catch(console.error);
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  async function addMoodEntry(moodKey) {
+    await api(`/api/journal/${state.person.id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'humor', mood: moodKey })
+    });
+    await loadJournal();
+  }
+
+  function renderMoodTrend(entries) {
+    const wrap = $('#mood-trend');
+    const moods = entries.filter((e) => e.type === 'humor').slice(-14);
+    if (!moods.length) {
+      wrap.innerHTML = '<p class="mood-trend-empty">Seus check-ins de humor vão aparecer aqui.</p>';
+      return;
+    }
+    wrap.innerHTML = '';
+    moods.forEach((entry, idx) => {
+      const m = MOOD_BY_KEY[entry.mood];
+      const valor = m ? m.valor : 3;
+      const bar = document.createElement('div');
+      bar.className = 'mood-bar' + (idx === moods.length - 1 ? ' latest' : '');
+      bar.style.height = `${Math.max(15, Math.round((valor / 5) * 100))}%`;
+      bar.title = m ? m.label : '';
+      wrap.appendChild(bar);
+    });
+    const last = MOOD_BY_KEY[moods[moods.length - 1].mood];
+    if (last) {
+      const label = document.createElement('span');
+      label.className = 'muted small';
+      label.style.marginLeft = '8px';
+      label.textContent = `hoje: ${last.label}`;
+      wrap.appendChild(label);
+    }
+  }
+
+  function renderEntryList(wrap, entries, emptyText) {
+    if (!entries.length) {
+      wrap.innerHTML = `<p class="entries-empty">${emptyText}</p>`;
+      return;
+    }
+    wrap.innerHTML = '';
+    entries.forEach((entry) => {
+      const div = document.createElement('div');
+      div.className = 'entry-card';
+      const date = new Date(entry.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+      div.innerHTML = `<div class="entry-meta"><span>${date}</span><button class="entry-remove" data-id="${entry.id}">Remover</button></div>${escapeHtml(entry.text)}`;
+      wrap.appendChild(div);
+    });
+    wrap.querySelectorAll('.entry-remove').forEach((btn) => {
+      btn.addEventListener('click', () => removeJournalEntry(btn.dataset.id).catch(console.error));
+    });
+  }
+
+  function renderAchievements(entries) {
+    const conquistas = entries.filter((e) => e.type === 'conquista').slice().reverse();
+    renderEntryList($('#achievements-list'), conquistas, 'Nenhuma conquista registrada ainda.');
+  }
+
+  function renderNotes(entries) {
+    const notas = entries.filter((e) => e.type === 'nota' && e.sobre === state.notesFilter).slice().reverse();
+    renderEntryList($('#notes-list'), notas, 'Nenhuma nota por aqui ainda.');
+  }
+
+  async function removeJournalEntry(entryId) {
+    await api(`/api/journal/${state.person.id}/${entryId}`, { method: 'DELETE' });
+    await loadJournal();
+  }
+
+  async function addAchievement() {
+    const input = $('#achievement-input');
+    const text = input.value.trim();
+    if (!text) return;
+    await api(`/api/journal/${state.person.id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'conquista', text })
+    });
+    input.value = '';
+    await loadJournal();
+  }
+
+  async function addNote() {
+    const input = $('#note-input');
+    const text = input.value.trim();
+    if (!text) return;
+    await api(`/api/journal/${state.person.id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'nota', text, sobre: state.notesFilter })
+    });
+    input.value = '';
+    await loadJournal();
   }
 
   async function refreshTips() {
@@ -545,6 +779,24 @@
 
   $('#btn-enable-push').addEventListener('click', () => {
     enablePush().catch(console.error);
+  });
+
+  $('#btn-add-achievement').addEventListener('click', () => {
+    addAchievement().catch(console.error);
+  });
+  $('#achievement-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') addAchievement().catch(console.error);
+  });
+
+  $('#btn-add-note').addEventListener('click', () => {
+    addNote().catch(console.error);
+  });
+  document.querySelectorAll('#notes-toggle .toggle-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.notesFilter = btn.dataset.sobre;
+      document.querySelectorAll('#notes-toggle .toggle-btn').forEach((b) => b.classList.toggle('selected', b === btn));
+      loadJournal().catch(console.error);
+    });
   });
 
   $('#btn-copy-ics').addEventListener('click', async () => {

@@ -3,7 +3,7 @@ const path = require('path');
 
 const DATA_DIR = process.env.DATA_DIR || '/tmp/casais-data';
 
-const SUBDIRS = ['responses', 'results', 'analysis', 'tips'];
+const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal'];
 
 function ensureDirs() {
   SUBDIRS.forEach((sub) => {
@@ -155,6 +155,37 @@ function removePushSubscription(personId, endpoint) {
   return list;
 }
 
+// Diário pessoal (conquistas, check-in de humor, notas livres sobre si ou
+// sobre o parceiro) — cada pessoa só vê o próprio, gravado a qualquer
+// momento, sem depender do questionário de 98 perguntas.
+function journalPath(personId) {
+  return filePath('journal', personId);
+}
+
+function readJournal(personId) {
+  const p = journalPath(personId);
+  if (!fs.existsSync(p)) return [];
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function addJournalEntry(personId, entry) {
+  const list = readJournal(personId);
+  const full = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    createdAt: new Date().toISOString(),
+    ...entry
+  };
+  list.push(full);
+  writeJson('journal', personId, list);
+  return full;
+}
+
+function removeJournalEntry(personId, entryId) {
+  const list = readJournal(personId).filter((e) => e.id !== entryId);
+  writeJson('journal', personId, list);
+  return list;
+}
+
 // Apaga tudo (respostas, resultados, análise cruzada, dicas e histórico de
 // rotação) de um casal — usado pra zerar dados de teste antes da rodada
 // "de verdade". Sempre por trás de um endpoint protegido, nunca chamado
@@ -220,6 +251,9 @@ module.exports = {
   nextPhraseVariant,
   resetCouple,
   resetTipsHistory,
+  readJournal,
+  addJournalEntry,
+  removeJournalEntry,
   getPushSubscriptions,
   savePushSubscription,
   removePushSubscription
