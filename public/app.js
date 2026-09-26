@@ -50,7 +50,8 @@
     feridas_infancia: { label: 'Autoconhecimento' },
     linguagem_amor: { label: 'Linguagem do amor' },
     valores_vida: { label: 'Valores & vida a dois' },
-    conhecer_melhor: { label: 'Conhecer melhor' }
+    conhecer_melhor: { label: 'Conhecer melhor' },
+    intimidade: { label: 'Intimidade & conexão física' }
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -439,6 +440,7 @@
       const resultData = await api(`/api/test/result/${state.person.id}`);
       $('#result-text').textContent = resultData.result.texto;
       showView('result');
+      loadDevotional('#devotional-content-result').catch(console.error);
     } catch (e) {
       console.error(e);
       setLoading('Deu um probleminha pra gerar seu resultado. Tenta recarregar a página em instantes.');
@@ -551,14 +553,14 @@
     await refreshTips();
     await loadMission();
     await loadJournal();
-    await loadDevotional();
+    await loadDevotional('#devotional-content');
     await refreshPushButtonState();
     showView('dashboard');
   }
 
   // ---------- devocional do dia ----------
-  async function loadDevotional() {
-    const wrap = $('#devotional-content');
+  async function loadDevotional(targetSelector) {
+    const wrap = $(targetSelector);
     try {
       const data = await api('/api/devotional/today');
       if (!data.devotional) {
