@@ -504,6 +504,8 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
   transition: box-shadow .12s ease, transform .12s ease;
 }
 .stat-badge:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.stat-badge-icon { font-size: 11px; opacity: .75; }
+.badge-hint { margin-top: 10px; }
 
 .modal-overlay {
   position: fixed;

@@ -123,7 +123,15 @@ const VALORES_LABEL = {
   divisao_domestica_atual: 'quem faz o quê em casa, na prática',
   familia_extensa_atual: 'a convivência real com a família estendida',
   planejamento_financeiro_atual: 'o dinheiro que já construíram juntos',
-  conflitos_domesticos_atual: 'como resolvem os atritos do dia a dia'
+  conflitos_domesticos_atual: 'como resolvem os atritos do dia a dia',
+  papel_atual_fe: 'o papel da fé no dia a dia de cada um',
+  mesma_fe: 'compartilhar (ou não) a mesma fé',
+  pratica_conjunta: 'praticar a fé junto como casal',
+  criacao_filhos_fe: 'criar os filhos dentro de uma fé',
+  divergencia_fe: 'como lidam com divergência sobre fé',
+  rotina_fe: 'práticas de fé na rotina do casal',
+  apoio_familia_fe: 'a opinião da família sobre a fé de vocês',
+  crescimento_fe: 'crescer espiritualmente como casal'
 };
 
 // VAL10 (tempo de noivado) fica de fora por enquanto — não fazia sentido
@@ -131,15 +139,19 @@ const VALORES_LABEL = {
 // (com ativa: false) reservada pra uma futura versão comercial do app.
 // VAL21-26 são sobre opinião/expectativa de quem já é casado(a); VAL27-34
 // vão além — perguntam pela realidade JÁ VIVIDA de quem já compartilha
-// rotina, contas e filhos no dia a dia. Quem respondeu "não sei/não se
-// aplica" em qualquer uma delas já é filtrado antes de gerar qualquer
-// finding (ver compareRespostas), então não atrapalha quem ainda não
-// chegou nessa fase.
+// rotina, contas e filhos no dia a dia. ESP01-08 (fé/espiritualidade)
+// entram nesse mesmo motor de comparação literal, apesar do nome
+// "VAL_QUESTION_IDS" — a função não olha a categoria da pergunta, só
+// compara a resposta literal de um id específico entre os dois. Quem
+// respondeu "não sei/não se aplica" em qualquer uma delas já é filtrado
+// antes de gerar qualquer finding (ver compareRespostas), então não
+// atrapalha quem ainda não chegou nessa fase ou não tem fé/religião.
 const VAL_QUESTION_IDS = [
   'VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL11', 'VAL12',
   'VAL13', 'VAL14', 'VAL15', 'VAL16', 'VAL17', 'VAL18', 'VAL19', 'VAL20',
   'VAL21', 'VAL22', 'VAL23', 'VAL24', 'VAL25', 'VAL26',
-  'VAL27', 'VAL28', 'VAL29', 'VAL30', 'VAL31', 'VAL32', 'VAL33', 'VAL34'
+  'VAL27', 'VAL28', 'VAL29', 'VAL30', 'VAL31', 'VAL32', 'VAL33', 'VAL34',
+  'ESP01', 'ESP02', 'ESP03', 'ESP04', 'ESP05', 'ESP06', 'ESP07', 'ESP08'
 ];
 
 function normalizar(texto) {
