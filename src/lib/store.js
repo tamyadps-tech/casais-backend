@@ -3,7 +3,7 @@ const path = require('path');
 
 const DATA_DIR = process.env.DATA_DIR || '/tmp/casais-data';
 
-const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal', 'missions'];
+const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal', 'missions', 'invites'];
 
 function ensureDirs() {
   SUBDIRS.forEach((sub) => {
@@ -15,6 +15,18 @@ ensureDirs();
 
 function safeId(id) {
   return String(id).replace(/[^a-zA-Z0-9_-]/g, '');
+}
+
+// Vira um nome em algo seguro pra usar como pedaço de um ID (sem acento,
+// sem espaço, minúsculo) — usado pra gerar o ID de cada pessoa a partir do
+// nome que ela mesma digitou ao aceitar um convite (ver activateInvite).
+function slug(texto) {
+  return String(texto)
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '')
+    .slice(0, 30) || 'pessoa';
 }
 
 function filePath(sub, name) {
@@ -204,6 +216,73 @@ function writeMissionsState(personId, state) {
   writeJson('missions', personId, state);
 }
 
+// CONVITES — cada casal novo entra no app por um link de convite único.
+// Antes de ativado, o arquivo só guarda o código; quem recebe o link
+// preenche o próprio nome e o do parceiro(a) uma única vez (ver
+// activateInvite) e esse mesmo arquivo passa a valer como o registro do
+// casal — reaproveitado, sem precisar de uma segunda tabela.
+const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem 0/O/1/I, pra evitar confusão ao digitar
+
+function gerarCodigo() {
+  let codigo = '';
+  for (let i = 0; i < 6; i += 1) {
+    codigo += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
+  }
+  return codigo;
+}
+
+function invitePath(code) {
+  return filePath('invites', code.toUpperCase());
+}
+
+function readInvite(code) {
+  const p = invitePath(code);
+  if (!fs.existsSync(p)) return null;
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+function createInvite() {
+  let codigo = gerarCodigo();
+  while (fs.existsSync(invitePath(codigo))) {
+    codigo = gerarCodigo();
+  }
+  const invite = { code: codigo, criadoEm: new Date().toISOString(), ativado: false };
+  writeJson('invites', codigo, invite);
+  return invite;
+}
+
+function activateInvite(code, nome, nomeParceiro) {
+  const invite = readInvite(code);
+  if (!invite) return { error: 'nao_encontrado' };
+  if (invite.ativado) return { error: 'ja_ativado', invite };
+
+  const codigoBase = code.toLowerCase();
+  const slug1 = slug(nome);
+  const slug2 = slug(nomeParceiro) === slug1 ? `${slug(nomeParceiro)}-parceiro` : slug(nomeParceiro);
+
+  const atualizado = {
+    ...invite,
+    ativado: true,
+    ativadoEm: new Date().toISOString(),
+    pessoa1: { id: `${codigoBase}-${slug1}`, name: String(nome).trim() },
+    pessoa2: { id: `${codigoBase}-${slug2}`, name: String(nomeParceiro).trim() }
+  };
+  writeJson('invites', code.toUpperCase(), atualizado);
+  return { invite: atualizado };
+}
+
+// Todos os casais já ativados — usado pelo agendamento automático de dicas
+// (server.js) pra saber pra quem gerar, além do casal original fixo.
+function listActivatedInvites() {
+  const dir = path.join(DATA_DIR, 'invites');
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')))
+    .filter((invite) => invite.ativado);
+}
+
 // Apaga tudo (respostas, resultados, análise cruzada, dicas e histórico de
 // rotação) de um casal — usado pra zerar dados de teste antes da rodada
 // "de verdade". Sempre por trás de um endpoint protegido, nunca chamado
@@ -274,6 +353,10 @@ module.exports = {
   removeJournalEntry,
   readMissionsState,
   writeMissionsState,
+  createInvite,
+  readInvite,
+  activateInvite,
+  listActivatedInvites,
   getPushSubscriptions,
   savePushSubscription,
   removePushSubscription

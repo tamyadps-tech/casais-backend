@@ -47,16 +47,21 @@ function notifyResultReady(personId, name) {
   });
 }
 
-// IDs fixos do casal (mesmo par usado pelo agendamento automático em
-// server.js) — usados só pra saber quem avisar quando o outro responde o
-// questionário. App pessoal de duas pessoas só, não precisa de algo mais
-// genérico que isso.
+// Casal original fixo (o par de uso pessoal de antes dos convites
+// existirem) + qualquer casal que tenha entrado depois por convite (ver
+// src/lib/store.js) — usado só pra saber quem avisar quando o outro
+// responde o questionário.
 const PERSON_1_ID = process.env.COUPLE_PERSON_1_ID || 'tamyris';
 const PERSON_2_ID = process.env.COUPLE_PERSON_2_ID || 'saulo';
 function partnerIdOf(personId) {
   if (personId === PERSON_1_ID) return PERSON_2_ID;
   if (personId === PERSON_2_ID) return PERSON_1_ID;
-  return null;
+
+  const convidado = store.listActivatedInvites().find(
+    (invite) => invite.pessoa1.id === personId || invite.pessoa2.id === personId
+  );
+  if (!convidado) return null;
+  return convidado.pessoa1.id === personId ? convidado.pessoa2.id : convidado.pessoa1.id;
 }
 
 function notifyPartnerSubmitted(personId, name) {
