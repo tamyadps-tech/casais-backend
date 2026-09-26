@@ -382,6 +382,8 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
   font-size: 14px;
   line-height: 1.55;
   background: var(--card);
+  cursor: pointer;
+  user-select: none;
   transition: border-color .12s ease;
 }
 .tip-card:nth-child(odd) { border-left-color: var(--pink); }
@@ -397,6 +399,17 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
   letter-spacing: .05em;
   font-weight: 700;
 }
+.tip-card.collapsed .tip-date { margin-bottom: 0; }
+.tip-date-meta { display: flex; align-items: center; gap: 8px; }
+.tip-toggle-icon {
+  font-size: 12px;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform .2s ease;
+}
+.tip-card.collapsed .tip-toggle-icon { transform: rotate(-90deg); }
+.tip-body { white-space: pre-line; }
+.tip-card.collapsed .tip-body { display: none; }
 .tip-tipo {
   color: var(--purple);
   font-weight: 800;
