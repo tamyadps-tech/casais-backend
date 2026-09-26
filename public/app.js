@@ -398,12 +398,14 @@
 
     try {
       const partnerStatus = await api(`/api/test/status/${partner.id}`);
+      const statusCard = $('#partner-status-card');
       if (partnerStatus.status !== 'submitted') {
         $('#partner-status-text').textContent =
           `${partner.name} ainda não respondeu o dele(a). Assim que responder, as dicas cruzadas de vocês dois começam a chegar.`;
+        statusCard.hidden = false;
       } else {
-        $('#partner-status-text').textContent =
-          `Vocês dois já responderam. As dicas chegam toda segunda e quinta, com uma dica extra de brinde no sábado, até janeiro de 2027.`;
+        // os dois já responderam — nada a avisar aqui, as dicas já falam por si
+        statusCard.hidden = true;
         // garante que a análise cruzada exista (endpoint é cacheado, seguro chamar sempre)
         await api('/api/test/process', {
           method: 'POST',
@@ -412,6 +414,7 @@
         }).catch(() => {});
       }
     } catch (e) {
+      $('#partner-status-card').hidden = false;
       $('#partner-status-text').textContent = 'Não consegui checar o status do seu par agora.';
     }
 
@@ -637,13 +640,23 @@
         return;
       }
       list.innerHTML = '';
-      [...data.tips].reverse().forEach((tip) => {
+      [...data.tips].reverse().forEach((tip, idx) => {
+        const isLatest = idx === 0;
         const card = document.createElement('div');
-        card.className = 'tip-card';
+        card.className = 'tip-card' + (isLatest ? '' : ' collapsed');
         const date = new Date(`${tip.date}T00:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long' });
         const tipos = Array.isArray(tip.tipo) ? tip.tipo : [tip.tipo];
         const tipoLabel = tipos.map((t) => TIP_TIPO_LABEL[t]).filter(Boolean).join(' + ');
-        card.innerHTML = `<span class="tip-date"><span>${date}</span>${tipoLabel ? `<span class="tip-tipo">${tipoLabel}</span>` : ''}</span>${escapeHtml(tip.texto)}`;
+        card.innerHTML = `
+          <span class="tip-date">
+            <span class="tip-date-meta"><span>${date}</span>${tipoLabel ? `<span class="tip-tipo">${tipoLabel}</span>` : ''}</span>
+            <span class="tip-toggle-icon" aria-hidden="true">▾</span>
+          </span>
+          <div class="tip-body">${escapeHtml(tip.texto)}</div>
+        `;
+        card.addEventListener('click', () => {
+          card.classList.toggle('collapsed');
+        });
         list.appendChild(card);
       });
     } catch (e) {
