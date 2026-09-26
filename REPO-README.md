@@ -95,7 +95,7 @@ Quando uma pergunta é adicionada ao banco depois que alguém já respondeu tudo
 
 ## Frontend
 
-`public/` é servido direto pelo Express (sem build step, sem Netlify). Visual clean e neutro, sem emojis — paleta em tons de cinza com um único acento, mobile-first, com suporte a tema escuro via `prefers-color-scheme`.
+`public/` é servido direto pelo Express (sem build step, sem Netlify). Visual moderno e colorido, sem emojis — identidade em gradiente rosa→roxo (`--pink`/`--purple` em `styles.css`), cartões com cantos bem arredondados, sombras suaves coloridas e a fonte Plus Jakarta Sans (Google Fonts). Mobile-first, com suporte a tema escuro via `prefers-color-scheme` (paleta própria, não é só um inverte de cor).
 
 ### App instalável + notificações push
 
