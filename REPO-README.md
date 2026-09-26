@@ -22,7 +22,7 @@ Não existem robôs autônomos rodando sozinhos por aí — é uma orquestraçã
 | Agente gerente | `src/lib/pipeline.js` |
 | Coordenadores de qualidade (looping) | `src/lib/qualityCoordinator.js` |
 
-**A IA está desligada por padrão** (`hasApiKey()` em `src/lib/aiClient.js` sempre retorna `false`, por pedido explícito) — o app roda 100% no banco de frases determinístico (`src/lib/phraseBank.js`) e nos textos-modelo (`mockResult`/`mockTip`), sem gastar nenhum crédito da Claude API, mesmo que `CLAUDE_API_KEY` esteja configurada no Railway (pode deixar configurada sem problema — só não é usada). Resultado individual, análise cruzada e dicas quinzenais saem instantâneos, sem depender de rede nem de saldo. Pra religar a IA (ela ainda existe, só está desativada), é só pedir — o código inteiro continua no repositório.
+**A IA está ligada só pras dicas quinzenais** (`tipsAgent.js`, via `hasApiKey()` real em `src/lib/aiClient.js`) — depois de semanas rodando 100% no banco de frases, as dicas ficaram repetitivas e superficiais, então a IA voltou a escrever o texto final (ainda em cima de fatos 100% determinísticos do `crossRules.js`, nunca inventados) com liberdade real pra propor ações criativas e específicas, não só reformular a sugestão fixa do banco com outras palavras. **Resultado individual e análise cruzada continuam desligados de propósito** (constante local `IA_DESLIGADA_AQUI` em `resultAgent.js` e `crossAnalysisAgent.js`, independente de `CLAUDE_API_KEY`) — saem sempre do banco de frases/mock, sem custo. Se a chamada de IA falhar por qualquer motivo (créditos, rede), a dica cai automaticamente no texto mock (`mockTip`) em vez de travar — ver `qualityCoordinator.js`.
 
 ## Como o cruzamento de dados vira dica assertiva
 

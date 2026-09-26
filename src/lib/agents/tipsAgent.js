@@ -15,11 +15,12 @@ const { runQualityLoop, feedbackSuffix, HUMANITY_RUBRIC } = require('../qualityC
 const RUBRIC = [
   'Começa chamando a pessoa pelo nome (ex: "Tamyris, ...")',
   'Usa os FATOS fornecidos no contexto, sem inventar nenhum dado novo sobre o casal',
-  'Transforma cada sugestão de ação fornecida numa ação concreta, pequena e executável ainda hoje ou nessa semana',
+  'A ação sugerida é específica, criativa e pensada pra esse casal — nunca um conselho genérico e óbvio que serviria pra qualquer relacionamento (ex: "conversem mais", "demonstrem carinho"); vai a fundo em COMO fazer isso na prática, com um exemplo concreto',
+  'A abertura da mensagem não repete a mesma fórmula toda vez ("sabia que...", "boa notícia...") — varia o jeito de introduzir o fato conforme o contexto, como alguém de verdade escreveria',
   'Quando houver dois fatos principais, os dois aparecem misturados logo no início da mensagem, um emendado no outro com naturalidade — nunca como duas dicas separadas nem repetindo o nome da pessoa duas vezes',
-  'Quando houver uma "dica extra sobre a própria vida", ela vem como uma segunda parte clara da mensagem, depois dos fatos principais, não misturada com eles',
+  'Quando houver uma "dica extra sobre a própria vida", ela vem como uma segunda parte clara da mensagem, depois dos fatos principais, não misturada com eles, e também traz uma reflexão ou ação específica — não um clichê de autoajuda genérico',
   'Não usa emojis em nenhum ponto do texto',
-  'Tem entre 60 e 200 palavras',
+  'Tem entre 80 e 220 palavras',
   'Se algum fato for do tipo "papo_valores", essa parte é um convite tranquilo pra conversar, nunca soa como alarme ou cobrança',
   ...HUMANITY_RUBRIC
 ];
@@ -90,31 +91,33 @@ async function generateTip({ targetName, partnerName, findings, autoFinding }) {
   const generate = async (feedback) => {
     const correcoes = feedbackSuffix(feedback);
     const autoBlock = autoFinding
-      ? `\n\nDICA EXTRA SOBRE A PRÓPRIA VIDA DE ${targetName.toUpperCase()} (fato verificado, não invente nada além disso):\n"${autoFinding.fato}"\nReflexão/ação sugerida: "${autoFinding.sugestao_acao}"`
+      ? `\n\nDICA EXTRA SOBRE A PRÓPRIA VIDA DE ${targetName.toUpperCase()} (fato verificado, não invente nada além disso):\n"${autoFinding.fato}"\nIdeia de partida pra reflexão/ação: "${autoFinding.sugestao_acao}" — pode usar essa ideia, adaptá-la, ou propor uma reflexão/ação ainda mais específica e criativa pra essa pessoa, contanto que sirva ao mesmo objetivo.`
       : '';
 
     const fatosBloco = principais
       .map(
         (f, idx) =>
-          `FATO PRINCIPAL ${idx + 1} SOBRE ${partnerName.toUpperCase()} (não invente nada além disso):\n"${f.fato}"\nSugestão de ação (transforme numa frase natural, pode adaptar a forma mas não o conteúdo): "${f.sugestao_acao}"\nTipo: ${f.tipo}`
+          `FATO PRINCIPAL ${idx + 1} SOBRE ${partnerName.toUpperCase()} (verificado, não invente nada além disso):\n"${f.fato}"\nIdeia de partida pra ação (tipo: ${f.tipo}): "${f.sugestao_acao}" — não precisa usar essa frase quase pronta; pode se inspirar nela, adaptar, ou criar uma ação diferente e mais criativa que sirva ao mesmo objetivo, contanto que faça sentido com o fato acima e não invente dado novo sobre o casal.`
       )
       .join('\n\n');
 
     const tarefaEspecial =
       principais.length > 1
         ? `Escreva em partes: 1) misture os ${principais.length} fatos principais logo no início, emendados com naturalidade (um conectando no outro, sem repetir o nome de ${targetName} a cada um). ${autoFinding ? `2) uma reflexão breve sobre a própria vida de ${targetName} — o jeito dela(e) de ver o mundo ou sua própria dificuldade em relacionamentos — baseada na dica extra abaixo.` : ''}`
-        : `Escreva em duas partes: 1) como amar melhor ${partnerName}, baseada no fato e na sugestão de ação. ${autoFinding ? `2) uma reflexão breve sobre a própria vida de ${targetName} — o jeito dela(e) de ver o mundo ou sua própria dificuldade em relacionamentos — baseada na dica extra abaixo.` : ''}`;
+        : `Escreva em duas partes: 1) como amar melhor ${partnerName}, baseada no fato acima. ${autoFinding ? `2) uma reflexão breve sobre a própria vida de ${targetName} — o jeito dela(e) de ver o mundo ou sua própria dificuldade em relacionamentos — baseada na dica extra abaixo.` : ''}`;
 
     const prompt = `Você escreve dicas quinzenais para um app pessoal de um casal (${targetName} e ${partnerName}, noivos). Esta dica é para ${targetName}.
 
 ${fatosBloco}
 ${autoBlock}
 
-TAREFA: Escreva UMA dica construtiva e calorosa pra ${targetName}, entre 60 e 200 palavras. ${tarefaEspecial}
+TAREFA: Escreva UMA dica construtiva, calorosa e de verdade ÚTIL pra ${targetName}, entre 80 e 220 palavras. ${tarefaEspecial}
 
-Se algum fato for do tipo "papo_valores", essa parte não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom. NÃO use emojis. Evite rótulos de diagnóstico ("apego ansioso", "ferida de rejeição" etc — descreva o comportamento, não o rótulo); "linguagem do amor" pode ser citado normalmente quando for o assunto. Escreva com simplicidade, amor e respeito pelos dois, como um amigo(a) de verdade torcendo por eles.${correcoes}`;
+Seja criativo e específico de propósito: pense em algo que só faria sentido pra ESSE casal, com esses fatos específicos — não um conselho de relacionamento genérico que caberia em qualquer casal. Dê um exemplo concreto de como fazer isso na prática (uma frase pra dizer, um gesto exato, um momento específico do dia), não só "conversem sobre isso" ou "demonstrem mais carinho". Varie a forma de abrir a mensagem — não comece sempre com "sabia que" ou "boa notícia", escreva como alguém que conhece bem o casal escreveria essa mensagem especificamente hoje.
 
-    return ask(prompt, { maxTokens: 650 });
+Se algum fato for do tipo "papo_valores", essa parte não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom, mas ainda assim específica e não repetitiva. NÃO use emojis. Evite rótulos de diagnóstico ("apego ansioso", "ferida de rejeição" etc — descreva o comportamento, não o rótulo); "linguagem do amor" pode ser citado normalmente quando for o assunto. Escreva com simplicidade, amor e respeito pelos dois, como um amigo(a) de verdade torcendo por eles.${correcoes}`;
+
+    return ask(prompt, { maxTokens: 750 });
   };
 
   const { text, status, nota, attempts } = await runQualityLoop(generate, RUBRIC);

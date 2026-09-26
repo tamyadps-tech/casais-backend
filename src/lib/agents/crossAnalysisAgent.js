@@ -5,9 +5,14 @@
 // (opcional, usado como contexto) e depois, no tipsAgent, pra transformar
 // UM finding específico numa mensagem calorosa.
 
-const { hasApiKey, ask } = require('../aiClient');
+const { ask } = require('../aiClient');
 const { buildFindings } = require('../crossRules');
 const profiles = require('../../data/profiles');
+
+// Continua desligado de propósito, independente de CLAUDE_API_KEY — só as
+// dicas quinzenais (tipsAgent.js) voltaram a usar IA. O resumo aqui é só
+// um contexto interno opcional, nunca mostrado direto pra quem usa o app.
+const IA_DESLIGADA_AQUI = true;
 
 function describePessoa(pessoa) {
   const { name, scores } = pessoa;
@@ -23,7 +28,7 @@ function describePessoa(pessoa) {
 }
 
 async function buildResumo(findings, nome1, nome2) {
-  if (!hasApiKey()) {
+  if (IA_DESLIGADA_AQUI) {
     return `Análise cruzada gerada com ${findings.length} pontos específicos entre ${nome1} e ${nome2} (modo simplificado, sem chave de IA configurada).`;
   }
 
