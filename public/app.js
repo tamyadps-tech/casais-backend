@@ -372,7 +372,7 @@
           `${partner.name} ainda não respondeu o dele(a). Assim que responder, as dicas cruzadas de vocês dois começam a chegar.`;
       } else {
         $('#partner-status-text').textContent =
-          `Vocês dois já responderam. As dicas quinzenais chegam toda segunda e quinta até janeiro de 2027.`;
+          `Vocês dois já responderam. As dicas chegam toda segunda e quinta, com uma dica extra de brinde no sábado, até janeiro de 2027.`;
         // garante que a análise cruzada exista (endpoint é cacheado, seguro chamar sempre)
         await api('/api/test/process', {
           method: 'POST',
@@ -399,7 +399,7 @@
     try {
       const data = await api(`/api/tips/${me.id}/${partner.id}/mine/${encodeURIComponent(me.name)}`);
       if (!data.tips.length) {
-        list.innerHTML = '<p class="tip-empty">Ainda não chegou nenhuma dica — a primeira aparece na próxima segunda ou quinta.</p>';
+        list.innerHTML = '<p class="tip-empty">Ainda não chegou nenhuma dica — a primeira aparece na próxima segunda, quinta ou sábado.</p>';
         return;
       }
       list.innerHTML = '';

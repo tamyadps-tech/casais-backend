@@ -27,7 +27,7 @@ router.get('/schedule/:id1/:id2', (req, res) => {
     success: true,
     inicio: START_DATE,
     fim: END_DATE,
-    frequencia: 'segunda e quinta-feira',
+    frequencia: 'segunda, quinta e sábado (extra de brinde)',
     datas: generateScheduleDates(),
     entregues: schedule.delivered
   });

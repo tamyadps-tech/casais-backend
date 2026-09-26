@@ -150,7 +150,8 @@ async function getOrBuildCoupleAnalysis(id1, id2, { force = false } = {}) {
 // Escolhe, entre os findings do cruzamento de dados que se aplicam a esta
 // pessoa, o que faz mais tempo não vira dica (ou nunca virou) — garante
 // rotação entre os tipos de dica (gesto de amor, cuidado com ferida,
-// dinâmica de apego, papo de valores, reforço) ao longo das ~21 semanas.
+// dinâmica de apego, papo de valores, reforço) ao longo das ~14 semanas
+// (segunda, quinta e sábado — 3 entregas por semana).
 const COOLDOWN_DIAS = 42; // ~6 semanas — não repete o mesmo fato antes disso
 function selectFinding(findings, targetName, usedLog) {
   const candidatos = findings.filter((f) => f.alvo === targetName);
