@@ -1221,6 +1221,98 @@ const allQuestions = [
     ]
   },
 
+  // Perguntas voltadas pra quem já é casado(a) — quem ainda não é pode
+  // responder "Não sei / não se aplica" (opção universal, ver o final
+  // deste arquivo) sem prejuízo nenhum pro resto do teste.
+  {
+    id: 'VAL21',
+    categoria: 'valores_vida',
+    subcategoria: 'sobrenome',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre unir os sobrenomes depois do casamento, o que mais representa você?',
+    opcoes: [
+      { texto: 'A esposa adota o sobrenome do marido' },
+      { texto: 'Cada um mantém o próprio sobrenome' },
+      { texto: 'Os dois adicionam o sobrenome um do outro' },
+      { texto: 'O marido também poderia adotar o sobrenome dela' },
+      { texto: 'Prefiro decidir isso mais pra frente' }
+    ]
+  },
+  {
+    id: 'VAL22',
+    categoria: 'valores_vida',
+    subcategoria: 'familia_conjuge',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Sobre a convivência com a família do cônjuge (sogros, cunhados), o que mais representa como você pensa? (escolha até 5)',
+    opcoes: [
+      { texto: 'Gosto de manter contato frequente, mesmo sem ser convidado(a)' },
+      { texto: 'Prefiro visitas combinadas com antecedência' },
+      { texto: 'Acho importante ter limites claros sobre opiniões da família na nossa vida' },
+      { texto: 'Feriados e datas importantes deveriam ser divididos entre as duas famílias' },
+      { texto: 'Prefiro que decisões do casal fiquem só entre nós dois, sem interferência' },
+      { texto: 'Gosto de tratar a família do parceiro(a) como se fosse minha própria' }
+    ]
+  },
+  {
+    id: 'VAL23',
+    categoria: 'valores_vida',
+    subcategoria: 'decisoes_casa',
+    tipo: 'multipla_escolha',
+    texto: 'No dia a dia de um casamento, como devem ser tomadas as decisões que afetam os dois (mudança, compra grande, mudar de emprego)?',
+    opcoes: [
+      { texto: 'Sempre conversando e decidindo junto, mesmo que demore mais' },
+      { texto: 'Cada um decide sozinho(a) o que for da sua área (trabalho, dinheiro, casa)' },
+      { texto: 'Na dúvida, prevalece a opinião de quem entende mais do assunto' },
+      { texto: 'Decisões grandes sempre a dois; as pequenas, cada um resolve por conta' },
+      { texto: 'Prefiro que quem sentir mais forte sobre o assunto tenha a palavra final' }
+    ]
+  },
+  {
+    id: 'VAL24',
+    categoria: 'valores_vida',
+    subcategoria: 'planejamento_legal',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Sobre planejamento pro futuro um do outro (testamento, seguro de vida, procurações), o que faz sentido pra você? (escolha até 5)',
+    opcoes: [
+      { texto: 'Importante resolver isso logo após casar' },
+      { texto: 'Prefiro deixar pra quando tivermos filhos ou patrimônio maior' },
+      { texto: 'Não me sinto confortável pensando nisso ainda' },
+      { texto: 'Acho que vale a pena buscar orientação profissional (advogado ou planejador financeiro)' },
+      { texto: 'Prefiro que cada um cuide da própria parte, sem misturar' },
+      { texto: 'Isso devia ser conversado logo no início do casamento' }
+    ]
+  },
+  {
+    id: 'VAL25',
+    categoria: 'valores_vida',
+    subcategoria: 'rotina_casada',
+    tipo: 'multipla_escolha',
+    texto: 'Pensando na rotina real de um casamento (não no começo do namoro), o que mais importa pra você no dia a dia?',
+    opcoes: [
+      { texto: 'Ter pelo menos um momento só dos dois todo santo dia, mesmo pequeno' },
+      { texto: 'Dividir bem as responsabilidades pra ninguém se sentir sobrecarregado(a)' },
+      { texto: 'Manter alguma individualidade, com espaço e hobbies próprios' },
+      { texto: 'Ter rituais fixos (jantar junto, fim de semana reservado)' },
+      { texto: 'O mais importante é se adaptar conforme a fase, sem rotina fixa' }
+    ]
+  },
+  {
+    id: 'VAL26',
+    categoria: 'valores_vida',
+    subcategoria: 'aniversario_casamento',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre celebrar datas importantes do casamento (o aniversário de casamento, por exemplo), o que mais combina com você?',
+    opcoes: [
+      { texto: 'Um jantar especial, só os dois, todo ano' },
+      { texto: 'Uma viagem, mesmo que curta' },
+      { texto: 'Trocar presentes com significado, sem precisar ser caro' },
+      { texto: 'O importante é lembrar e valorizar, sem precisar de grande produção' },
+      { texto: 'Prefiro fazer algo diferente a cada ano, sem tradição fixa' }
+    ]
+  },
+
   // ==========================================
   // CONHECER MELHOR
   // ==========================================
@@ -1396,7 +1488,22 @@ const allQuestions = [
   }
 ];
 
-const questions = allQuestions.filter((q) => q.ativa !== false);
+// Opção universal de "pular sem chutar" — toda pergunta de múltipla
+// escolha ou seleção múltipla ganha ela automaticamente aqui (em vez de
+// repetir em cada uma das ~80 perguntas), pra quem não sabe responder ou
+// pra quem a pergunta simplesmente não se aplica (ex: perguntas sobre vida
+// de casado(a), pra quem ainda não é). tag 'neutro' garante que nunca entra
+// na pontuação; o texto exato é usado como sentinela pelo motor de
+// cruzamento (crossRules.js) pra nunca contar como "os dois concordam".
+const NAO_SEI_TEXTO = 'Não sei / não se aplica';
+
+function comOpcaoNaoSei(q) {
+  if (q.tipo !== 'multipla_escolha' && q.tipo !== 'selecao_multipla') return q;
+  return { ...q, opcoes: [...q.opcoes, { texto: NAO_SEI_TEXTO, tag: 'neutro' }] };
+}
+
+const questions = allQuestions.filter((q) => q.ativa !== false).map(comOpcaoNaoSei);
 
 module.exports = questions;
 module.exports.all = allQuestions;
+module.exports.NAO_SEI_TEXTO = NAO_SEI_TEXTO;
