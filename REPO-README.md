@@ -1,6 +1,6 @@
 # Casais Backend
 
-App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 98 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas quinzenais personalizadas até janeiro de 2027, pelo app ou pelo Google Agenda.
+App pessoal de autoconhecimento e casal — feito só para Tamyris e Saulo. 98 perguntas, testes de personalidade/temperamento/apego, feridas da infância, linguagem do amor, valores e vida a dois, e perguntas pra se conhecerem melhor. No final, dicas personalizadas toda segunda e quinta, com uma extra de brinde no sábado, até janeiro de 2027, pelo app ou pelo Google Agenda.
 
 ## Como o sistema pensa (a "equipe de agentes")
 
@@ -18,7 +18,7 @@ Não existem robôs autônomos rodando sozinhos por aí — é uma orquestraçã
 | Resultado + dica de autoconhecimento | `src/lib/agents/resultAgent.js` — sempre cobre 4 partes: perfil geral, personalidade/temperamento, forma de amar (apego + linguagem do amor) e uma dica prática |
 | Cruzamento de dados do casal | `src/lib/agents/crossAnalysisAgent.js` |
 | Dicas quinzenais personalizadas | `src/lib/agents/tipsAgent.js` |
-| Comunicação automática 2x/semana | `node-cron` em `server.js` + feed `.ics` |
+| Comunicação automática (seg/qui + extra de sábado) | `node-cron` em `server.js` + feed `.ics` |
 | Agente gerente | `src/lib/pipeline.js` |
 | Coordenadores de qualidade (looping) | `src/lib/qualityCoordinator.js` |
 
@@ -36,9 +36,9 @@ Essa é a parte mais importante do sistema, então ela é **determinística** �
 
 Cada dica final, então, mistura **dois findings principais** (de lentes/tipos diferentes quando possível — ex: um papo de valores + um gesto de amor) emendados com naturalidade logo no início, sem repetir o nome da pessoa a cada um, **+ uma reflexão sobre a própria vida** (lente 5) — já completa desde a primeiríssima dica de cada pessoa, sem uma versão simplificada de "boas-vindas".
 
-**Anti-repetição (do fato):** cada finding tem um id estável, e o sistema guarda (por pessoa, por casal) quando cada um foi usado pela última vez. Toda vez que uma dica precisa ser gerada, o agente gerente escolhe o finding aplicável àquela pessoa que está há mais tempo sem ser usado (ou nunca foi usado), com um cooldown de 6 semanas antes de repetir o mesmo fato — isso garante variedade e rotação entre os 5 tipos de dica ao longo das ~21 semanas de entrega.
+**Anti-repetição (do fato):** cada finding tem um id estável, e o sistema guarda (por pessoa, por casal) quando cada um foi usado pela última vez. Toda vez que uma dica precisa ser gerada, o agente gerente escolhe o finding aplicável àquela pessoa que está há mais tempo sem ser usado (ou nunca foi usado), com um cooldown de 6 semanas antes de repetir o mesmo fato — isso garante variedade e rotação entre os 5 tipos de dica ao longo das ~14 semanas de entrega (segunda, quinta e sábado).
 
-**Anti-repetição (do conselho — banco de frases, `src/lib/phraseBank.js`):** cada finding carrega um `variant_key` (ex: `valores_alta`, `ferida_rejeicao`, `gesto_tempo_qualidade`) que aponta pra um banco de 3 a 20 variações escritas à mão do "conselho" final. Toda vez que um finding é usado, o sistema roda pra próxima variação daquela categoria (round-robin, por casal, guardado em `tips/<couple_id>/phrase-index.json`) — assim o mesmo fato nunca repete a mesma frase de conselho em sequência. Isso funciona **independente de ter `CLAUDE_API_KEY` configurada ou não**: com IA, ela reescreve o fato + a variação escolhida com calor humano; sem IA (modo mock), a variação já sai pronta e humanizada, sem custo de token nenhum. Os 129 textos foram calibrados pra cobrir ~3 meses de entregas (2x/semana) sem repetição perceptível.
+**Anti-repetição (do conselho — banco de frases, `src/lib/phraseBank.js`):** cada finding carrega um `variant_key` (ex: `valores_alta`, `ferida_rejeicao`, `gesto_tempo_qualidade`) que aponta pra um banco de 3 a 20 variações escritas à mão do "conselho" final. Toda vez que um finding é usado, o sistema roda pra próxima variação daquela categoria (round-robin, por casal, guardado em `tips/<couple_id>/phrase-index.json`) — assim o mesmo fato nunca repete a mesma frase de conselho em sequência, mesmo no modo mock. Com `CLAUDE_API_KEY` configurada (ver seção acima), as dicas quinzenais usam essa variação só como ponto de partida — a IA tem liberdade pra propor uma ação ainda mais específica e criativa, o que reduz bem mais a sensação de repetição com o tempo.
 
 ## Banco de perguntas (98 ativas no total)
 

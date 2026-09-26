@@ -1,9 +1,9 @@
-// Calendário de entregas: duas vezes por semana (segunda e quinta),
-// começando hoje e indo até o fim de janeiro de 2027.
+// Calendário de entregas: segunda e quinta (dicas normais) + sábado (dica
+// extra de brinde), começando hoje e indo até o fim de janeiro de 2027.
 
 const START_DATE = process.env.TIPS_START_DATE || new Date().toISOString().slice(0, 10);
 const END_DATE = process.env.TIPS_END_DATE || '2027-01-31';
-const DELIVERY_WEEKDAYS = [1, 4]; // 1 = segunda, 4 = quinta (getDay())
+const DELIVERY_WEEKDAYS = [1, 4, 6]; // 1 = segunda, 4 = quinta, 6 = sábado (getDay())
 const DELIVERY_HOUR = Number(process.env.TIPS_DELIVERY_HOUR || 9);
 
 function toDateOnly(d) {

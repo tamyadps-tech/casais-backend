@@ -61,10 +61,10 @@ app.use('/api/admin', adminRouter);
 app.use('/api/push', pushRouter);
 
 // ==========================================
-// AGENDAMENTO AUTOMÁTICO DAS DICAS (2x/semana até jan/2027)
+// AGENDAMENTO AUTOMÁTICO DAS DICAS (segunda, quinta e sábado até jan/2027)
 // ==========================================
 // Roda todo dia no horário configurado; o próprio pipeline decide se hoje é
-// dia de entrega (segunda ou quinta) e se ainda não foi gerado.
+// dia de entrega (segunda, quinta ou sábado) e se ainda não foi gerado.
 cron.schedule(`0 ${DELIVERY_HOUR} * * *`, async () => {
   try {
     const result = await pipeline.generateDueTips(PERSON_1_ID, PERSON_2_ID);
@@ -82,7 +82,7 @@ cron.schedule(`0 ${DELIVERY_HOUR} * * *`, async () => {
 
 app.listen(PORT, () => {
   console.log(`Servidor Casais rodando em http://localhost:${PORT}`);
-  console.log(`Entregas de dica: ${START_DATE} até ${END_DATE}, 2x/semana às ${DELIVERY_HOUR}h`);
+  console.log(`Entregas de dica: ${START_DATE} até ${END_DATE}, seg/qui/sáb às ${DELIVERY_HOUR}h`);
 });
 
 module.exports = app;
