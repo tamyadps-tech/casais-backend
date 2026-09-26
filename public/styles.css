@@ -406,6 +406,188 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
 }
 .tip-empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
 
+.chart-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+  margin: 20px 0 10px;
+}
+.chart-title:first-of-type { margin-top: 6px; }
+
+/* Gráfico sequencial (magnitude) — um único matiz roxo, comprimento da
+   barra = intensidade, trilho no tom mais claro do mesmo matiz. */
+.bar-chart { display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: flex; flex-direction: column; gap: 4px; }
+.bar-row-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+}
+.bar-row-label span:last-child { color: var(--muted); font-weight: 800; font-size: 12px; }
+.bar-track {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--purple-soft);
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  min-width: 6px;
+  border-radius: 999px;
+  background: var(--purple);
+  transition: width .4s ease;
+}
+
+/* Gráfico divergente (polaridade) — dois matizes já usados na identidade
+   do app (rosa/roxo) e um ponto neutro no centro quando os dois lados
+   empatam; nunca uma cor nova no meio. */
+.axis-chart { display: flex; flex-direction: column; gap: 14px; }
+.axis-row { display: flex; flex-direction: column; gap: 5px; }
+.axis-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+}
+.axis-labels span:first-child { color: var(--pink); }
+.axis-labels span:last-child { color: var(--purple); text-align: right; }
+.axis-track {
+  display: flex;
+  gap: 2px;
+  height: 12px;
+}
+.axis-fill-a, .axis-fill-b {
+  height: 100%;
+  min-width: 4px;
+}
+.axis-fill-a { background: var(--pink); border-radius: 999px 0 0 999px; }
+.axis-fill-b { background: var(--purple); border-radius: 0 999px 999px 0; }
+.axis-track.empatado .axis-fill-a,
+.axis-track.empatado .axis-fill-b { background: var(--border); }
+
+.badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.stat-badge {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--purple-soft);
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.growth-list { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+.growth-item {
+  border-left: 4px solid var(--mint);
+  border-radius: var(--radius-sm);
+  background: var(--purple-soft);
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.growth-item .growth-area {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-weight: 800;
+  color: var(--purple);
+  margin-bottom: 4px;
+}
+
+.mood-picker { display: flex; gap: 6px; margin-top: 6px; }
+.mood-btn {
+  flex: 1;
+  padding: 12px 4px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color .12s ease, background .12s ease, transform .12s ease;
+}
+.mood-btn:hover { border-color: var(--purple); transform: translateY(-1px); }
+.mood-btn.selected { border-color: transparent; background: var(--gradient); color: #fff; box-shadow: var(--shadow-sm); }
+
+.mood-trend { display: flex; align-items: flex-end; gap: 4px; margin-top: 16px; height: 40px; }
+.mood-trend-empty { color: var(--muted); font-size: 13px; }
+.mood-bar {
+  width: 10px;
+  border-radius: 4px 4px 0 0;
+  background: var(--purple-soft);
+}
+.mood-bar.latest { background: var(--gradient); }
+
+.add-row { display: flex; gap: 8px; margin-top: 12px; }
+.add-row input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+}
+.add-row input[type="text"]:focus { outline: none; border-color: var(--purple); }
+.add-row textarea { min-height: 80px; margin: 0; }
+
+.toggle-row { display: flex; gap: 8px; margin-top: 12px; }
+.toggle-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color .12s ease, background .12s ease;
+}
+.toggle-btn.selected { border-color: transparent; background: var(--gradient); color: #fff; }
+
+.entries-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.entry-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.entry-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-weight: 700;
+}
+.entry-remove {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.entry-remove:hover { color: var(--pink); }
+.entries-empty { color: var(--muted); font-size: 13px; padding: 4px 0 0; }
+
 .copy-row { display: flex; gap: 8px; margin-top: 12px; }
 .copy-row input {
   flex: 1;

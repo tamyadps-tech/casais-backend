@@ -13,6 +13,7 @@ const tipsRouter = require('./src/routes/tips');
 const calendarRouter = require('./src/routes/calendar');
 const adminRouter = require('./src/routes/admin');
 const pushRouter = require('./src/routes/push');
+const journalRouter = require('./src/routes/journal');
 const { DELIVERY_HOUR, START_DATE, END_DATE } = require('./src/lib/scheduler');
 
 const app = express();
@@ -59,6 +60,7 @@ app.use('/api/tips', tipsRouter);
 app.use('/api/calendar', calendarRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/push', pushRouter);
+app.use('/api/journal', journalRouter);
 
 // ==========================================
 // AGENDAMENTO AUTOMÁTICO DAS DICAS (segunda, quinta e sábado até jan/2027)

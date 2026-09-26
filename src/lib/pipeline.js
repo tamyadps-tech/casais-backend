@@ -12,6 +12,7 @@ const { analyzeCouple, describePessoa } = require('./agents/crossAnalysisAgent')
 const { generateTip } = require('./agents/tipsAgent');
 const { generateScheduleDates } = require('./scheduler');
 const { sendToSubscription } = require('./push');
+const { buildGrowthPoints } = require('./growthPoints');
 
 // Manda push pra todos os aparelhos inscritos dessa pessoa. Silencioso se
 // push não estiver configurado (sem VAPID) ou a pessoa não tiver nenhuma
@@ -100,7 +101,10 @@ async function completeResponses(personId, partnerId, extraResponses) {
 async function getOrBuildResult(personId, { force = false } = {}) {
   if (!force) {
     const cached = store.readJson('results', personId);
-    if (cached) return cached;
+    // "pontos a trabalhar" é determinístico e sem custo de IA — recalcula
+    // sempre a partir da pontuação já salva, mesmo em resultados antigos
+    // gerados antes desse recurso existir, sem precisar forçar regeneração.
+    if (cached) return { ...cached, pontosCrescimento: buildGrowthPoints(cached.scores) };
   }
 
   const submission = store.readJson('responses', personId);
