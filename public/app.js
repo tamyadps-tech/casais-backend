@@ -14,6 +14,8 @@
     papo_valores: 'Papo de valores'
   };
 
+  const NAO_SEI_TEXTO = 'Não sei / não se aplica';
+
   const LINGUAGEM_LABEL = {
     palavras_afirmacao: 'Palavras de afirmação',
     tempo_qualidade: 'Tempo de qualidade',
@@ -189,7 +191,8 @@
       wrap.className = 'options-list';
       q.opcoes.forEach((texto) => {
         const btn = document.createElement('button');
-        btn.className = 'option-btn' + (existing === texto ? ' selected' : '');
+        const skip = texto === NAO_SEI_TEXTO;
+        btn.className = 'option-btn' + (skip ? ' option-btn-skip' : '') + (existing === texto ? ' selected' : '');
         btn.textContent = texto;
         btn.addEventListener('click', () => {
           answerAndAdvance(q.id, texto);
@@ -215,7 +218,8 @@
       wrap.className = 'options-list';
       q.opcoes.forEach((texto) => {
         const btn = document.createElement('button');
-        btn.className = 'option-btn' + (selected.includes(texto) ? ' selected' : '');
+        const skip = texto === NAO_SEI_TEXTO;
+        btn.className = 'option-btn' + (skip ? ' option-btn-skip' : '') + (selected.includes(texto) ? ' selected' : '');
         btn.textContent = texto;
         btn.addEventListener('click', () => {
           const idx = selected.indexOf(texto);
@@ -260,11 +264,19 @@
       }
       wrap.appendChild(buttons);
       area.appendChild(wrap);
+
+      const skipBtn = document.createElement('button');
+      skipBtn.className = 'btn-link skip-question' + (existing === NAO_SEI_TEXTO ? ' selected' : '');
+      skipBtn.textContent = NAO_SEI_TEXTO;
+      skipBtn.addEventListener('click', () => {
+        answerAndAdvance(q.id, NAO_SEI_TEXTO);
+      });
+      area.appendChild(skipBtn);
     } else {
       const textarea = document.createElement('textarea');
       textarea.className = 'open-answer';
       textarea.placeholder = 'Escreva à vontade...';
-      textarea.value = existing || '';
+      textarea.value = existing && existing !== NAO_SEI_TEXTO ? existing : '';
       area.appendChild(textarea);
 
       const nextBtn = $('#btn-next');
@@ -277,6 +289,14 @@
         if (!textarea.value.trim()) return;
         answerAndAdvance(q.id, textarea.value.trim());
       };
+
+      const skipBtn = document.createElement('button');
+      skipBtn.className = 'btn-link skip-question' + (existing === NAO_SEI_TEXTO ? ' selected' : '');
+      skipBtn.textContent = NAO_SEI_TEXTO;
+      skipBtn.addEventListener('click', () => {
+        answerAndAdvance(q.id, NAO_SEI_TEXTO);
+      });
+      area.appendChild(skipBtn);
     }
   }
 
@@ -423,8 +443,28 @@
     await refreshTips();
     await loadMission();
     await loadJournal();
+    await loadDevotional();
     await refreshPushButtonState();
     showView('dashboard');
+  }
+
+  // ---------- devocional do dia ----------
+  async function loadDevotional() {
+    const wrap = $('#devotional-content');
+    try {
+      const data = await api('/api/devotional/today');
+      const d = data.devotional;
+      wrap.innerHTML = `
+        <div class="devotional-box">
+          <span class="devotional-ref">${escapeHtml(d.referencia)}</span>
+          <p class="devotional-verse">"${escapeHtml(d.texto)}"</p>
+          <p class="devotional-estudo">${escapeHtml(d.estudo)}</p>
+        </div>
+      `;
+    } catch (e) {
+      console.error(e);
+      wrap.innerHTML = '<p class="mission-empty">Não consegui carregar o devocional agora.</p>';
+    }
   }
 
   // ---------- missão individual ----------

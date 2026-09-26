@@ -23,6 +23,7 @@
 //                    (o tipsAgent reescreve isso com calor humano e empatia)
 
 const { getOptionTags, getLiteralById } = require('./scoring');
+const { NAO_SEI_TEXTO } = require('../data/questions');
 
 // Rótulos em linguagem humana, não em termo técnico — "presentes" soa a
 // obrigação/compra; o que realmente importa aqui é o gesto pensado, não o
@@ -108,15 +109,26 @@ const VALORES_LABEL = {
   cuidado_filhos: 'o cuidado com os filhos no dia a dia',
   provimento: 'quem é o(a) principal provedor(a)',
   cuidados_pesados: 'as tarefas mais pesadas do dia a dia',
-  casa_e_beleza: 'cuidados da casa e da própria aparência'
+  casa_e_beleza: 'cuidados da casa e da própria aparência',
+  sobrenome: 'unir os sobrenomes depois de casar',
+  familia_conjuge: 'a convivência com a família do cônjuge',
+  decisoes_casa: 'como tomar decisões importantes a dois',
+  planejamento_legal: 'planejamento pro futuro um do outro',
+  rotina_casada: 'a rotina real de um casamento',
+  aniversario_casamento: 'como celebrar datas do casamento'
 };
 
 // VAL10 (tempo de noivado) fica de fora por enquanto — não fazia sentido
 // pro uso pessoal de Tamyris e Saulo, mas continua no banco de perguntas
 // (com ativa: false) reservada pra uma futura versão comercial do app.
+// VAL21-26 são as perguntas voltadas pra quem já é casado(a) — quem
+// respondeu "não sei/não se aplica" nelas já é filtrado antes de gerar
+// qualquer finding (ver compareRespostas), então não atrapalha quem ainda
+// não chegou nessa fase.
 const VAL_QUESTION_IDS = [
   'VAL01', 'VAL02', 'VAL03', 'VAL04', 'VAL05', 'VAL06', 'VAL07', 'VAL08', 'VAL09', 'VAL11', 'VAL12',
-  'VAL13', 'VAL14', 'VAL15', 'VAL16', 'VAL17', 'VAL18', 'VAL19', 'VAL20'
+  'VAL13', 'VAL14', 'VAL15', 'VAL16', 'VAL17', 'VAL18', 'VAL19', 'VAL20',
+  'VAL21', 'VAL22', 'VAL23', 'VAL24', 'VAL25', 'VAL26'
 ];
 
 function normalizar(texto) {
@@ -127,9 +139,12 @@ function normalizar(texto) {
 // array (seleção múltipla) de forma uniforme: devolve o que as duas
 // pessoas têm em comum e o que cada uma respondeu só pra si. Uma escolha
 // única "empata" naturalmente quando os dois arrays de 1 item coincidem.
+// "Não sei / não se aplica" nunca deve contar como as duas pessoas
+// concordando (nem como uma diferença real) — só é descartada da
+// comparação.
 function compareRespostas(respostaA, respostaB) {
-  const arrA = Array.isArray(respostaA) ? respostaA : [respostaA];
-  const arrB = Array.isArray(respostaB) ? respostaB : [respostaB];
+  const arrA = (Array.isArray(respostaA) ? respostaA : [respostaA]).filter((v) => v !== NAO_SEI_TEXTO);
+  const arrB = (Array.isArray(respostaB) ? respostaB : [respostaB]).filter((v) => v !== NAO_SEI_TEXTO);
   const comuns = arrA.filter((item) => arrB.some((outro) => normalizar(outro) === normalizar(item)));
   return { comuns, arrA, arrB };
 }
@@ -305,6 +320,9 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
 
     const label = VALORES_LABEL[respA.subcategoria] || respA.subcategoria;
     const { comuns, arrA, arrB } = compareRespostas(respA.resposta, respB.resposta);
+    // Se um dos dois (ou os dois) só respondeu "não sei/não se aplica", não
+    // sobra nada real pra comparar — não é nem sintonia nem diferença.
+    if (!arrA.length || !arrB.length) return;
     const nivel = classificarCompatibilidade(comuns, arrA, arrB);
 
     if (comuns.length) {

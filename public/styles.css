@@ -283,6 +283,15 @@ h2 { font-size: 16px; margin: 0 0 8px; font-weight: 700; color: var(--text); }
   font-weight: 700;
   box-shadow: var(--shadow-sm);
 }
+.option-btn-skip { border-style: dashed; color: var(--muted); font-size: 14px; }
+.option-btn-skip.selected { border-style: solid; }
+
+.skip-question {
+  margin: 14px 0 0;
+  font-weight: 700;
+  color: var(--muted);
+}
+.skip-question.selected { color: var(--purple); text-decoration: underline; }
 
 .scale-wrap { display: flex; flex-direction: column; gap: 16px; }
 .scale-labels {
@@ -509,6 +518,31 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
   color: var(--purple);
   margin-bottom: 4px;
 }
+
+.devotional-box {
+  border-left: 4px solid var(--pink);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--pink-soft), var(--purple-soft));
+  padding: 16px 18px;
+  margin-top: 6px;
+}
+.devotional-ref {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-weight: 800;
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+.devotional-verse {
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.55;
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+.devotional-estudo { font-size: 14px; line-height: 1.55; margin: 0; }
 
 .mission-box {
   border-left: 4px solid var(--mint);
