@@ -2,15 +2,14 @@ const axios = require('axios');
 
 const MODEL = process.env.CLAUDE_MODEL || 'claude-sonnet-5';
 
-// Desligado por pedido explícito: o app roda 100% no banco de frases
-// determinístico (src/lib/phraseBank.js) e nos textos-modelo (mockResult/
-// mockTip), sem gastar nenhum crédito da Claude API — resultado, análise
-// cruzada e dicas quinzenais saem instantâneos, sem depender de rede nem
-// de saldo configurado. A chave CLAUDE_API_KEY pode continuar configurada
-// no Railway sem problema (não precisa apagar); se um dia quiser religar
-// a IA pra ajudar a escrever os textos, é só pedir.
+// Checagem real da chave — usada hoje só pelas dicas quinzenais
+// (tipsAgent.js), que voltaram a usar IA por pedido explícito (as dicas
+// 100% do banco de frases ficaram repetitivas e superficiais depois de
+// semanas de uso real). Resultado individual e análise cruzada continuam
+// desligados de propósito, direto no mock — ver a constante local
+// IA_DESLIGADA_AQUI em resultAgent.js e crossAnalysisAgent.js.
 function hasApiKey() {
-  return false;
+  return Boolean(process.env.CLAUDE_API_KEY);
 }
 
 // Wrapper fino sobre a Claude API. Todo "agente" do sistema usa esta função

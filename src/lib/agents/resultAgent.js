@@ -7,8 +7,13 @@
 
 const { scoreAll } = require('../scoring');
 const profiles = require('../../data/profiles');
-const { hasApiKey, ask } = require('../aiClient');
+const { ask } = require('../aiClient');
 const { runQualityLoop, feedbackSuffix, HUMANITY_RUBRIC } = require('../qualityCoordinator');
+
+// Continua desligado de propósito, independente de CLAUDE_API_KEY — só as
+// dicas quinzenais (tipsAgent.js) voltaram a usar IA. Resultado individual
+// segue 100% no mock, sem custo.
+const IA_DESLIGADA_AQUI = true;
 
 const RUBRIC = [
   'Usa o nome da pessoa e faz referência a pelo menos 2 dados concretos do perfil dela',
@@ -48,7 +53,7 @@ Dica prática pra essa semana: separe 10 minutos sozinho(a) e escreva uma coisa 
 async function buildResult({ name, responses }) {
   const scores = scoreAll(responses);
 
-  if (!hasApiKey()) {
+  if (IA_DESLIGADA_AQUI) {
     return { scores, texto: mockResult(name, scores), status: 'sem_revisao', nota: null, attempts: 1 };
   }
 
