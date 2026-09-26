@@ -1313,6 +1313,128 @@ const allQuestions = [
     ]
   },
 
+  // Perguntas sobre a REALIDADE JÁ VIVIDA de quem já compartilha rotina,
+  // contas e filhos no dia a dia — diferente de VAL21-26 (que são mais
+  // sobre opinião/expectativa mesmo de quem ainda não chegou lá). Quem
+  // ainda não vive essa fase pode responder "Não sei / não se aplica".
+  {
+    id: 'VAL27',
+    categoria: 'valores_vida',
+    subcategoria: 'financas_atuais',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Hoje, na prática, como funciona a divisão das contas da casa entre vocês? (escolha até 5)',
+    opcoes: [
+      { texto: 'Temos conta conjunta e pagamos tudo dali' },
+      { texto: 'Cada um paga uma parte combinada das contas fixas' },
+      { texto: 'Um de nós paga a maior parte, o outro contribui menos' },
+      { texto: 'Dividimos por tipo de conta (um paga aluguel, outro paga mercado, etc.)' },
+      { texto: 'Ainda estamos ajustando esse equilíbrio' },
+      { texto: 'Guardamos uma reserva conjunta além das contas do dia a dia' }
+    ]
+  },
+  {
+    id: 'VAL28',
+    categoria: 'valores_vida',
+    subcategoria: 'rotina_filhos_atual',
+    tipo: 'multipla_escolha',
+    texto: 'Na correria real do dia a dia com os filhos (escola, banho, deveres, sono), como está sendo a divisão entre vocês hoje?',
+    opcoes: [
+      { texto: 'Dividimos bem, revezando conforme a agenda de cada um' },
+      { texto: 'Um de nós assume a maior parte dessas tarefas hoje' },
+      { texto: 'Contamos com ajuda de terceiros (avós, babá) pra dar conta' },
+      { texto: 'Ainda estamos encontrando um equilíbrio que funcione' },
+      { texto: 'Um trabalha fora e o outro cuida mais dessa rotina por enquanto' }
+    ]
+  },
+  {
+    id: 'VAL29',
+    categoria: 'valores_vida',
+    subcategoria: 'desacordos_criacao',
+    tipo: 'multipla_escolha',
+    texto: 'Quando vocês discordam sobre como criar os filhos (limites, tela, disciplina), o que costuma acontecer?',
+    opcoes: [
+      { texto: 'Conversamos em particular e alinhamos antes de agir na frente deles' },
+      { texto: 'Às vezes discordamos na frente das crianças, sem querer' },
+      { texto: 'Um de nós geralmente cede pra evitar conflito' },
+      { texto: 'Buscamos um meio-termo conversando com calma' },
+      { texto: 'Ainda é um ponto de tensão real entre nós' }
+    ]
+  },
+  {
+    id: 'VAL30',
+    categoria: 'valores_vida',
+    subcategoria: 'tempo_a_sos_atual',
+    tipo: 'multipla_escolha',
+    texto: 'Com a correria de hoje (trabalho, filhos, casa), como está o tempo só dos dois, sem mais ninguém?',
+    opcoes: [
+      { texto: 'Conseguimos manter um momento fixo só nosso, mesmo pequeno' },
+      { texto: 'Virou raro, mas sentimos falta e queremos resgatar' },
+      { texto: 'Estamos numa fase corrida e isso ficou em segundo plano' },
+      { texto: 'Aproveitamos qualquer brecha, sem hora marcada' },
+      { texto: 'Precisamos conversar sobre isso — sinto que está faltando' }
+    ]
+  },
+  {
+    id: 'VAL31',
+    categoria: 'valores_vida',
+    subcategoria: 'divisao_domestica_atual',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Na prática, hoje, quem faz o quê em casa? (escolha até 5, o que mais representa a realidade de vocês)',
+    opcoes: [
+      { texto: 'Eu cozinho na maior parte dos dias' },
+      { texto: 'Meu parceiro(a) cozinha na maior parte dos dias' },
+      { texto: 'Dividimos a limpeza por cômodo ou por dia da semana' },
+      { texto: 'Contratamos ajuda pra boa parte da limpeza' },
+      { texto: 'As contas e burocracias ficam mais comigo' },
+      { texto: 'As contas e burocracias ficam mais com meu parceiro(a)' },
+      { texto: 'Sinto que a divisão está desigual hoje' }
+    ]
+  },
+  {
+    id: 'VAL32',
+    categoria: 'valores_vida',
+    subcategoria: 'familia_extensa_atual',
+    tipo: 'multipla_escolha',
+    texto: 'Hoje, na relação com a família do seu cônjuge (sogros, cunhados), como você descreveria a convivência real?',
+    opcoes: [
+      { texto: 'Tranquila, sinto que sou bem tratado(a) e me sinto à vontade' },
+      { texto: 'Boa, mas com alguns atritos ocasionais' },
+      { texto: 'Tensa — sinto que existe um desconforto de fundo' },
+      { texto: 'Distante, tem pouco contato no dia a dia' },
+      { texto: 'Depende muito da ocasião ou da pessoa da família' }
+    ]
+  },
+  {
+    id: 'VAL33',
+    categoria: 'valores_vida',
+    subcategoria: 'planejamento_financeiro_atual',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre o dinheiro que vocês já construíram juntos até aqui, o que mais representa a realidade de hoje?',
+    opcoes: [
+      { texto: 'Temos metas financeiras conversadas e estamos seguindo elas' },
+      { texto: 'Vamos vivendo, sem um plano muito definido' },
+      { texto: 'Um cuida mais dessa parte, o outro participa menos' },
+      { texto: 'Já discutimos sobre isso mais de uma vez, é um ponto sensível' },
+      { texto: 'Estamos numa fase de reorganizar as finanças da casa' }
+    ]
+  },
+  {
+    id: 'VAL34',
+    categoria: 'valores_vida',
+    subcategoria: 'conflitos_domesticos_atual',
+    tipo: 'multipla_escolha',
+    texto: 'No dia a dia real de casa (não numa briga grande, no atrito comum), como vocês costumam resolver as coisas?',
+    opcoes: [
+      { texto: 'Conversamos na hora, sem deixar acumular' },
+      { texto: 'Um de nós prefere esfriar antes de conversar' },
+      { texto: 'Às vezes vira discussão maior do que precisava' },
+      { texto: 'Evitamos o assunto até ele voltar sozinho depois' },
+      { texto: 'Estamos aprendendo a lidar melhor com isso' }
+    ]
+  },
+
   // ==========================================
   // CONHECER MELHOR
   // ==========================================

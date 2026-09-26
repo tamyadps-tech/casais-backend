@@ -519,12 +519,14 @@
       $('#dash-result-text').textContent = 'Ainda não deu pra gerar — tenta atualizar a página.';
     }
 
+    let partnerReady = false;
     try {
       const partnerStatus = await api(`/api/test/status/${partner.id}`);
       const statusCard = $('#partner-status-card');
-      if (partnerStatus.status !== 'submitted') {
+      partnerReady = partnerStatus.status === 'submitted';
+      if (!partnerReady) {
         $('#partner-status-text').textContent =
-          `${partner.name} ainda não respondeu o dele(a). Assim que responder, as dicas cruzadas de vocês dois começam a chegar.`;
+          `${partner.name} ainda não respondeu o dele(a). Suas dicas e desafios só ficam disponíveis quando ${partner.name} completar o questionário também.`;
         statusCard.hidden = false;
       } else {
         // os dois já responderam — nada a avisar aqui, as dicas já falam por si
@@ -542,6 +544,9 @@
     }
 
     $('#ics-url').value = `${window.location.origin}/api/calendar/${me.id}/${partner.id}/${encodeURIComponent(me.name)}.ics`;
+
+    state.partnerReady = partnerReady;
+    state.partnerName = partner.name;
 
     await refreshTips();
     await loadMission();
@@ -572,6 +577,12 @@
 
   // ---------- missão individual ----------
   async function loadMission() {
+    if (!state.partnerReady) {
+      $('#mission-current').innerHTML =
+        `<p class="mission-empty">Sua missão libera assim que ${escapeHtml(state.partnerName || 'seu par')} completar o questionário também.</p>`;
+      $('#mission-history').innerHTML = '';
+      return;
+    }
     try {
       const data = await api(`/api/missions/${state.person.id}`);
       renderMissionCurrent(data.current);
@@ -834,6 +845,10 @@
     const me = state.person;
     const partner = partnerOf(me);
     const list = $('#tips-list');
+    if (!state.partnerReady) {
+      list.innerHTML = `<p class="tip-empty">Suas dicas liberam assim que ${escapeHtml(partner.name)} completar o questionário também.</p>`;
+      return;
+    }
     list.innerHTML = '<p class="tip-empty">Carregando...</p>';
     try {
       const data = await api(`/api/tips/${me.id}/${partner.id}/mine/${encodeURIComponent(me.name)}`);
