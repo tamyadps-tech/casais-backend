@@ -137,7 +137,8 @@ function scoreAll(responses) {
     linguagem_amor: scoreLinguagemAmor(responses),
     valores_vida: collectRespostasLiterais(responses, 'valores_vida'),
     conhecer_melhor: collectRespostasLiterais(responses, 'conhecer_melhor'),
-    intimidade: collectRespostasLiterais(responses, 'intimidade')
+    intimidade: collectRespostasLiterais(responses, 'intimidade'),
+    espiritualidade: collectRespostasLiterais(responses, 'espiritualidade')
   };
 }
 

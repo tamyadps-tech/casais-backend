@@ -134,7 +134,8 @@
     linguagem_amor: { label: 'Linguagem do amor' },
     valores_vida: { label: 'Valores & vida a dois' },
     conhecer_melhor: { label: 'Conhecer melhor' },
-    intimidade: { label: 'Intimidade & conexão física' }
+    intimidade: { label: 'Intimidade & conexão física' },
+    espiritualidade: { label: 'Fé & espiritualidade' }
   };
 
   const $ = (sel) => document.querySelector(sel);
@@ -787,7 +788,7 @@
     [TEMPERAMENTO_INFO[temp], APEGO_INFO[apegoDom]].filter(Boolean).forEach((info) => {
       const btn = document.createElement('button');
       btn.className = 'stat-badge';
-      btn.textContent = info.nome;
+      btn.innerHTML = `${escapeHtml(info.nome)} <span class="stat-badge-icon" aria-hidden="true">ⓘ</span>`;
       btn.addEventListener('click', () => openInfoModal(info));
       wrap.appendChild(btn);
     });

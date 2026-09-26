@@ -1729,6 +1729,131 @@ const allQuestions = [
       { texto: 'Prefiro reservar esse tipo de carinho só pra quando estamos a sós' },
       { texto: 'Depende muito do ambiente ou de quem está por perto' }
     ]
+  },
+
+  // ==========================================
+  // FÉ & ESPIRITUALIDADE
+  // ==========================================
+  // Complementa a VAL09 (que é mais sobre expectativa/opinião) com a
+  // realidade já vivida do casal — prática conjunta, criação dos filhos,
+  // como lidam com divergência. Linguagem neutra de propósito, sem
+  // assumir nenhuma religião específica, pra servir qualquer casal que use
+  // o app. Entram no mesmo motor de cruzamento de VAL_QUESTION_IDS (ver
+  // crossRules.js) pra identificar sintonia e diferenças que vale
+  // conversar, exatamente como pediu quem trouxe essa ideia.
+  {
+    id: 'ESP01',
+    categoria: 'espiritualidade',
+    subcategoria: 'papel_atual_fe',
+    tipo: 'multipla_escolha',
+    texto: 'Hoje, na prática, qual papel a fé ou espiritualidade ocupa na sua vida (não como você imagina, mas como é agora)?',
+    opcoes: [
+      { texto: 'Central — organizo boa parte da rotina em torno disso' },
+      { texto: 'Importante, mas sem muita prática regular' },
+      { texto: 'Presente de forma mais pessoal, sem seguir uma religião específica' },
+      { texto: 'Não pratico hoje, mas respeito quem pratica' },
+      { texto: 'Não faz parte da minha vida' }
+    ]
+  },
+  {
+    id: 'ESP02',
+    categoria: 'espiritualidade',
+    subcategoria: 'mesma_fe',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre você e seu parceiro(a) compartilharem a mesma fé (ou não), como você se sente hoje?',
+    opcoes: [
+      { texto: 'Compartilhamos a mesma fé, e isso é importante pra mim' },
+      { texto: 'Temos fés diferentes, mas isso não é um problema entre nós' },
+      { texto: 'Temos fés diferentes, e às vezes isso gera tensão' },
+      { texto: 'Nenhum dos dois pratica, e está tudo bem assim' },
+      { texto: 'Ainda estamos entendendo como isso funciona entre nós' }
+    ]
+  },
+  {
+    id: 'ESP03',
+    categoria: 'espiritualidade',
+    subcategoria: 'pratica_conjunta',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre praticar a fé junto como casal (orar, ir a um culto, missa ou templo, meditar etc.), o que mais representa vocês hoje?',
+    opcoes: [
+      { texto: 'Fazemos isso juntos com frequência, faz parte da nossa rotina' },
+      { texto: 'Cada um pratica separado, do seu jeito' },
+      { texto: 'Gostaria que fizéssemos mais isso juntos' },
+      { texto: 'Não praticamos nada disso, e não sentimos falta' },
+      { texto: 'Ainda não conversamos sobre isso' }
+    ]
+  },
+  {
+    id: 'ESP04',
+    categoria: 'espiritualidade',
+    subcategoria: 'criacao_filhos_fe',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre criar os filhos (ou futuros filhos) dentro de uma fé específica, o que mais representa sua opinião?',
+    opcoes: [
+      { texto: 'Quero criar dentro da minha fé, com clareza sobre isso' },
+      { texto: 'Prefiro apresentar várias visões e deixar que eles escolham quando crescerem' },
+      { texto: 'Quero que participem da rotina religiosa da família, mesmo sem obrigar a crença' },
+      { texto: 'Não é uma prioridade pra mim que a criação envolva religião' },
+      { texto: 'Ainda não tenho uma opinião formada sobre isso' }
+    ]
+  },
+  {
+    id: 'ESP05',
+    categoria: 'espiritualidade',
+    subcategoria: 'divergencia_fe',
+    tipo: 'multipla_escolha',
+    texto: 'Quando você e seu parceiro(a) pensam diferente sobre fé ou religião, o que costuma acontecer?',
+    opcoes: [
+      { texto: 'Conversamos com respeito, mesmo discordando' },
+      { texto: 'Evitamos o assunto pra não gerar atrito' },
+      { texto: 'Já foi motivo de discussão mais de uma vez' },
+      { texto: 'Um de nós tende a ceder pra evitar conflito' },
+      { texto: 'Não tivemos ainda uma divergência real sobre isso' }
+    ]
+  },
+  {
+    id: 'ESP06',
+    categoria: 'espiritualidade',
+    subcategoria: 'rotina_fe',
+    tipo: 'selecao_multipla',
+    max_selecoes: 5,
+    texto: 'Quais dessas práticas de fé fazem parte (ou você gostaria que fizessem parte) da rotina de vocês? (escolha até 5)',
+    opcoes: [
+      { texto: 'Oração ou momento de fé em casa' },
+      { texto: 'Frequentar um templo, igreja, centro ou grupo religioso' },
+      { texto: 'Leitura de textos sagrados ou devocionais' },
+      { texto: 'Celebrar datas religiosas específicas' },
+      { texto: 'Participar de uma comunidade de fé com outras famílias' },
+      { texto: 'Nenhuma dessas faz sentido pra nós hoje' }
+    ]
+  },
+  {
+    id: 'ESP07',
+    categoria: 'espiritualidade',
+    subcategoria: 'apoio_familia_fe',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre a opinião da família de cada um (pais, sogros) a respeito da fé de vocês como casal, como isso tem sido?',
+    opcoes: [
+      { texto: 'Nossas famílias apoiam nossas escolhas de fé' },
+      { texto: 'Existe alguma pressão ou expectativa da família sobre isso' },
+      { texto: 'Preferimos não misturar a opinião da família nessa parte' },
+      { texto: 'Não é um tema que surge entre nós e as famílias' },
+      { texto: 'Ainda não passamos por essa situação' }
+    ]
+  },
+  {
+    id: 'ESP08',
+    categoria: 'espiritualidade',
+    subcategoria: 'crescimento_fe',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre crescer espiritualmente enquanto casal (não sozinho), o que mais representa o que você gostaria?',
+    opcoes: [
+      { texto: 'Gostaria que isso fosse um projeto conjunto, não só individual' },
+      { texto: 'Prefiro que cada um cresça no seu próprio ritmo, sem cobrança' },
+      { texto: 'Sinto que já vivemos isso junto, de alguma forma' },
+      { texto: 'Esse tipo de crescimento não é uma prioridade pra nós' },
+      { texto: 'Ainda não conversamos sobre isso com profundidade' }
+    ]
   }
 ];
 
