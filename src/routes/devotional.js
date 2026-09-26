@@ -1,8 +1,6 @@
-// DEVOCIONAL DO DIA — mesmo versículo + estudo pros dois, de segunda a
-// sexta, por um período de 3 meses (mesma ideia de janela de tempo das
-// dicas em src/lib/scheduler.js, só que com dias úteis em vez de
-// segunda/quinta/sábado). Rotação determinística pela posição do dia
-// dentro da janela (sem custo de IA, sem estado salvo) — sempre o mesmo
+// DEVOCIONAL DO DIA — mesmo versículo + estudo pros dois, todo santo dia,
+// por um período de 3 meses. Rotação determinística pela posição do dia
+// dentro dessa janela (sem custo de IA, sem estado salvo) — sempre o mesmo
 // devocional pra todo mundo num dado dia, voltando ao início do banco
 // quando a lista de conteúdo acaba antes da janela.
 
@@ -13,7 +11,6 @@ const router = express.Router();
 
 const START_DATE = process.env.DEVOTIONAL_START_DATE || new Date().toISOString().slice(0, 10);
 const END_DATE = process.env.DEVOTIONAL_END_DATE || addMonths(START_DATE, 3);
-const DIAS_UTEIS = [1, 2, 3, 4, 5]; // segunda a sexta (getUTCDay())
 
 function addMonths(dateStr, months) {
   const d = new Date(`${dateStr}T00:00:00Z`);
@@ -29,20 +26,18 @@ function formatDate(d) {
   return d.toISOString().slice(0, 10);
 }
 
-function gerarDiasUteis(startDate, endDate) {
+function gerarDiasDaJanela(startDate, endDate) {
   const dates = [];
   const cursor = toDateOnly(startDate);
   const end = toDateOnly(endDate);
   while (cursor <= end) {
-    if (DIAS_UTEIS.includes(cursor.getUTCDay())) {
-      dates.push(formatDate(cursor));
-    }
+    dates.push(formatDate(cursor));
     cursor.setUTCDate(cursor.getUTCDate() + 1);
   }
   return dates;
 }
 
-const DIAS_UTEIS_DA_JANELA = gerarDiasUteis(START_DATE, END_DATE);
+const DIAS_DA_JANELA = gerarDiasDaJanela(START_DATE, END_DATE);
 
 function devotionalDoDia(date = new Date()) {
   const hoje = formatDate(date);
@@ -50,11 +45,7 @@ function devotionalDoDia(date = new Date()) {
     return { devotional: null, motivo: 'fora_do_periodo' };
   }
 
-  const indice = DIAS_UTEIS_DA_JANELA.indexOf(hoje);
-  if (indice === -1) {
-    return { devotional: null, motivo: 'fim_de_semana' };
-  }
-
+  const indice = DIAS_DA_JANELA.indexOf(hoje);
   return { devotional: { ...devotionalBank[indice % devotionalBank.length], date: hoje } };
 }
 

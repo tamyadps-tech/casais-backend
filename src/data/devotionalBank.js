@@ -1,8 +1,8 @@
 // DEVOCIONAL DO CASAL — um versículo curto + um estudo pensado pra ser lido
-// junto, de segunda a sexta, por um período de 3 meses. Conteúdo fixo (sem
-// custo de IA), com um novo devocional a cada dia útil numa rotação — ver
-// src/routes/devotional.js pra como o dia de hoje é escolhido (e pra como
-// fins de semana e o fim do período de 3 meses são tratados). A partir da
+// junto, todo santo dia (inclusive fim de semana), por um período de 3
+// meses. Conteúdo fixo (sem custo de IA), com um novo devocional por dia
+// numa rotação — ver src/routes/devotional.js pra como o dia de hoje é
+// escolhido (e pra como o fim do período de 3 meses é tratado). A partir da
 // entrada 25, o banco deixa de
 // falar só sobre o casal e passa a trazer reflexões mais profundas sobre
 // si mesmo, sobre relações em geral (amizade, perdão, comunidade) e sobre

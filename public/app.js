@@ -648,9 +648,7 @@
     try {
       const data = await api('/api/devotional/today');
       if (!data.devotional) {
-        wrap.innerHTML = data.motivo === 'fora_do_periodo'
-          ? '<p class="mission-empty">O ciclo de devocionais desse período já terminou.</p>'
-          : '<p class="mission-empty">Sem devocional no fim de semana — o próximo chega na segunda-feira.</p>';
+        wrap.innerHTML = '<p class="mission-empty">O ciclo de devocionais desse período já terminou.</p>';
         return;
       }
       const d = data.devotional;
