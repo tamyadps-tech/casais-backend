@@ -1607,6 +1607,128 @@ const allQuestions = [
       { texto: 'Já ter me magoado por me abrir antes', tag: 'traicao' },
       { texto: 'Prefiro processar sozinho(a) antes de falar', tag: 'neutro' }
     ]
+  },
+
+  // ==========================================
+  // INTIMIDADE
+  // ==========================================
+  // Perguntas sobre conexão física do casal, tratadas com o mesmo cuidado
+  // das perguntas sobre feridas de infância: nada gráfico, nada que peça
+  // detalhe de experiência — só o suficiente pra identificar onde vale
+  // abrir uma conversa com mais cuidado. Respostas guardadas como texto
+  // literal (collectRespostasLiterais), não entram nos gráficos do painel.
+  // Todas ganham a opção universal "Não sei / não se aplica", e a INT05
+  // ainda tem seu próprio "prefiro não responder" — sensível o bastante
+  // pra merecer as duas portas de saída.
+  {
+    id: 'INT01',
+    categoria: 'intimidade',
+    subcategoria: 'frequencia_desejada',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre a frequência de intimidade física entre vocês, como você tem se sentido ultimamente?',
+    opcoes: [
+      { texto: 'Satisfeito(a), sinto que está equilibrado pros dois' },
+      { texto: 'Gostaria que fosse mais frequente' },
+      { texto: 'Gostaria que fosse menos frequente' },
+      { texto: 'Varia muito conforme a fase, e tudo bem com isso' },
+      { texto: 'É um assunto que a gente ainda precisa conversar melhor' }
+    ]
+  },
+  {
+    id: 'INT02',
+    categoria: 'intimidade',
+    subcategoria: 'cansaco_rotina',
+    tipo: 'multipla_escolha',
+    texto: 'O cansaço do dia a dia (trabalho, filhos, rotina) tem afetado a proximidade física de vocês?',
+    opcoes: [
+      { texto: 'Bastante — sinto que a energia pra isso quase não sobra' },
+      { texto: 'Um pouco, mas a gente ainda encontra um jeito' },
+      { texto: 'Não sinto que isso seja um problema hoje' },
+      { texto: 'Prefiro não pensar nisso agora' }
+    ]
+  },
+  {
+    id: 'INT03',
+    categoria: 'intimidade',
+    subcategoria: 'iniciativa',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre quem costuma tomar a iniciativa na intimidade do casal, o que mais representa vocês hoje?',
+    opcoes: [
+      { texto: 'Costuma ser bem dividido entre os dois' },
+      { texto: 'Geralmente sou eu quem inicia' },
+      { texto: 'Geralmente é meu parceiro(a) quem inicia' },
+      { texto: 'Sinto falta de mais iniciativa de um dos dois' },
+      { texto: 'Ainda estamos entendendo esse equilíbrio' }
+    ]
+  },
+  {
+    id: 'INT04',
+    categoria: 'intimidade',
+    subcategoria: 'medos_intimidade',
+    tipo: 'selecao_multipla',
+    max_selecoes: 3,
+    texto: 'Existe algum medo ou insegurança que às vezes atrapalha sua intimidade com seu parceiro(a)? (escolha até 3, se houver)',
+    opcoes: [
+      { texto: 'Medo de não corresponder às expectativas' },
+      { texto: 'Insegurança com o próprio corpo' },
+      { texto: 'Medo de ser julgado(a) ou rejeitado(a)' },
+      { texto: 'Dificuldade de relaxar por causa da rotina ou do estresse' },
+      { texto: 'Não sinto nenhum desses medos hoje' }
+    ]
+  },
+  {
+    id: 'INT05',
+    categoria: 'intimidade',
+    subcategoria: 'historico_delicado',
+    tipo: 'multipla_escolha',
+    texto: 'Existe alguma experiência do seu passado que ainda influencia como você vive sua intimidade hoje?',
+    opcoes: [
+      { texto: 'Sim, e já converso ou processo isso de alguma forma' },
+      { texto: 'Sim, mas ainda não consegui falar sobre isso com ninguém' },
+      { texto: 'Não que eu identifique' },
+      { texto: 'Prefiro não responder essa pergunta' }
+    ]
+  },
+  {
+    id: 'INT06',
+    categoria: 'intimidade',
+    subcategoria: 'vontades',
+    tipo: 'selecao_multipla',
+    max_selecoes: 3,
+    texto: 'O que mais faz você se sentir desejado(a) pelo seu parceiro(a)? (escolha até 3)',
+    opcoes: [
+      { texto: 'Um olhar ou comentário que mostra atração' },
+      { texto: 'Ser procurado(a) com carinho, sem pressa' },
+      { texto: 'Sentir que sou prioridade mesmo com a rotina corrida' },
+      { texto: 'Gestos pequenos ao longo do dia, não só em momentos íntimos' },
+      { texto: 'Ainda não parei pra pensar nisso' }
+    ]
+  },
+  {
+    id: 'INT07',
+    categoria: 'intimidade',
+    subcategoria: 'beijo_carinho',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre beijo na boca e carinho físico no dia a dia (fora da intimidade), o que mais representa vocês hoje?',
+    opcoes: [
+      { texto: 'Fazemos isso com frequência, faz parte da nossa rotina' },
+      { texto: 'Acontece, mas menos do que eu gostaria' },
+      { texto: 'Praticamente não acontece mais no dia a dia' },
+      { texto: 'Depende muito da fase que estamos vivendo' }
+    ]
+  },
+  {
+    id: 'INT08',
+    categoria: 'intimidade',
+    subcategoria: 'carinho_publico',
+    tipo: 'multipla_escolha',
+    texto: 'Sobre demonstrar carinho em público (dar as mãos, um beijo rápido, um abraço), como você se sente?',
+    opcoes: [
+      { texto: 'À vontade, gosto de demonstrar afeto na frente dos outros' },
+      { texto: 'Tudo bem com o básico, mas prefiro não exagerar' },
+      { texto: 'Prefiro reservar esse tipo de carinho só pra quando estamos a sós' },
+      { texto: 'Depende muito do ambiente ou de quem está por perto' }
+    ]
   }
 ];
 
