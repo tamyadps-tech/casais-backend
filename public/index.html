@@ -28,14 +28,60 @@
         <h1>Casais</h1>
         <p class="muted">Um espaço só de vocês dois pra se conhecerem melhor.</p>
         <p class="label-quem">Quem é você?</p>
-        <div class="person-grid">
-          <button class="person-btn" data-id="tamyris" data-name="Tamyris">
-            <span class="person-avatar">T</span> Tamyris
-          </button>
-          <button class="person-btn" data-id="saulo" data-name="Saulo">
-            <span class="person-avatar">S</span> Saulo
-          </button>
+        <div class="person-grid" id="person-grid"></div>
+      </div>
+    </section>
+
+    <!-- CONVITE: preencher os nomes -->
+    <section id="view-convite-join" class="view" hidden>
+      <div class="card center">
+        <div class="mark" aria-hidden="true"></div>
+        <h1>Bem-vindo(a)!</h1>
+        <p class="muted">Vocês foram convidados pra usar o app. É só preencher os nomes de vocês dois pra liberar o acesso.</p>
+        <div class="join-form">
+          <label class="join-label" for="join-nome">Seu nome</label>
+          <input type="text" id="join-nome" placeholder="Seu nome" maxlength="60" />
+          <label class="join-label" for="join-nome-parceiro">Nome do seu par</label>
+          <input type="text" id="join-nome-parceiro" placeholder="Nome do seu par" maxlength="60" />
         </div>
+        <p class="form-error small" id="join-error" hidden></p>
+        <button class="btn-primary" id="btn-join-submit">Liberar acesso</button>
+      </div>
+    </section>
+
+    <!-- CONVITE: link inválido -->
+    <section id="view-convite-invalido" class="view" hidden>
+      <div class="card center">
+        <h1>Link inválido</h1>
+        <p class="muted">Esse link de convite não existe ou já expirou. Peça pra quem te convidou mandar um novo link.</p>
+      </div>
+    </section>
+
+    <!-- COMO BAIXAR O APP -->
+    <section id="view-como-baixar" class="view" hidden>
+      <div class="card center">
+        <h1>Tudo pronto!</h1>
+        <p class="muted">Agora instalem o app no celular de cada um — leva menos de 1 minuto.</p>
+        <div class="install-steps">
+          <div class="install-step">
+            <span class="install-step-badge">iPhone</span>
+            <ol>
+              <li>Abram esse link no <b>Safari</b> (não funciona no Chrome do iPhone)</li>
+              <li>Toquem no ícone de compartilhar <span class="install-icon">⬆</span> na barra de baixo</li>
+              <li>Escolham <b>"Adicionar à Tela de Início"</b></li>
+            </ol>
+          </div>
+          <div class="install-step">
+            <span class="install-step-badge">Android</span>
+            <ol>
+              <li>Abram esse link no <b>Chrome</b></li>
+              <li>Toquem nos 3 pontinhos <span class="install-icon">⋮</span> no canto superior</li>
+              <li>Escolham <b>"Instalar app"</b> ou <b>"Adicionar à tela inicial"</b></li>
+            </ol>
+          </div>
+        </div>
+        <p class="muted small">Cada um de vocês abre esse mesmo link no próprio celular e escolhe o próprio nome na tela seguinte.</p>
+        <button class="btn-primary" id="btn-como-baixar-continuar">Continuar</button>
       </div>
     </section>
 

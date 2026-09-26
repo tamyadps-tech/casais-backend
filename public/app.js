@@ -54,7 +54,7 @@
   };
 
   const $ = (sel) => document.querySelector(sel);
-  const views = ['login', 'intro', 'quiz', 'loading', 'result', 'dashboard'];
+  const views = ['login', 'convite-join', 'convite-invalido', 'como-baixar', 'intro', 'quiz', 'loading', 'result', 'dashboard'];
 
   let state = {
     person: null, // { id, name }
@@ -104,7 +104,23 @@
     localStorage.setItem(answersKey(personId), JSON.stringify(answers));
   }
 
+  function loadCouple() {
+    try {
+      const raw = localStorage.getItem('casais_couple');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+  function saveCouple(couple) {
+    localStorage.setItem('casais_couple', JSON.stringify(couple));
+  }
+
   function partnerOf(person) {
+    const couple = loadCouple();
+    if (couple) {
+      return couple.pessoa1.id === person.id ? couple.pessoa2 : couple.pessoa1;
+    }
     return person.id === COUPLE.tamyris.id ? COUPLE.saulo : COUPLE.tamyris;
   }
 
@@ -120,6 +136,15 @@
 
   // ---------- fluxo principal ----------
   async function init() {
+    const conviteCode = new URLSearchParams(window.location.search).get('convite');
+    if (conviteCode) {
+      await handleConvite(conviteCode);
+      return;
+    }
+
+    const couple = loadCouple();
+    renderLoginButtons(couple ? couple.pessoa1 : COUPLE.tamyris, couple ? couple.pessoa2 : COUPLE.saulo);
+
     const person = loadPerson();
     if (!person) {
       showView('login');
@@ -127,6 +152,84 @@
     }
     state.person = person;
     await routeForPerson();
+  }
+
+  // ---------- convite (casal novo entrando no app) ----------
+  function renderLoginButtons(pessoa1, pessoa2) {
+    const grid = $('#person-grid');
+    grid.innerHTML = '';
+    [pessoa1, pessoa2].forEach((pessoa) => {
+      const btn = document.createElement('button');
+      btn.className = 'person-btn';
+      btn.dataset.id = pessoa.id;
+      btn.dataset.name = pessoa.name;
+      const inicial = (pessoa.name || '?').trim().charAt(0).toUpperCase();
+      btn.innerHTML = `<span class="person-avatar">${escapeHtml(inicial)}</span> ${escapeHtml(pessoa.name)}`;
+      btn.addEventListener('click', async () => {
+        const person = { id: pessoa.id, name: pessoa.name };
+        savePerson(person);
+        state.person = person;
+        await routeForPerson();
+      });
+      grid.appendChild(btn);
+    });
+  }
+
+  function cleanConviteFromUrl() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('convite');
+    window.history.replaceState({}, '', url.toString());
+  }
+
+  async function handleConvite(code) {
+    try {
+      const data = await api(`/api/invites/${code}`);
+      if (data.ativado) {
+        saveCouple({ pessoa1: data.pessoa1, pessoa2: data.pessoa2 });
+        cleanConviteFromUrl();
+        renderLoginButtons(data.pessoa1, data.pessoa2);
+        const person = loadPerson();
+        if (person) {
+          state.person = person;
+          await routeForPerson();
+        } else {
+          showView('login');
+        }
+      } else {
+        showView('convite-join');
+        $('#btn-join-submit').onclick = () => submitJoin(code);
+      }
+    } catch (e) {
+      console.error(e);
+      showView('convite-invalido');
+    }
+  }
+
+  async function submitJoin(code) {
+    const nome = $('#join-nome').value.trim();
+    const nomeParceiro = $('#join-nome-parceiro').value.trim();
+    const errEl = $('#join-error');
+    errEl.hidden = true;
+    if (!nome || !nomeParceiro) {
+      errEl.textContent = 'Preencha os dois nomes pra continuar.';
+      errEl.hidden = false;
+      return;
+    }
+    try {
+      const data = await api(`/api/invites/${code}/activate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, nomeParceiro })
+      });
+      saveCouple({ pessoa1: data.pessoa1, pessoa2: data.pessoa2 });
+      cleanConviteFromUrl();
+      renderLoginButtons(data.pessoa1, data.pessoa2);
+      showView('como-baixar');
+    } catch (e) {
+      console.error(e);
+      errEl.textContent = 'Não consegui liberar o acesso agora. Tenta de novo em instantes.';
+      errEl.hidden = false;
+    }
   }
 
   async function routeForPerson() {
@@ -856,13 +959,8 @@
   }
 
   // ---------- eventos ----------
-  document.querySelectorAll('.person-btn').forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      const person = { id: btn.dataset.id, name: btn.dataset.name };
-      savePerson(person);
-      state.person = person;
-      await routeForPerson();
-    });
+  $('#btn-como-baixar-continuar').addEventListener('click', () => {
+    showView('login');
   });
 
   $('#btn-switch-person-intro').addEventListener('click', () => {

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Casais — Convites</title>
+  <meta name="theme-color" content="#7c5cff" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <section class="view">
+      <div class="card center">
+        <div class="mark" aria-hidden="true"></div>
+        <h1>Criar convite</h1>
+        <p class="muted">Gera um link pra um casal novo entrar no app. Quando abrirem o link, eles preenchem os próprios nomes e já ficam com acesso liberado — com o passo a passo de como instalar incluso.</p>
+
+        <div class="join-form">
+          <label class="join-label" for="admin-key">Sua chave de administrador</label>
+          <input type="password" id="admin-key" placeholder="A mesma chave de sempre (ADMIN_RESET_KEY)" />
+        </div>
+
+        <p class="form-error small" id="admin-error" hidden></p>
+
+        <button class="btn-primary" id="btn-create-invite">Criar link de convite</button>
+
+        <div id="invite-result" hidden>
+          <p class="muted small" style="margin-top:20px">Link pronto — copie e mande pro casal por WhatsApp ou mensagem:</p>
+          <div class="copy-row">
+            <input type="text" id="invite-url" readonly />
+            <button class="btn-secondary" id="btn-copy-invite">Copiar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      var $ = function (sel) { return document.querySelector(sel); };
+
+      function loadKey() {
+        try { return localStorage.getItem('casais_admin_key') || ''; } catch (e) { return ''; }
+      }
+      function saveKey(key) {
+        try { localStorage.setItem('casais_admin_key', key); } catch (e) { /* ignora */ }
+      }
+
+      $('#admin-key').value = loadKey();
+
+      $('#btn-create-invite').addEventListener('click', function () {
+        var key = $('#admin-key').value.trim();
+        var errEl = $('#admin-error');
+        errEl.hidden = true;
+        $('#invite-result').hidden = true;
+
+        if (!key) {
+          errEl.textContent = 'Preencha sua chave de administrador.';
+          errEl.hidden = false;
+          return;
+        }
+
+        saveKey(key);
+        var btn = $('#btn-create-invite');
+        btn.disabled = true;
+        btn.textContent = 'Criando...';
+
+        fetch('/api/admin/invites/create?key=' + encodeURIComponent(key))
+          .then(function (res) {
+            return res.json().then(function (body) { return { status: res.status, body: body }; });
+          })
+          .then(function (r) {
+            if (r.status !== 200) {
+              throw new Error(r.body.error || 'Não consegui criar o convite.');
+            }
+            $('#invite-url').value = r.body.url;
+            $('#invite-result').hidden = false;
+          })
+          .catch(function (e) {
+            errEl.textContent = e.message;
+            errEl.hidden = false;
+          })
+          .finally(function () {
+            btn.disabled = false;
+            btn.textContent = 'Criar link de convite';
+          });
+      });
+
+      $('#btn-copy-invite').addEventListener('click', function () {
+        var input = $('#invite-url');
+        input.select();
+        var done = function () {
+          var btn = $('#btn-copy-invite');
+          var original = btn.textContent;
+          btn.textContent = 'Copiado';
+          setTimeout(function () { btn.textContent = original; }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(input.value).then(done).catch(function () {
+            document.execCommand('copy');
+            done();
+          });
+        } else {
+          document.execCommand('copy');
+          done();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

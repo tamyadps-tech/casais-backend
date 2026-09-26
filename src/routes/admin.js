@@ -50,4 +50,22 @@ router.get('/reset-tips/:id1/:id2', (req, res) => {
   res.json({ success: true, message: 'Histórico de dicas apagado — respostas e resultado continuam intactos.', ...result });
 });
 
+// Cria um convite novo pra um casal usar o app — devolve o link pronto
+// pra mandar pro casal (WhatsApp, e-mail, etc). Não é destrutivo, então
+// só pede a chave, sem precisar de ?confirm=SIM. Pensado pra ser colado
+// direto na barra de endereço do navegador.
+router.get('/invites/create', (req, res) => {
+  const adminKey = process.env.ADMIN_RESET_KEY;
+  if (!adminKey) {
+    return res.status(403).json({ error: 'Desligado: ADMIN_RESET_KEY não está configurada no servidor.' });
+  }
+  if (req.query.key !== adminKey) {
+    return res.status(403).json({ error: 'Chave inválida.' });
+  }
+
+  const invite = store.createInvite();
+  const url = `${req.protocol}://${req.get('host')}/?convite=${invite.code}`;
+  res.json({ success: true, code: invite.code, url });
+});
+
 module.exports = router;
