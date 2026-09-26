@@ -95,12 +95,38 @@ cron.schedule(`0 ${DELIVERY_HOUR} * * *`, async () => {
 });
 
 // ==========================================
+// AVISO DE ATUALIZAÇÃO DO APP (push pra todo mundo, uma vez por versão)
+// ==========================================
+// Toda vez que o app ganha uma novidade de verdade pro usuário (pergunta
+// nova, devocional, funcionalidade nova etc.), atualize APP_VERSION (uma
+// string qualquer, só precisa ser diferente da anterior) e
+// APP_UPDATE_MESSAGE aqui embaixo. No próximo boot do servidor (ou seja,
+// no próximo deploy), todo mundo que já usa o app recebe um push
+// avisando — só uma vez por versão, nunca de novo a cada reinício.
+const APP_VERSION = '2026-09-26-intimidade';
+const APP_UPDATE_MESSAGE =
+  'Tem novidade no app: perguntas novas sobre intimidade, o devocional já aparece assim que você termina o teste, e dá pra convidar outros casais. Dá uma olhada!';
+
+async function notificarAtualizacaoSeForNova() {
+  try {
+    const meta = store.readAppMeta();
+    if (meta.lastNotifiedVersion === APP_VERSION) return;
+    await pipeline.notifyAppUpdate(APP_UPDATE_MESSAGE);
+    store.writeAppMeta({ ...meta, lastNotifiedVersion: APP_VERSION, lastNotifiedAt: new Date().toISOString() });
+    console.log(`Notificação de atualização enviada (${APP_VERSION})`);
+  } catch (error) {
+    console.error('Erro ao notificar atualização do app:', error.message);
+  }
+}
+
+// ==========================================
 // START SERVER
 // ==========================================
 
 app.listen(PORT, () => {
   console.log(`Servidor Casais rodando em http://localhost:${PORT}`);
   console.log(`Entregas de dica: ${START_DATE} até ${END_DATE}, seg/qui/sáb às ${DELIVERY_HOUR}h`);
+  notificarAtualizacaoSeForNova();
 });
 
 module.exports = app;

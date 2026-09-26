@@ -3,7 +3,7 @@ const path = require('path');
 
 const DATA_DIR = process.env.DATA_DIR || '/tmp/casais-data';
 
-const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal', 'missions', 'invites'];
+const SUBDIRS = ['responses', 'results', 'analysis', 'tips', 'journal', 'missions', 'invites', 'meta'];
 
 function ensureDirs() {
   SUBDIRS.forEach((sub) => {
@@ -283,6 +283,17 @@ function listActivatedInvites() {
     .filter((invite) => invite.ativado);
 }
 
+// Pequeno registro de metadados do app em si (não de uma pessoa ou casal)
+// — hoje guarda só a última versão já notificada por push (ver
+// notifyAppUpdate em src/lib/pipeline.js e a checagem em server.js).
+function readAppMeta() {
+  return readJson('meta', 'app') || {};
+}
+
+function writeAppMeta(meta) {
+  writeJson('meta', 'app', meta);
+}
+
 // Apaga tudo (respostas, resultados, análise cruzada, dicas e histórico de
 // rotação) de um casal — usado pra zerar dados de teste antes da rodada
 // "de verdade". Sempre por trás de um endpoint protegido, nunca chamado
@@ -357,6 +368,8 @@ module.exports = {
   readInvite,
   activateInvite,
   listActivatedInvites,
+  readAppMeta,
+  writeAppMeta,
   getPushSubscriptions,
   savePushSubscription,
   removePushSubscription

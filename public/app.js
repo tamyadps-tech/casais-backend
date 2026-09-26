@@ -31,8 +31,91 @@
     { key: 'eixo_estilo', a: 'estruturado', b: 'espontaneo', labelA: 'Estruturado(a)', labelB: 'Espontâneo(a)' }
   ];
 
-  const TEMPERAMENTO_NOME = { sanguineo: 'Sanguíneo', colerico: 'Colérico', melancolico: 'Melancólico', fleumatico: 'Fleumático' };
-  const APEGO_NOME = { seguro: 'Apego seguro', ansioso: 'Apego ansioso', evitativo: 'Apego evitativo', desorganizado: 'Apego desorganizado' };
+  const TEMPERAMENTO_INFO = {
+    sanguineo: {
+      nome: 'Sanguíneo',
+      descricao: 'Animado(a), sociável, contagia o ambiente com energia e otimismo. Vive o momento e se conecta fácil com as pessoas.',
+      pontos_fortes: [
+        'Traz leveza e energia positiva pro ambiente',
+        'Se adapta rápido a mudanças e imprevistos',
+        'Facilidade genuína de criar conexão com as pessoas'
+      ],
+      como_potencializar: 'Use seu entusiasmo pra puxar os outros pra frente, mas treine terminar o que começa antes de partir pra próxima novidade — é aí que sua energia vira resultado de verdade.'
+    },
+    colerico: {
+      nome: 'Colérico',
+      descricao: 'Decidido(a), direto(a), gosta de liderar e resolver rápido. Tem clareza sobre o que quer e não tem medo de agir.',
+      pontos_fortes: [
+        'Toma decisão rápido, mesmo sob pressão',
+        'Natural pra liderar e organizar as coisas',
+        'Vai direto ao ponto, sem rodeio'
+      ],
+      como_potencializar: 'Sua clareza e decisão são um ativo — só cuide do tom quando estiver com pressa ou irritado(a), pra sua franqueza não soar como dureza pra quem está do seu lado.'
+    },
+    melancolico: {
+      nome: 'Melancólico',
+      descricao: 'Reflexivo(a), detalhista, sente as coisas de forma profunda. Pensa bem antes de agir e nota o que passa despercebido.',
+      pontos_fortes: [
+        'Atenção genuína aos detalhes que os outros não veem',
+        'Profundidade emocional e empatia real',
+        'Decide com cuidado, raramente no impulso'
+      ],
+      como_potencializar: 'Sua profundidade é um presente — pra ela não virar peso, pratique compartilhar o que sente antes de processar tudo sozinho(a), e dê um prazo pra decisão em vez de buscar a opção perfeita.'
+    },
+    fleumatico: {
+      nome: 'Fleumático',
+      descricao: 'Calmo(a), paciente, evita conflito e mantém a estabilidade. É o tipo de pessoa que traz equilíbrio pro ambiente.',
+      pontos_fortes: [
+        'Traz calma e estabilidade em momentos de tensão',
+        'Paciência genuína com o ritmo dos outros',
+        'Raramente reage no impulso'
+      ],
+      como_potencializar: 'Sua calma é rara e valiosa — só cuide pra não deixar de se posicionar quando algo te incomoda de verdade; evitar todo conflito tem um custo que vale a pena evitar.'
+    }
+  };
+
+  const APEGO_INFO = {
+    seguro: {
+      nome: 'Apego seguro',
+      descricao: 'Confia com naturalidade, se comunica bem e lida com distância sem pânico. Base sólida pra uma relação saudável.',
+      pontos_fortes: [
+        'Comunica necessidades sem drama nem silêncio',
+        'Lida bem com distância e autonomia do parceiro(a)',
+        'Recupera de conflitos com facilidade'
+      ],
+      como_potencializar: 'Use sua segurança pra acolher quem tem mais dificuldade nisso — sua consistência e paciência ajudam o outro lado a se sentir seguro também.'
+    },
+    ansioso: {
+      nome: 'Apego ansioso',
+      descricao: 'Busca proximidade e reafirmação constante, teme ser deixado(a) de lado. Ama intensamente, às vezes com medo de perder.',
+      pontos_fortes: [
+        'Capacidade grande de se entregar e se conectar profundamente',
+        'Sensível aos sinais emocionais do parceiro(a)',
+        'Valoriza muito a intimidade e a proximidade'
+      ],
+      como_potencializar: 'Sua intensidade é bonita quando não vem do medo — antes de pedir uma confirmação, tente notar se é a ansiedade falando ou a realidade. Comunicar isso ao parceiro(a) ajuda mais que testar o quanto ele(a) se importa.'
+    },
+    evitativo: {
+      nome: 'Apego evitativo',
+      descricao: 'Valoriza muito a independência e tem dificuldade de se abrir por completo. Precisa de espaço pra se sentir seguro(a).',
+      pontos_fortes: [
+        'Autonomia genuína, não depende do outro pra se sentir bem',
+        'Mantém a calma em momentos de intensidade emocional',
+        'Respeita o espaço do parceiro(a) com naturalidade'
+      ],
+      como_potencializar: 'Sua independência é saudável até o ponto em que vira distância — pratique compartilhar o que sente antes de recuar, mesmo que pareça mais fácil resolver tudo sozinho(a).'
+    },
+    desorganizado: {
+      nome: 'Apego desorganizado',
+      descricao: 'Oscila entre buscar e afastar, misturando desejo de intimidade com medo dela. Padrão mais complexo, mas totalmente trabalhável.',
+      pontos_fortes: [
+        'Autoconsciência sobre o próprio padrão, quando nomeado',
+        'Capacidade de amar intensamente quando se sente seguro(a)',
+        'Abertura pra crescer quando o padrão é reconhecido'
+      ],
+      como_potencializar: 'Notar o padrão de se aproximar e se afastar sem julgamento já é metade do caminho. Nomear isso em voz alta pro parceiro(a) ("é esse padrão de novo") tira poder da reação automática.'
+    }
+  };
 
   const MOOD_OPTIONS = [
     { key: 'dificil', label: 'Difícil', valor: 1 },
@@ -701,12 +784,31 @@
     wrap.innerHTML = '';
     const temp = scores.temperamento && scores.temperamento.dominantes && scores.temperamento.dominantes[0];
     const apegoDom = scores.apego && scores.apego.dominante;
-    [TEMPERAMENTO_NOME[temp], APEGO_NOME[apegoDom]].filter(Boolean).forEach((texto) => {
-      const span = document.createElement('span');
-      span.className = 'stat-badge';
-      span.textContent = texto;
-      wrap.appendChild(span);
+    [TEMPERAMENTO_INFO[temp], APEGO_INFO[apegoDom]].filter(Boolean).forEach((info) => {
+      const btn = document.createElement('button');
+      btn.className = 'stat-badge';
+      btn.textContent = info.nome;
+      btn.addEventListener('click', () => openInfoModal(info));
+      wrap.appendChild(btn);
     });
+  }
+
+  function openInfoModal(info) {
+    $('#modal-title').textContent = info.nome;
+    $('#modal-desc').textContent = info.descricao;
+    const list = $('#modal-strengths');
+    list.innerHTML = '';
+    (info.pontos_fortes || []).forEach((texto) => {
+      const li = document.createElement('li');
+      li.textContent = texto;
+      list.appendChild(li);
+    });
+    $('#modal-tip').textContent = info.como_potencializar;
+    $('#info-modal').hidden = false;
+  }
+
+  function closeInfoModal() {
+    $('#info-modal').hidden = true;
   }
 
   function renderGrowthPoints(pontos) {
@@ -984,6 +1086,11 @@
   // ---------- eventos ----------
   $('#btn-como-baixar-continuar').addEventListener('click', () => {
     showView('login');
+  });
+
+  $('#modal-close').addEventListener('click', closeInfoModal);
+  $('#info-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'info-modal') closeInfoModal();
   });
 
   $('#btn-switch-person-intro').addEventListener('click', () => {
