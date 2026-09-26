@@ -73,6 +73,26 @@ function notifyPartnerSubmitted(personId, name) {
   });
 }
 
+// Todo mundo que já usa o app hoje — casal original fixo + todo casal
+// ativado por convite — usado só pra avisar de novidades do próprio app
+// (ver notifyAppUpdate em server.js).
+function todasAsPessoas() {
+  const pessoas = [PERSON_1_ID, PERSON_2_ID];
+  store.listActivatedInvites().forEach((invite) => {
+    pessoas.push(invite.pessoa1.id, invite.pessoa2.id);
+  });
+  return pessoas;
+}
+
+// Avisa todo mundo (sem custo de IA, só um push) quando o app ganha
+// novidade — pergunta nova, devocional, funcionalidade nova etc. Chamado
+// uma vez por versão (ver server.js), nunca a cada reinício do servidor.
+async function notifyAppUpdate(message) {
+  await Promise.all(
+    todasAsPessoas().map((personId) => sendPush(personId, { title: 'Novidade no app', body: message }))
+  );
+}
+
 async function submitResponses(personId, name, responses) {
   const data = { respondent_id: personId, name, responses, submitted_at: new Date().toISOString() };
   store.writeJson('responses', personId, data);
@@ -329,5 +349,6 @@ module.exports = {
   pendingQuestionIds,
   completeResponses,
   getOrAssignMission,
-  completeMission
+  completeMission,
+  notifyAppUpdate
 };

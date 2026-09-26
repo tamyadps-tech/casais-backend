@@ -494,10 +494,87 @@ textarea.open-answer:focus { outline: none; border-color: var(--purple); box-sha
 .stat-badge {
   padding: 8px 14px;
   border-radius: 999px;
+  border: none;
   background: var(--purple-soft);
   color: var(--purple);
   font-size: 12px;
   font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: box-shadow .12s ease, transform .12s ease;
+}
+.stat-badge:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 31, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  padding: 0;
+}
+@media (min-width: 480px) {
+  .modal-overlay { align-items: center; padding: 20px; }
+}
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+}
+@media (min-width: 480px) {
+  .modal-card { border-radius: var(--radius); }
+}
+.modal-card h2 {
+  font-size: 20px;
+  margin: 0 0 12px;
+  font-weight: 800;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
+}
+.modal-desc { font-size: 15px; line-height: 1.55; margin: 0 0 18px; }
+.modal-subheading {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+  margin: 0 0 8px;
+}
+.modal-strengths { margin: 0 0 18px; padding-left: 20px; font-size: 14px; line-height: 1.6; }
+.modal-strengths li { margin-bottom: 4px; }
+.modal-tip {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  background: var(--purple-soft);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--purple-soft);
+  color: var(--purple);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .growth-list { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
