@@ -421,9 +421,68 @@
     $('#ics-url').value = `${window.location.origin}/api/calendar/${me.id}/${partner.id}/${encodeURIComponent(me.name)}.ics`;
 
     await refreshTips();
+    await loadMission();
     await loadJournal();
     await refreshPushButtonState();
     showView('dashboard');
+  }
+
+  // ---------- missão individual ----------
+  async function loadMission() {
+    try {
+      const data = await api(`/api/missions/${state.person.id}`);
+      renderMissionCurrent(data.current);
+      renderMissionHistory(data.history || []);
+    } catch (e) {
+      console.error(e);
+      $('#mission-current').innerHTML = '<p class="mission-empty">Não consegui carregar sua missão agora.</p>';
+    }
+  }
+
+  function renderMissionCurrent(mission) {
+    const wrap = $('#mission-current');
+    if (!mission) {
+      wrap.innerHTML = '<p class="mission-empty">Nenhuma missão disponível agora.</p>';
+      return;
+    }
+    wrap.innerHTML = `
+      <div class="mission-box">
+        <span class="mission-area">${escapeHtml(mission.area)}</span>
+        <p class="mission-text">${escapeHtml(mission.texto)}</p>
+        <div class="mission-actions">
+          <button class="btn-mission-done" id="btn-mission-done">Fiz essa missão</button>
+          <button class="btn-mission-skip" id="btn-mission-skip">Não fiz dessa vez</button>
+        </div>
+      </div>
+    `;
+    $('#btn-mission-done').addEventListener('click', () => completeMission('feita').catch(console.error));
+    $('#btn-mission-skip').addEventListener('click', () => completeMission('nao_feita').catch(console.error));
+  }
+
+  async function completeMission(status) {
+    await api(`/api/missions/${state.person.id}/complete`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    await loadMission();
+  }
+
+  function renderMissionHistory(history) {
+    const wrap = $('#mission-history');
+    if (!history.length) {
+      wrap.innerHTML = '';
+      return;
+    }
+    wrap.innerHTML = '';
+    history.slice(0, 8).forEach((m) => {
+      const div = document.createElement('div');
+      div.className = 'entry-card';
+      const date = new Date(m.completedAt || m.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+      const statusLabel = m.status === 'feita' ? 'Feita' : 'Não fiz';
+      div.innerHTML = `<div class="entry-meta"><span>${date} · ${escapeHtml(m.area)}</span><span class="entry-status ${m.status}">${statusLabel}</span></div>${escapeHtml(m.texto)}`;
+      wrap.appendChild(div);
+    });
   }
 
   // ---------- perfil em números (gráficos) ----------

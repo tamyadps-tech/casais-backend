@@ -13,6 +13,7 @@ const { generateTip } = require('./agents/tipsAgent');
 const { generateScheduleDates } = require('./scheduler');
 const { sendToSubscription } = require('./push');
 const { buildGrowthPoints } = require('./growthPoints');
+const { buildMissionPool } = require('./missionBank');
 
 // Manda push pra todos os aparelhos inscritos dessa pessoa. Silencioso se
 // push não estiver configurado (sem VAPID) ou a pessoa não tiver nenhuma
@@ -120,6 +121,52 @@ async function getOrBuildResult(personId, { force = false } = {}) {
   store.writeJson('results', personId, payload);
   await notifyResultReady(personId, submission.name);
   return payload;
+}
+
+// MISSÕES INDIVIDUAIS — desafio pequeno e prático, um de cada vez, derivado
+// do perfil da pessoa (ver src/lib/missionBank.js). Sem custo de IA: só
+// escolhe da rotação. Se já existe uma missão pendente, devolve ela; senão
+// atribui a próxima da rotação (por área, sem repetir antes de passar por
+// todas as outras).
+async function getOrAssignMission(personId) {
+  const result = await getOrBuildResult(personId);
+  if (!result) return null;
+
+  const pool = buildMissionPool(result.scores);
+  const state = store.readMissionsState(personId);
+  if (state.current) return state;
+  if (!pool.length) return state;
+
+  const idx = (state.poolIndex || 0) % pool.length;
+  const chosen = pool[idx];
+  const mission = {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    area: chosen.area,
+    texto: chosen.texto,
+    status: 'pendente',
+    createdAt: new Date().toISOString()
+  };
+  const newState = {
+    current: mission,
+    history: state.history || [],
+    poolIndex: idx + 1
+  };
+  store.writeMissionsState(personId, newState);
+  return newState;
+}
+
+function completeMission(personId, status) {
+  const state = store.readMissionsState(personId);
+  if (!state.current) return state;
+
+  const finished = { ...state.current, status, completedAt: new Date().toISOString() };
+  const newState = {
+    current: null,
+    history: [finished, ...(state.history || [])],
+    poolIndex: state.poolIndex || 0
+  };
+  store.writeMissionsState(personId, newState);
+  return newState;
 }
 
 async function getOrBuildCoupleAnalysis(id1, id2, { force = false } = {}) {
@@ -275,5 +322,7 @@ module.exports = {
   generateDueTips,
   selectFinding,
   pendingQuestionIds,
-  completeResponses
+  completeResponses,
+  getOrAssignMission,
+  completeMission
 };
