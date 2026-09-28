@@ -652,10 +652,13 @@
         return;
       }
       const d = data.devotional;
+      const versiculosHtml = (d.versiculos || []).map((v) => `
+        <span class="devotional-ref">${escapeHtml(v.referencia)}</span>
+        <p class="devotional-verse">"${escapeHtml(v.texto)}"</p>
+      `).join('');
       wrap.innerHTML = `
         <div class="devotional-box">
-          <span class="devotional-ref">${escapeHtml(d.referencia)}</span>
-          <p class="devotional-verse">"${escapeHtml(d.texto)}"</p>
+          ${versiculosHtml}
           <p class="devotional-estudo">${escapeHtml(d.estudo)}</p>
         </div>
       `;

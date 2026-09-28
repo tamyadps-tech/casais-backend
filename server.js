@@ -103,9 +103,9 @@ cron.schedule(`0 ${DELIVERY_HOUR} * * *`, async () => {
 // APP_UPDATE_MESSAGE aqui embaixo. No próximo boot do servidor (ou seja,
 // no próximo deploy), todo mundo que já usa o app recebe um push
 // avisando — só uma vez por versão, nunca de novo a cada reinício.
-const APP_VERSION = '2026-09-26-espiritualidade';
+const APP_VERSION = '2026-09-28-devocional-profundo';
 const APP_UPDATE_MESSAGE =
-  'Tem novidade no app: perguntas novas sobre fé e espiritualidade, e agora dá pra tocar nos emblemas do seu perfil (temperamento e apego) pra entender melhor cada um. Dá uma olhada!';
+  'O devocional ficou mais profundo: reflexões mais completas, com mais de um versículo quando faz sentido. Dá uma olhada!';
 
 async function notificarAtualizacaoSeForNova() {
   try {
