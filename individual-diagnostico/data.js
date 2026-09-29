@@ -514,12 +514,12 @@ const QUESTIONS = [
     id: 'EST08', categoria: 'estilo_vida', tipo: 'multipla_escolha',
     texto: 'Uma noite perfeita de sexta-feira, pra você, se parece mais com o quê?',
     opcoes: [
-      { texto: 'Balada, música alta, gente por todo lado — eu no meio disso, vivo(a)', tag: 'social_ama' },
-      { texto: 'Uma saída de vez em quando, com moderação — o suficiente', tag: 'social_moderado' },
-      { texto: 'Um encontro pequeno, íntimo, com poucas pessoas que realmente importam', tag: 'social_intimo' },
-      { texto: 'Sinceramente, isso já não me atrai como antes', tag: 'social_baixo' },
-      { texto: 'Nunca foi muito o meu tipo de programa', tag: 'social_nao' },
-      { texto: 'Depende inteiramente de quem está do meu lado', tag: 'social_depende' }
+      { texto: 'Balada, show ou uma noite agitada, com música alta e gente por todo lado', tag: 'social_ama' },
+      { texto: 'Um jantar ou happy hour com um grupo de amigos — animado, mas sem exagero', tag: 'social_moderado' },
+      { texto: 'Um jantar pequeno, ou uma boa conversa, só com quem eu realmente quero ver', tag: 'social_intimo' },
+      { texto: 'Ficar em casa numa maratona de série, um livro bom, ou qualquer coisa sem compromisso', tag: 'social_baixo' },
+      { texto: 'Um cinema, uma trilha, um jogo, um hobby — nunca fui muito de balada mesmo', tag: 'social_nao' },
+      { texto: 'Depende inteiramente de quem está do meu lado — o programa em si pesa menos', tag: 'social_depende' }
     ]
   },
   {
@@ -629,7 +629,7 @@ const TAG_TO_PARCEIRO_IDEAL = {
   social_ama: 'gosta de sair e curtir a vida social tanto quanto você',
   social_moderado: 'topa equilibrar com você os momentos de festa e os de calma',
   social_intimo: 'prefere, como você, encontros pequenos e verdadeiros a agito grande',
-  social_baixo: 'não cobra uma vida social agitada que já não combina mais com você',
+  social_baixo: 'curte tanto quanto você uma noite mais caseira e tranquila, sem cobrar uma vida social agitada',
   social_nao: 'tem outros programas favoritos que combinam com os seus',
   social_depende: 'entende que a companhia importa mais que o programa em si, assim como você',
 
