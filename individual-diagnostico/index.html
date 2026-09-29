@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Espelho</title>
+  <meta name="description" content="Um espelho sobre como você se relaciona — temperamento, forma de amar e o que sua história ainda ensina." />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- LANDING -->
+    <section id="view-landing" class="view">
+      <div class="card center">
+        <div class="mark" aria-hidden="true"></div>
+        <h1>Espelho</h1>
+        <p class="muted">Um retrato sincero de como você se relaciona — seu temperamento, o jeito como você ama, e o que sua história ainda ensina sobre isso hoje.</p>
+        <p class="muted small">São cerca de 50 perguntas, leva uns 15-20 minutos. No fim, você recebe um texto pessoal, escrito diretamente pra você — não um rótulo, um espelho. Nada é salvo em nenhum servidor: tudo acontece aqui, no seu navegador.</p>
+        <div class="join-form">
+          <label class="join-label" for="nome-input">Seu nome</label>
+          <input type="text" id="nome-input" placeholder="Como você quer ser chamado(a)" maxlength="60" />
+        </div>
+        <p class="form-error small" id="landing-error" hidden></p>
+        <button class="btn-primary" id="btn-start">Começar</button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="view-quiz" class="view" hidden>
+      <div class="quiz-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="quiz-meta">
+          <span id="quiz-counter" class="muted small"></span>
+        </div>
+        <div class="card">
+          <p class="question-text" id="question-text"></p>
+          <div id="answer-area"></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn-link" id="btn-back">Voltar</button>
+          <button class="btn-primary" id="btn-next" hidden>Próxima</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="view-result" class="view" hidden>
+      <div class="card">
+        <h1 id="result-title">Sobre você nos relacionamentos</h1>
+        <div class="result-text" id="result-text"></div>
+      </div>
+
+      <div class="card" id="parceiro-ideal" hidden>
+        <h2>Que tipo de parceiro(a) tende a combinar com você</h2>
+        <p class="muted small">Isso aqui não é sobre encontrar alguém perfeito — é sobre reconhecer, no estilo de vida e no comportamento, quem tende a caminhar bem ao seu lado. É só compatibilidade comportamental: não substitui afinidade emocional, valores mais profundos, nem — o mais importante — a escolha e a atração mútuas de duas pessoas reais.</p>
+        <p class="muted small" style="margin-top:14px; font-weight:700;">Alguém que combina bem com você, no dia a dia, provavelmente é alguém que:</p>
+        <ul class="parceiro-lista" id="parceiro-ideal-lista"></ul>
+        <p class="muted small" style="margin-top:14px;">Nenhuma lista substitui a escolha diária de amar — isso aqui só ajuda a enxergar, com mais clareza, o tipo de convivência que tende a fluir menos forçada pra você.</p>
+      </div>
+
+      <div class="card center">
+        <p class="muted small">Quer refazer com outro nome, ou mostrar pra alguém?</p>
+        <button class="btn-secondary" id="btn-restart">Recomeçar</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/data.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
