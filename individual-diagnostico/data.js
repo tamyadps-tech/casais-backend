@@ -8,554 +8,554 @@ const QUESTIONS = [
   // ---------- temperamento ----------
   {
     id: 'TEM01', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Numa roda de amigos, qual desses papéis mais parece com você?',
+    texto: 'Imagine que você entra numa sala cheia de gente que não conhece. O que se move primeiro dentro de você?',
     opcoes: [
-      { texto: 'O(a) que puxa assunto e contagia todo mundo com energia', tag: 'sanguineo' },
-      { texto: 'O(a) que toma a frente e organiza o que vai rolar', tag: 'colerico' },
-      { texto: 'O(a) que observa, analisa e fala pouco — mas fala bem', tag: 'melancolico' },
-      { texto: 'O(a) que fica tranquilo(a) no seu canto, sem se abalar com nada', tag: 'fleumatico' },
-      { texto: 'Não me encaixo bem em nenhum desses, sou mais na minha', tag: 'neutro' },
-      { texto: 'Um pouco de cada, depende muito do grupo', tag: 'neutro' }
+      { texto: 'Uma vontade quase instintiva de puxar conversa e contagiar o ambiente', tag: 'sanguineo' },
+      { texto: 'Um impulso de entender rápido quem manda ali e assumir posição', tag: 'colerico' },
+      { texto: 'Um olhar atento, avaliando cada pessoa antes de decidir se aproximar', tag: 'melancolico' },
+      { texto: 'Uma calma tranquila, como se nada ali pedisse pressa', tag: 'fleumatico' },
+      { texto: 'Nenhuma dessas — prefiro observar de fora, sem me encaixar em papel nenhum', tag: 'neutro' },
+      { texto: 'Um pouco de tudo isso, dependendo de quem está na sala', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM02', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Quando um plano muda de última hora, sua reação mais provável é...',
+    texto: 'Um plano em que você via com carinho desmorona de repente, sem aviso. O que acontece primeiro por dentro?',
     opcoes: [
-      { texto: 'Adaptar na hora e já ficar animado(a) com o novo plano', tag: 'sanguineo' },
-      { texto: 'Ficar irritado(a) e já pensar em como resolver rápido', tag: 'colerico' },
-      { texto: 'Sentir um incômodo e pensar bastante sobre o que mudou', tag: 'melancolico' },
-      { texto: 'Dar de ombros — tanto faz, vai que vai', tag: 'fleumatico' },
-      { texto: 'Fico neutro(a), nem percebo tanta diferença', tag: 'neutro' },
-      { texto: 'Reclamo baixinho e sigo o fluxo', tag: 'neutro' }
+      { texto: 'Uma faísca de curiosidade — já começo a pensar no que pode nascer disso', tag: 'sanguineo' },
+      { texto: 'Uma irritação instantânea, e já começo a arquitetar como resolver', tag: 'colerico' },
+      { texto: 'Um incômodo que fica girando, revivendo o que deu errado', tag: 'melancolico' },
+      { texto: 'Uma aceitação quase automática — o que vier, eu absorvo', tag: 'fleumatico' },
+      { texto: 'Praticamente nada — não sinto muita diferença entre o antes e o depois', tag: 'neutro' },
+      { texto: 'Um resmungo silencioso, e sigo o que a vida decidiu por mim', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM03', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Em um projeto em grupo, você tende a ser aquele(a) que...',
+    texto: 'Numa construção coletiva, onde ninguém decidiu ainda quem faz o quê, qual função você acaba ocupando sem nem perceber?',
     opcoes: [
-      { texto: 'Anima o time e mantém o clima leve', tag: 'sanguineo' },
-      { texto: 'Assume a liderança e cobra resultado', tag: 'colerico' },
-      { texto: 'Cuida dos detalhes que ninguém mais percebe', tag: 'melancolico' },
-      { texto: 'Mantém a calma quando todo mundo já surtou', tag: 'fleumatico' },
-      { texto: 'Fica na função que ninguém mais quer fazer, sem reclamar', tag: 'neutro' },
-      { texto: 'Prefere só executar sua parte, sem se envolver demais', tag: 'neutro' }
+      { texto: 'A que injeta ânimo no grupo e evita que o clima esfrie', tag: 'sanguineo' },
+      { texto: 'A que assume o leme e cobra que as coisas de fato aconteçam', tag: 'colerico' },
+      { texto: 'A que enxerga os detalhes que passariam despercebidos por qualquer outra pessoa', tag: 'melancolico' },
+      { texto: 'A que segura a estabilidade quando todo mundo já perdeu a paciência', tag: 'fleumatico' },
+      { texto: 'A que sobra — faço o que ninguém mais quis fazer, sem questionar', tag: 'neutro' },
+      { texto: 'A que só cumpre sua parte, sem se misturar demais com o resto', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM04', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Quando alguém te corta no trânsito, o que passa mais rápido pela sua cabeça?',
+    texto: 'Alguém te fecha no trânsito sem pedir licença. O que atravessa sua cabeça no primeiro segundo?',
     opcoes: [
-      { texto: 'Um xingamento — e esquece em 2 minutos', tag: 'sanguineo' },
-      { texto: 'Uma raiva forte, quase parte pro confronto', tag: 'colerico' },
-      { texto: 'Fica remoendo aquilo o resto do trajeto', tag: 'melancolico' },
-      { texto: 'Nem percebe direito, segue o dia normal', tag: 'fleumatico' },
-      { texto: 'Nem lembra depois, esquece rápido', tag: 'neutro' },
-      { texto: 'Fica tenso(a) por dentro, mas não demonstra nada', tag: 'neutro' }
+      { texto: 'Um xingamento rápido — que já evapora antes do semáforo seguinte', tag: 'sanguineo' },
+      { texto: 'Uma raiva que sobe quente, quase pedindo confronto', tag: 'colerico' },
+      { texto: 'Uma reflexão incômoda que insiste em voltar pelo resto do caminho', tag: 'melancolico' },
+      { texto: 'Quase nada — o corpo nem registra direito o que aconteceu', tag: 'fleumatico' },
+      { texto: 'Esqueço no instante seguinte, como se nunca tivesse acontecido', tag: 'neutro' },
+      { texto: 'Uma tensão que fica presa por dentro, sem sair pra lugar nenhum', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM05', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Como você costuma tomar decisões rápidas?',
+    texto: 'Diante de uma decisão que não pode esperar, o que guia sua escolha?',
     opcoes: [
-      { texto: 'No impulso, animado(a) com a possibilidade', tag: 'sanguineo' },
-      { texto: 'Rápido e direto, sem enrolação', tag: 'colerico' },
-      { texto: 'Só depois de pensar em todos os ângulos possíveis', tag: 'melancolico' },
-      { texto: 'Sem pressa — o tempo resolve', tag: 'fleumatico' },
-      { texto: 'Peço a opinião de alguém antes de decidir', tag: 'neutro' },
-      { texto: 'Evito decidir até que seja realmente necessário', tag: 'neutro' }
+      { texto: 'O impulso do momento — decido animado(a) com a possibilidade que se abre', tag: 'sanguineo' },
+      { texto: 'A pressa de resolver — decido rápido, sem enrolar', tag: 'colerico' },
+      { texto: 'A necessidade de girar a questão por todos os ângulos antes de agir', tag: 'melancolico' },
+      { texto: 'A confiança de que o tempo, por si, resolve o que precisa ser resolvido', tag: 'fleumatico' },
+      { texto: 'A busca por uma segunda opinião antes de me comprometer', tag: 'neutro' },
+      { texto: 'O adiamento — só decido quando não há mais escapatória', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM06', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'O que mais te estressa numa relação?',
+    texto: 'O que, numa relação, corrói sua paciência mais rápido do que qualquer outra coisa?',
     opcoes: [
-      { texto: 'Rotina parada, sem novidade nenhuma', tag: 'sanguineo' },
-      { texto: 'Sentir que perdeu o controle da situação', tag: 'colerico' },
-      { texto: 'Não conseguir entender o que se passa na cabeça do outro', tag: 'melancolico' },
-      { texto: 'Confronto e discussão — prefere evitar', tag: 'fleumatico' },
-      { texto: 'Falta de reconhecimento pelo que eu faço', tag: 'neutro' },
-      { texto: 'Sentir que não tenho voz nas decisões', tag: 'neutro' }
+      { texto: 'A rotina parada, sem nada de novo pra viver', tag: 'sanguineo' },
+      { texto: 'A sensação de ter perdido as rédeas da situação', tag: 'colerico' },
+      { texto: 'Não conseguir decifrar o que se passa por trás do silêncio do outro', tag: 'melancolico' },
+      { texto: 'O confronto em si — prefiro qualquer coisa a discussão aberta', tag: 'fleumatico' },
+      { texto: 'A falta de reconhecimento por tudo que já entreguei', tag: 'neutro' },
+      { texto: 'A sensação de não ter voz nas decisões que me afetam', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM07', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Diante de um problema sério, o que você faz primeiro?',
+    texto: 'Um problema sério bate à porta sem avisar. Qual é o seu primeiro movimento, antes mesmo de pensar?',
     opcoes: [
-      { texto: 'Chama alguém pra conversar e desabafar', tag: 'sanguineo' },
-      { texto: 'Parte pra ação, resolve logo', tag: 'colerico' },
-      { texto: 'Analisa cada detalhe antes de fazer qualquer coisa', tag: 'melancolico' },
-      { texto: 'Espera um pouco pra ver se o problema se resolve sozinho', tag: 'fleumatico' },
-      { texto: 'Busca informações antes de fazer qualquer coisa', tag: 'neutro' },
-      { texto: 'Tenta não pensar muito, distrai a cabeça primeiro', tag: 'neutro' }
+      { texto: 'Ligar pra alguém e colocar tudo pra fora em voz alta', tag: 'sanguineo' },
+      { texto: 'Partir direto pra ação — resolver antes de sentir', tag: 'colerico' },
+      { texto: 'Recuar pra dentro e vasculhar cada detalhe antes de qualquer passo', tag: 'melancolico' },
+      { texto: 'Esperar, quase por instinto, pra ver se o próprio tempo resolve', tag: 'fleumatico' },
+      { texto: 'Buscar informação, entender o cenário antes de qualquer atitude', tag: 'neutro' },
+      { texto: 'Distrair a cabeça primeiro, adiar o encontro com o problema', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM08', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Como você reage a elogios em público?',
+    texto: 'Alguém te elogia na frente de outras pessoas. O que acontece por dentro, antes mesmo da resposta sair da boca?',
     opcoes: [
-      { texto: 'Adora, se ilumina na hora', tag: 'sanguineo' },
-      { texto: 'Aceita com orgulho, sente que mereceu', tag: 'colerico' },
-      { texto: 'Fica sem graça, prefere reconhecimento em particular', tag: 'melancolico' },
-      { texto: 'Agradece tranquilamente, sem alarde', tag: 'fleumatico' },
-      { texto: 'Fica desconfiado(a), acha que tem segunda intenção', tag: 'neutro' },
-      { texto: 'Devolve o elogio na mesma hora', tag: 'neutro' }
+      { texto: 'Um brilho instantâneo — eu adoro esse tipo de momento', tag: 'sanguineo' },
+      { texto: 'Um orgulho tranquilo — sinto que era merecido', tag: 'colerico' },
+      { texto: 'Um desconforto sutil — prefiro reconhecimento em particular', tag: 'melancolico' },
+      { texto: 'Uma gratidão simples, sem grande alarde', tag: 'fleumatico' },
+      { texto: 'Uma desconfiança — fico pensando se há segunda intenção ali', tag: 'neutro' },
+      { texto: 'Um impulso de devolver o elogio na mesma hora', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM09', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Qual frase mais combina com você?',
+    texto: 'Se sua forma de viver virasse uma frase, qual dessas chegaria mais perto?',
     opcoes: [
-      { texto: '"A vida é festa, bora aproveitar"', tag: 'sanguineo' },
-      { texto: '"Se não for pra vencer, pra que fazer?"', tag: 'colerico' },
-      { texto: '"Prefiro fazer certo do que fazer rápido"', tag: 'melancolico' },
-      { texto: '"Devagar se vai ao longe"', tag: 'fleumatico' },
-      { texto: '"Cada um no seu quadrado, sem drama"', tag: 'neutro' },
-      { texto: '"O que vier, eu encaro"', tag: 'neutro' }
+      { texto: '"A vida é festa, bora aproveitar antes que passe"', tag: 'sanguineo' },
+      { texto: '"Se não é pra vencer, pra que gastar energia?"', tag: 'colerico' },
+      { texto: '"Prefiro fazer certo a fazer rápido"', tag: 'melancolico' },
+      { texto: '"Devagar se vai ao longe, e eu não tenho pressa"', tag: 'fleumatico' },
+      { texto: '"Cada um no seu quadrado, sem drama nenhum"', tag: 'neutro' },
+      { texto: '"O que vier, eu encaro — sem muito planejamento"', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM10', categoria: 'temperamento', tipo: 'multipla_escolha',
-    texto: 'Numa discussão de casal, você costuma...',
+    texto: 'No meio de uma discussão que dói de verdade, o que seu corpo faz antes da sua mente decidir?',
     opcoes: [
-      { texto: 'Falar demais, deixar escapar o que sente na hora', tag: 'sanguineo' },
-      { texto: 'Ir direto ao ponto, sem rodeios, mesmo que doa', tag: 'colerico' },
-      { texto: 'Se fechar e só voltar a falar depois de processar tudo', tag: 'melancolico' },
-      { texto: 'Evitar o confronto, esperar a poeira baixar', tag: 'fleumatico' },
-      { texto: 'Tentar equilibrar, ouvir e falar na mesma medida', tag: 'neutro' },
-      { texto: 'Buscar humor pra aliviar a tensão', tag: 'neutro' }
+      { texto: 'Fala demais — as palavras escapam antes de eu conseguir filtrá-las', tag: 'sanguineo' },
+      { texto: 'Vai direto ao ponto, mesmo sabendo que aquilo pode doer', tag: 'colerico' },
+      { texto: 'Se fecha, e só volta a falar depois de processar tudo em silêncio', tag: 'melancolico' },
+      { texto: 'Evita o confronto, espera a poeira baixar sozinha', tag: 'fleumatico' },
+      { texto: 'Tenta equilibrar — ouvir tanto quanto fala', tag: 'neutro' },
+      { texto: 'Busca humor, tenta aliviar o peso do momento', tag: 'neutro' }
     ]
   },
   {
     id: 'TEM11', categoria: 'temperamento', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto você se irrita rápido quando algo sai do seu controle.',
-    escala: { min: 1, max: 5, min_label: 'Quase nada me tira do sério', max_label: 'Exploto fácil quando perco o controle da situação' },
+    texto: 'Numa escala de 1 a 5, o quanto a sensação de perder o controle de uma situação acende alguma coisa forte dentro de você?',
+    escala: { min: 1, max: 5, min_label: 'Quase nada — perder o controle não me abala', max_label: 'Muito — sinto que exploto por dentro quando isso acontece' },
     dimensao: 'colerico'
   },
   {
     id: 'TEM12', categoria: 'temperamento', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto você precisa de tempo sozinho(a) pra processar as coisas antes de falar sobre elas.',
-    escala: { min: 1, max: 5, min_label: 'Falo na hora, não preciso processar', max_label: 'Preciso de bastante tempo em silêncio antes de conseguir colocar em palavras' },
+    texto: 'De 1 a 5, o quanto você precisa se recolher em silêncio antes de conseguir transformar o que sente em palavras?',
+    escala: { min: 1, max: 5, min_label: 'Nada — as palavras saem no mesmo instante em que sinto', max_label: 'Muito — preciso de um tempo a sós antes de conseguir nomear o que sinto' },
     dimensao: 'melancolico'
   },
 
   // ---------- apego ----------
   {
     id: 'APE01', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Seu parceiro(a) demora mais que o normal pra responder uma mensagem. O que passa primeiro pela sua cabeça?',
+    texto: 'O silêncio do celular, depois de mandar uma mensagem importante, costuma falar o quê primeiro na sua cabeça?',
     opcoes: [
-      { texto: 'Nada demais, ele(a) deve estar ocupado(a)', tag: 'seguro' },
-      { texto: 'Será que eu fiz alguma coisa errada?', tag: 'ansioso' },
-      { texto: 'Nem percebo muito, sigo minha vida normalmente', tag: 'evitativo' },
-      { texto: 'Fico incomodado(a), mas nem sei dizer se é medo ou raiva', tag: 'desorganizado' },
-      { texto: 'Depende do dia, às vezes nem penso nisso', tag: 'neutro' },
-      { texto: 'Fico na dúvida, mas não demonstro nada', tag: 'neutro' }
+      { texto: 'Nada — a pessoa deve estar ocupada, e tudo bem com isso', tag: 'seguro' },
+      { texto: 'Um sussurro ansioso: será que eu fiz alguma coisa errada?', tag: 'ansioso' },
+      { texto: 'Quase nada — sigo minha vida sem dar peso ao silêncio', tag: 'evitativo' },
+      { texto: 'Um incômodo confuso, que eu nem sei nomear direito — medo? raiva?', tag: 'desorganizado' },
+      { texto: 'Depende do dia — às vezes nem registro isso', tag: 'neutro' },
+      { texto: 'Uma dúvida que fica ali, mas sem sair pra fora', tag: 'neutro' }
     ]
   },
   {
     id: 'APE02', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Quando vocês estão de mal, o que você mais quer fazer?',
+    texto: 'Depois de uma briga, o que dentro de você mais pede pra acontecer primeiro?',
     opcoes: [
-      { texto: 'Conversar logo, resolver e seguir em frente', tag: 'seguro' },
-      { texto: 'Correr atrás, buscar reconciliação imediatamente', tag: 'ansioso' },
-      { texto: 'Ter um tempo sozinho(a), longe do assunto', tag: 'evitativo' },
-      { texto: 'Uma parte quer se aproximar, outra quer fugir', tag: 'desorganizado' },
-      { texto: 'Prefiro deixar o tempo resolver, sem forçar nada', tag: 'neutro' },
-      { texto: 'Fico mal, mas espero a outra pessoa dar o primeiro passo', tag: 'neutro' }
+      { texto: 'Conversar logo, resolver e seguir — sem carregar peso pro dia seguinte', tag: 'seguro' },
+      { texto: 'Correr atrás da reconciliação o quanto antes, nem que seja eu quem ceda primeiro', tag: 'ansioso' },
+      { texto: 'Um tempo sozinho(a), longe do assunto, antes de qualquer conversa', tag: 'evitativo' },
+      { texto: 'Uma parte de mim quer se aproximar, outra quer sumir — as duas ao mesmo tempo', tag: 'desorganizado' },
+      { texto: 'Deixar o tempo agir, sem forçar nada além do necessário', tag: 'neutro' },
+      { texto: 'Esperar — fico mal, mas espero o outro dar o primeiro passo', tag: 'neutro' }
     ]
   },
   {
     id: 'APE03', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Como você se sente quando seu parceiro(a) quer passar um tempo sem você (uma viagem com amigos, por exemplo)?',
+    texto: 'Seu parceiro(a) anuncia uma viagem só com amigos, sem você. O que se instala no seu peito quando ouve isso?',
     opcoes: [
-      { texto: 'Tranquilo(a), confio e aproveito meu tempo também', tag: 'seguro' },
-      { texto: 'Ansioso(a), fico pensando no que ele(a) está fazendo', tag: 'ansioso' },
-      { texto: 'Até prefiro, gosto do meu espaço também', tag: 'evitativo' },
-      { texto: 'Sinto falta, mas também um alívio — é confuso', tag: 'desorganizado' },
-      { texto: 'Depende do clima da relação naquele momento', tag: 'neutro' },
-      { texto: 'Fico bem, mas mando notícia de vez em quando', tag: 'neutro' }
+      { texto: 'Uma tranquilidade genuína — confio, e aproveito meu próprio tempo também', tag: 'seguro' },
+      { texto: 'Uma ansiedade que fica imaginando o que ele(a) está fazendo, sem parar', tag: 'ansioso' },
+      { texto: 'Um certo alívio — gosto do meu espaço tanto quanto ele(a) precisa do dele(a)', tag: 'evitativo' },
+      { texto: 'Uma saudade misturada com um alívio estranho — as duas coisas ao mesmo tempo', tag: 'desorganizado' },
+      { texto: 'Depende do momento que a relação está vivendo', tag: 'neutro' },
+      { texto: 'Uma paz relativa, com uma mensagem de vez em quando pra me situar', tag: 'neutro' }
     ]
   },
   {
     id: 'APE04', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Falar sobre o futuro da relação (morar junto, casar) faz você sentir...',
+    texto: 'Quando a conversa vira pro futuro da relação — morar junto, construir uma vida — o que acorda dentro de você?',
     opcoes: [
-      { texto: 'Empolgação — é natural pensar nisso junto', tag: 'seguro' },
-      { texto: 'Ansiedade, quero ter certeza de que vai acontecer', tag: 'ansioso' },
-      { texto: 'Um certo desconforto, prefiro ir vivendo um dia de cada vez', tag: 'evitativo' },
-      { texto: 'Uma mistura de vontade de ir junto e vontade de fugir do assunto', tag: 'desorganizado' },
-      { texto: 'Prefiro focar no presente, sem pensar tão à frente', tag: 'neutro' },
-      { texto: 'Depende muito de como a conversa é conduzida', tag: 'neutro' }
+      { texto: 'Uma empolgação natural, como se fosse óbvio pensar nisso junto', tag: 'seguro' },
+      { texto: 'Uma ansiedade que busca certeza — preciso saber que aquilo vai mesmo acontecer', tag: 'ansioso' },
+      { texto: 'Um desconforto sutil — prefiro viver um dia de cada vez, sem me prender ao amanhã', tag: 'evitativo' },
+      { texto: 'Uma vontade de ir junto que, no minuto seguinte, vira vontade de fugir do assunto', tag: 'desorganizado' },
+      { texto: 'Um foco maior no presente, sem me alongar demais no futuro', tag: 'neutro' },
+      { texto: 'Depende de como a conversa é conduzida — do tom, não do tema', tag: 'neutro' }
     ]
   },
   {
     id: 'APE05', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Quando seu parceiro(a) erra com você, sua reação mais comum é...',
+    texto: 'Quando a pessoa que você ama te machuca, mesmo sem querer, o que emerge primeiro?',
     opcoes: [
-      { texto: 'Falar com calma sobre o que senti', tag: 'seguro' },
-      { texto: 'Cobrar bastante, com medo de que aconteça de novo', tag: 'ansioso' },
-      { texto: 'Guardar pra mim e me distanciar sem explicar o motivo', tag: 'evitativo' },
-      { texto: 'Explodir e, depois, me arrepender de como agi', tag: 'desorganizado' },
-      { texto: 'Esperar um pedido de desculpas antes de reagir', tag: 'neutro' },
-      { texto: 'Tentar entender o contexto antes de reagir', tag: 'neutro' }
+      { texto: 'Uma calma que consegue nomear o que senti, sem se perder no meio do caminho', tag: 'seguro' },
+      { texto: 'Uma cobrança forte, movida pelo medo de que aquilo se repita', tag: 'ansioso' },
+      { texto: 'Um recuo silencioso — me distancio sem sempre explicar por quê', tag: 'evitativo' },
+      { texto: 'Uma explosão que, minutos depois, vira arrependimento por como agi', tag: 'desorganizado' },
+      { texto: 'A espera por um pedido de desculpas antes de qualquer reação minha', tag: 'neutro' },
+      { texto: 'Uma tentativa de entender o contexto antes de sentir qualquer coisa', tag: 'neutro' }
     ]
   },
   {
     id: 'APE06', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'O que mais te dá segurança numa relação?',
+    texto: 'O que, no fundo, faz você sentir que pode relaxar de verdade dentro de uma relação?',
     opcoes: [
-      { texto: 'Saber que consigo confiar e ser eu mesmo(a)', tag: 'seguro' },
-      { texto: 'Ter provas constantes de que sou amado(a)', tag: 'ansioso' },
-      { texto: 'Ter minha independência preservada', tag: 'evitativo' },
-      { texto: 'Sinceramente, nunca me senti totalmente seguro(a) numa relação', tag: 'desorganizado' },
-      { texto: 'Ter uma rotina estável e previsível', tag: 'neutro' },
-      { texto: 'Sentir que somos um time nas decisões', tag: 'neutro' }
+      { texto: 'Saber que posso ser exatamente quem sou, sem precisar performar', tag: 'seguro' },
+      { texto: 'Ter provas constantes — palavras, gestos, atenção — de que sou amado(a)', tag: 'ansioso' },
+      { texto: 'Manter minha independência intacta, mesmo estando com alguém', tag: 'evitativo' },
+      { texto: 'Honestamente? Nunca cheguei a sentir segurança plena numa relação', tag: 'desorganizado' },
+      { texto: 'Uma rotina estável, onde eu sei o que esperar', tag: 'neutro' },
+      { texto: 'Sentir que decidimos as coisas como time, não como indivíduos isolados', tag: 'neutro' }
     ]
   },
   {
     id: 'APE07', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Quando você sente que está se apaixonando de verdade, o que costuma fazer?',
+    texto: 'Quando você percebe que está se apaixonando de verdade, o que seu corpo faz antes da sua cabeça decidir qualquer coisa?',
     opcoes: [
-      { texto: 'Se permitir viver, com naturalidade', tag: 'seguro' },
-      { texto: 'Já começar a temer perder a pessoa', tag: 'ansioso' },
-      { texto: 'Ficar um pouco na defensiva, com medo de se expor demais', tag: 'evitativo' },
-      { texto: 'Se aproximar e se afastar várias vezes, sem entender bem por quê', tag: 'desorganizado' },
-      { texto: 'Fico observando com cautela antes de me entregar', tag: 'neutro' },
-      { texto: 'Sigo o fluxo, sem pensar muito nisso', tag: 'neutro' }
+      { texto: 'Se permite viver aquilo, com naturalidade, sem grandes resistências', tag: 'seguro' },
+      { texto: 'Já começa a temer a perda da pessoa, mesmo antes de tê-la de fato', tag: 'ansioso' },
+      { texto: 'Ergue uma defesa sutil, com medo de se expor além da conta', tag: 'evitativo' },
+      { texto: 'Se aproxima e recua várias vezes, sem entender bem o próprio movimento', tag: 'desorganizado' },
+      { texto: 'Observa com cautela, antes de se entregar por completo', tag: 'neutro' },
+      { texto: 'Segue o fluxo, sem pensar demais no que está sentindo', tag: 'neutro' }
     ]
   },
   {
     id: 'APE08', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Numa festa, seu parceiro(a) está conversando animadamente com outra pessoa por um bom tempo. Você...',
+    texto: 'Numa festa, seu parceiro(a) ri animado(a) com outra pessoa, por tempo demais pro seu gosto. O que se move em você?',
     opcoes: [
-      { texto: 'Nem liga, confia e segue curtindo a festa', tag: 'seguro' },
-      { texto: 'Fica de olho, uma pontinha de ciúme aparece', tag: 'ansioso' },
-      { texto: 'Nem nota, está distraído(a) com outra coisa', tag: 'evitativo' },
-      { texto: 'Sente ciúme, mas evita demonstrar — guarda pra depois', tag: 'desorganizado' },
-      { texto: 'Puxo assunto e me junto à conversa', tag: 'neutro' },
-      { texto: 'Comento sobre isso depois, de boa', tag: 'neutro' }
+      { texto: 'Nada muito forte — confio, e sigo curtindo minha própria noite', tag: 'seguro' },
+      { texto: 'Um ciúme que cresce enquanto eu fico de olho, sem conseguir desviar', tag: 'ansioso' },
+      { texto: 'Quase nada — nem registro, estou distraído(a) com outra coisa', tag: 'evitativo' },
+      { texto: 'Um ciúme que sinto por dentro, mas escondo pra tratar depois, em outro momento', tag: 'desorganizado' },
+      { texto: 'Um impulso de me juntar à conversa, sem drama', tag: 'neutro' },
+      { texto: 'Um comentário tranquilo sobre isso, mais tarde, sem peso', tag: 'neutro' }
     ]
   },
   {
     id: 'APE09', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Depender emocionalmente de alguém é algo que você...',
+    texto: 'Precisar emocionalmente de alguém — de verdade, sem fingir que dá conta sozinho(a) — é algo que você...',
     opcoes: [
-      { texto: 'Faz com naturalidade — é parte de uma relação saudável', tag: 'seguro' },
-      { texto: 'Busca bastante, às vezes até demais', tag: 'ansioso' },
-      { texto: 'Evita ao máximo, prefere se virar sozinho(a)', tag: 'evitativo' },
-      { texto: 'Deseja, mas ao mesmo tempo teme', tag: 'desorganizado' },
-      { texto: 'Depende muito de quem é a pessoa', tag: 'neutro' },
-      { texto: 'Tento equilibrar entre pedir ajuda e resolver sozinho(a)', tag: 'neutro' }
+      { texto: 'Faz com naturalidade, entendendo que isso é parte de qualquer vínculo saudável', tag: 'seguro' },
+      { texto: 'Busca intensamente, às vezes até além do que seria saudável', tag: 'ansioso' },
+      { texto: 'Evita ao máximo — prefiro sempre encontrar meu próprio caminho', tag: 'evitativo' },
+      { texto: 'Deseja e teme ao mesmo tempo, numa contradição que nunca se resolve de vez', tag: 'desorganizado' },
+      { texto: 'Depende muito de quem é a pessoa do outro lado', tag: 'neutro' },
+      { texto: 'Tenta equilibrar entre pedir ajuda e resolver por conta própria', tag: 'neutro' }
     ]
   },
   {
     id: 'APE10', categoria: 'apego', tipo: 'multipla_escolha',
-    texto: 'Quando algo muito bom acontece na sua vida, qual é seu primeiro instinto?',
+    texto: 'Uma notícia boa chega na sua vida. Antes de contar pra alguém, o que seu instinto faz primeiro?',
     opcoes: [
-      { texto: 'Compartilhar com o parceiro(a) na hora, com alegria', tag: 'seguro' },
-      { texto: 'Compartilhar e já esperar uma reação super entusiasmada', tag: 'ansioso' },
-      { texto: 'Guardar pra mim por um tempo antes de contar', tag: 'evitativo' },
-      { texto: 'Contar, mas já esperando que algo dê errado', tag: 'desorganizado' },
-      { texto: 'Fico na dúvida se conto logo ou espero o momento certo', tag: 'neutro' },
-      { texto: 'Comemoro sozinho(a) antes de contar pra alguém', tag: 'neutro' }
+      { texto: 'Compartilha na hora, com o parceiro(a), com alegria genuína', tag: 'seguro' },
+      { texto: 'Compartilha, já na expectativa de uma reação grande o bastante pra confirmar que importo', tag: 'ansioso' },
+      { texto: 'Guarda só pra si por um tempo, antes de sequer pensar em contar', tag: 'evitativo' },
+      { texto: 'Conta, mas já se preparando internamente pra alguma decepção que pode vir depois', tag: 'desorganizado' },
+      { texto: 'Fica em dúvida entre contar logo ou esperar o momento certo', tag: 'neutro' },
+      { texto: 'Comemora sozinho(a), antes de dividir com qualquer pessoa', tag: 'neutro' }
     ]
   },
   {
     id: 'APE11', categoria: 'apego', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto você sente necessidade de confirmação constante de que é amado(a).',
-    escala: { min: 1, max: 5, min_label: 'Quase nenhuma — confio sem precisar de provas', max_label: 'Muita — preciso sentir isso o tempo todo' },
+    texto: 'De 1 a 5, o quanto você precisa sentir, de forma repetida, que é amado(a) — mesmo quando nada mudou de fato.',
+    escala: { min: 1, max: 5, min_label: 'Quase nada — confio sem exigir provas constantes', max_label: 'Muito — preciso sentir isso confirmado o tempo todo' },
     dimensao: 'ansioso'
   },
   {
     id: 'APE12', categoria: 'apego', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto é fácil pra você se abrir emocionalmente com o parceiro(a).',
-    escala: { min: 1, max: 5, min_label: 'Muito difícil — prefiro guardar pra mim', max_label: 'Muito fácil — me abro sem medo' },
+    texto: 'De 1 a 5, o quanto suas emoções mais cruas conseguem sair de dentro de você e chegar até quem você ama.',
+    escala: { min: 1, max: 5, min_label: 'Quase nunca — prefiro guardar o que sinto pra mim', max_label: 'Com facilidade — me abro sem grande resistência' },
     dimensao: 'evitativo', inverso: true
   },
   {
     id: 'APE13', categoria: 'apego', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto discussões de relacionamento mexem com seu sono ou seu apetite.',
-    escala: { min: 1, max: 5, min_label: 'Nada — sigo minha rotina normal', max_label: 'Muito — fico afetado(a) fisicamente' },
+    texto: 'De 1 a 5, o quanto uma discussão de relacionamento consegue invadir seu corpo — sono, apetite, concentração.',
+    escala: { min: 1, max: 5, min_label: 'Nada — sigo minha rotina normalmente', max_label: 'Muito — fico fisicamente afetado(a) por dias' },
     dimensao: 'ansioso'
   },
   {
     id: 'APE14', categoria: 'apego', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto você se identifica com se aproximar e se afastar das pessoas sem entender totalmente por quê.',
-    escala: { min: 1, max: 5, min_label: 'Nunca me identifico com isso', max_label: 'Me identifico muito com isso' },
+    texto: 'De 1 a 5, o quanto você reconhece em si esse movimento de se aproximar e se afastar das pessoas, sem entender de verdade por quê.',
+    escala: { min: 1, max: 5, min_label: 'Nunca me reconheço nisso', max_label: 'Me reconheço demais nisso' },
     dimensao: 'desorganizado'
   },
 
   // ---------- feridas da infância ----------
   {
     id: 'FER01', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'Quando alguém cancela um encontro com você de última hora, o que dói mais?',
+    texto: 'Alguém cancela um encontro com você em cima da hora. Qual dor, especificamente, dói mais?',
     opcoes: [
-      { texto: 'Sentir que não fui prioridade pra essa pessoa', tag: 'rejeicao' },
-      { texto: 'O medo de que isso vire um padrão e a pessoa suma', tag: 'abandono' },
-      { texto: 'Sentir que fiquei em segundo plano, meio invisível', tag: 'humilhacao' },
-      { texto: 'Já ficar desconfiado(a) se a desculpa é verdadeira mesmo', tag: 'traicao' },
-      { texto: 'Achar injusto, depois de tudo que eu tinha planejado', tag: 'injustica' },
-      { texto: 'Nada muito profundo — só uma chatice do dia', tag: 'neutro' }
+      { texto: 'A sensação de não ter sido prioridade pra essa pessoa', tag: 'rejeicao' },
+      { texto: 'O medo de que isso vire um padrão, até a pessoa simplesmente sumir', tag: 'abandono' },
+      { texto: 'A sensação de ficar invisível, em segundo plano, sem peso nenhum', tag: 'humilhacao' },
+      { texto: 'A desconfiança imediata sobre se a desculpa é mesmo verdadeira', tag: 'traicao' },
+      { texto: 'A revolta de ter se planejado tanto pra nada', tag: 'injustica' },
+      { texto: 'Nada muito profundo — é só uma chatice do dia', tag: 'neutro' }
     ]
   },
   {
     id: 'FER02', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'O que mais te machuca quando alguém te dá um feedback negativo?',
+    texto: 'Um feedback negativo chega. O que dói de verdade não é o conteúdo — é o quê, exatamente?',
     opcoes: [
-      { texto: 'O medo de estar sendo rejeitado(a) como pessoa', tag: 'rejeicao' },
-      { texto: 'O medo de essa pessoa se afastar de mim por causa disso', tag: 'abandono' },
-      { texto: 'A sensação de vergonha, como se todo mundo estivesse vendo', tag: 'humilhacao' },
-      { texto: 'A desconfiança sobre a real intenção por trás do feedback', tag: 'traicao' },
-      { texto: 'A sensação de que fui tratado(a) de forma desproporcional', tag: 'injustica' },
-      { texto: 'Nada muito profundo, sigo em frente rápido', tag: 'neutro' }
+      { texto: 'O medo de estar sendo rejeitado(a) como pessoa, não só corrigido(a) numa tarefa', tag: 'rejeicao' },
+      { texto: 'O medo de que essa pessoa se afaste de mim por causa disso', tag: 'abandono' },
+      { texto: 'A vergonha de sentir que todo mundo está vendo minha falha', tag: 'humilhacao' },
+      { texto: 'A desconfiança sobre a real intenção por trás daquelas palavras', tag: 'traicao' },
+      { texto: 'A sensação de estar sendo tratado(a) de forma desproporcional ao que fiz', tag: 'injustica' },
+      { texto: 'Nada muito profundo — sigo em frente rápido', tag: 'neutro' }
     ]
   },
   {
     id: 'FER03', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'Numa discussão, o que mais te machuca ouvir do seu parceiro(a)?',
+    texto: 'Numa discussão, qual dessas frases, se ditas, deixariam uma marca mais funda em você?',
     opcoes: [
       { texto: '"Eu não te quero mais por perto"', tag: 'rejeicao' },
       { texto: '"Vou embora"', tag: 'abandono' },
       { texto: '"Você é ridículo(a) por pensar assim"', tag: 'humilhacao' },
       { texto: '"Você não é confiável"', tag: 'traicao' },
       { texto: '"Você não merece isso"', tag: 'injustica' },
-      { texto: 'Nenhuma frase específica — o tom de voz é o que mais pesa', tag: 'neutro' }
+      { texto: 'Nenhuma frase específica — o tom de voz pesa mais que as palavras', tag: 'neutro' }
     ]
   },
   {
     id: 'FER04', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'Quando criança, o que mais pesava pra você?',
+    texto: 'Voltando à infância: o que mais pesava, silenciosamente, sem que ninguém precisasse dizer em voz alta?',
     opcoes: [
-      { texto: 'Sentir que não era escolhido(a) primeiro pros times ou brincadeiras', tag: 'rejeicao' },
-      { texto: 'Ficar muito tempo sozinho(a), sem ninguém por perto', tag: 'abandono' },
-      { texto: 'Ser corrigido(a) ou repreendido(a) na frente dos outros', tag: 'humilhacao' },
-      { texto: 'Perceber promessas de adultos que não se cumpriam', tag: 'traicao' },
-      { texto: 'Sentir que as regras eram diferentes (e piores) pra mim', tag: 'injustica' },
-      { texto: 'Nada muito marcante, tive uma infância tranquila', tag: 'neutro' }
+      { texto: 'Não ser escolhido(a) primeiro — pros times, pras brincadeiras, pra atenção', tag: 'rejeicao' },
+      { texto: 'Passar muito tempo sozinho(a), sem ninguém por perto de verdade', tag: 'abandono' },
+      { texto: 'Ser corrigido(a) na frente dos outros, com todo mundo vendo', tag: 'humilhacao' },
+      { texto: 'Perceber que promessas de adultos, com frequência, não se cumpriam', tag: 'traicao' },
+      { texto: 'Sentir que as regras eram diferentes — e piores — só pra mim', tag: 'injustica' },
+      { texto: 'Nada muito marcante — tive uma infância tranquila', tag: 'neutro' }
     ]
   },
   {
     id: 'FER05', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'O que mais te dói quando alguém te compara com outra pessoa?',
+    texto: 'Ser comparado(a) com outra pessoa — mesmo sem querer — costuma abrir qual ferida específica?',
     opcoes: [
-      { texto: 'Sentir que não sou suficiente do jeito que sou', tag: 'rejeicao' },
-      { texto: 'Medo de ser trocado(a) pela pessoa com quem fui comparado(a)', tag: 'abandono' },
-      { texto: 'Vergonha de ser exposto(a) dessa forma', tag: 'humilhacao' },
-      { texto: 'Sentir que a pessoa escondia o que realmente pensava de mim', tag: 'traicao' },
-      { texto: 'Achar simplesmente injusto e desnecessário', tag: 'injustica' },
-      { texto: 'Não costuma me incomodar tanto', tag: 'neutro' }
+      { texto: 'A sensação de não ser suficiente do jeito que sou', tag: 'rejeicao' },
+      { texto: 'O medo de ser trocado(a) pela pessoa com quem fui comparado(a)', tag: 'abandono' },
+      { texto: 'A vergonha de ser exposto(a) dessa forma, na frente de quem quer que seja', tag: 'humilhacao' },
+      { texto: 'A sensação de que a pessoa escondia o que realmente pensava de mim', tag: 'traicao' },
+      { texto: 'A revolta simples por achar aquilo desnecessário e injusto', tag: 'injustica' },
+      { texto: 'Não costuma me incomodar muito', tag: 'neutro' }
     ]
   },
   {
     id: 'FER06', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'Como você reage quando percebe que foi excluído(a) de um convite ou grupo?',
+    texto: 'Descobrir que foi deixado(a) de fora de um convite ou grupo mexe com você de que jeito, por dentro?',
     opcoes: [
-      { texto: 'Dói bastante, mesmo que eu não demonstre', tag: 'rejeicao' },
-      { texto: 'Fico com medo de perder essas pessoas de vez', tag: 'abandono' },
-      { texto: 'Fico com vergonha de perguntar o motivo', tag: 'humilhacao' },
-      { texto: 'Já penso em quem pode ter falado mal de mim', tag: 'traicao' },
-      { texto: 'Fico revoltado(a), acho injusto', tag: 'injustica' },
+      { texto: 'Dói bastante, mesmo que eu não demonstre nada pra fora', tag: 'rejeicao' },
+      { texto: 'Acende o medo de perder essas pessoas de vez', tag: 'abandono' },
+      { texto: 'Traz vergonha — até de perguntar o motivo', tag: 'humilhacao' },
+      { texto: 'Faz eu já pensar em quem pode ter falado mal de mim', tag: 'traicao' },
+      { texto: 'Gera uma revolta — acho simplesmente injusto', tag: 'injustica' },
       { texto: 'Não costuma me afetar muito', tag: 'neutro' }
     ]
   },
   {
     id: 'FER07', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'O que mais te assusta na ideia de se abrir completamente com alguém?',
+    texto: 'Na ideia de se abrir por completo com alguém — sem filtro, sem edição — o que mais assusta?',
     opcoes: [
-      { texto: 'Ser rejeitado(a) depois de mostrar quem realmente sou', tag: 'rejeicao' },
-      { texto: 'Me apegar e depois essa pessoa desaparecer', tag: 'abandono' },
+      { texto: 'Ser rejeitado(a) depois de mostrar quem realmente sou, sem máscara', tag: 'rejeicao' },
+      { texto: 'Me apegar de verdade e, depois, ver essa pessoa desaparecer', tag: 'abandono' },
       { texto: 'Parecer fraco(a) ou ridículo(a) por sentir o que sinto', tag: 'humilhacao' },
-      { texto: 'Essa pessoa usar isso contra mim depois', tag: 'traicao' },
-      { texto: 'Não costumo ter medo disso', tag: 'neutro' },
-      { texto: 'Medo de ser mal interpretado(a)', tag: 'neutro' }
+      { texto: 'Essa pessoa usar o que eu contei contra mim, mais tarde', tag: 'traicao' },
+      { texto: 'Não costumo sentir medo nisso', tag: 'neutro' },
+      { texto: 'Ser mal interpretado(a) no meio do caminho', tag: 'neutro' }
     ]
   },
   {
     id: 'FER08', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'Quando você comete um erro grande, o medo maior é...',
+    texto: 'Depois de cometer um erro grande, qual medo pesa mais do que o próprio erro?',
     opcoes: [
       { texto: 'Que as pessoas parem de gostar de mim por causa disso', tag: 'rejeicao' },
-      { texto: 'Que isso afaste as pessoas de mim', tag: 'abandono' },
-      { texto: 'O julgamento e a vergonha alheia', tag: 'humilhacao' },
-      { texto: 'Que usem esse erro contra mim no futuro', tag: 'traicao' },
-      { texto: 'Ser punido(a) de forma desproporcional ao erro', tag: 'injustica' },
-      { texto: 'Aceitar e seguir em frente, sem muito peso', tag: 'neutro' }
+      { texto: 'Que isso afaste as pessoas de mim, aos poucos', tag: 'abandono' },
+      { texto: 'O julgamento — a vergonha de ser visto(a) errando', tag: 'humilhacao' },
+      { texto: 'Que usem esse erro contra mim, mais adiante, quando eu menos esperar', tag: 'traicao' },
+      { texto: 'Ser punido(a) de um jeito desproporcional ao tamanho do erro', tag: 'injustica' },
+      { texto: 'Aceito e sigo em frente, sem carregar muito peso', tag: 'neutro' }
     ]
   },
   {
     id: 'FER09', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'Na infância, como as broncas costumavam ser?',
+    texto: 'Pensando nas broncas que você recebia quando criança: qual dessas frases descreve melhor como elas eram?',
     opcoes: [
-      { texto: 'Eu sentia que era eu, e não só a atitude, que estava sendo rejeitado(a)', tag: 'rejeicao' },
-      { texto: 'Vinham acompanhadas de silêncio ou distanciamento', tag: 'abandono' },
-      { texto: 'Aconteciam na frente de outras pessoas', tag: 'humilhacao' },
-      { texto: 'Eu sentia que promessas feitas antes não eram cumpridas depois', tag: 'traicao' },
-      { texto: 'Pareciam desproporcionais ao que eu tinha feito', tag: 'injustica' },
-      { texto: 'Eram justas e bem explicadas', tag: 'neutro' }
+      { texto: 'Eu sentia que era eu, não só minha atitude, que estava sendo rejeitado(a)', tag: 'rejeicao' },
+      { texto: 'Vinham acompanhadas de silêncio ou distanciamento, não só palavras', tag: 'abandono' },
+      { texto: 'Aconteciam na frente de outras pessoas, sem nenhum cuidado com isso', tag: 'humilhacao' },
+      { texto: 'Eu sentia que promessas feitas antes da bronca não eram cumpridas depois', tag: 'traicao' },
+      { texto: 'Pareciam grandes demais pra pequenas coisas que eu tinha feito', tag: 'injustica' },
+      { texto: 'Eram justas, e bem explicadas — sem deixar marcas', tag: 'neutro' }
     ]
   },
   {
     id: 'FER10', categoria: 'feridas_infancia', tipo: 'multipla_escolha',
-    texto: 'O que mais dói quando alguém quebra uma promessa com você?',
+    texto: 'Quando alguém quebra uma promessa com você, o que exatamente é o centro da dor?',
     opcoes: [
-      { texto: 'Sentir que não importo o suficiente pra que cumpram', tag: 'rejeicao' },
-      { texto: 'Medo de que isso signifique que vão me deixar', tag: 'abandono' },
-      { texto: 'Vergonha de ter acreditado', tag: 'humilhacao' },
-      { texto: 'A quebra de confiança em si', tag: 'traicao' },
-      { texto: 'A injustiça de ter contado com algo que não veio', tag: 'injustica' },
-      { texto: 'Sigo em frente, não fico remoendo', tag: 'neutro' }
+      { texto: 'Sentir que eu não importo o suficiente pra que a promessa fosse mantida', tag: 'rejeicao' },
+      { texto: 'O medo de que isso signifique que, mais cedo ou mais tarde, vão me deixar', tag: 'abandono' },
+      { texto: 'A vergonha de ter acreditado, de ter confiado demais', tag: 'humilhacao' },
+      { texto: 'A própria quebra de confiança — o fato em si', tag: 'traicao' },
+      { texto: 'A injustiça de ter contado com algo que simplesmente não veio', tag: 'injustica' },
+      { texto: 'Sigo em frente — não fico remoendo isso', tag: 'neutro' }
     ]
   },
   {
     id: 'FER11', categoria: 'feridas_infancia', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto você sente medo de ser abandonado(a) pelas pessoas que ama.',
-    escala: { min: 1, max: 5, min_label: 'Quase nenhum', max_label: 'Um medo bem presente' },
+    texto: 'De 1 a 5, o quanto o medo de ser abandonado(a) por quem você ama mora dentro de você, mesmo em dias calmos.',
+    escala: { min: 1, max: 5, min_label: 'Quase nenhum — não é algo que me visita', max_label: 'Muito — é um medo que sinto quase sempre presente' },
     dimensao: 'abandono'
   },
   {
     id: 'FER12', categoria: 'feridas_infancia', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto situações de injustiça (mesmo pequenas) mexem muito com você.',
-    escala: { min: 1, max: 5, min_label: 'Quase não me afetam', max_label: 'Me afetam profundamente' },
+    texto: 'De 1 a 5, o quanto situações de injustiça — mesmo as pequenas, cotidianas — conseguem te tirar do eixo.',
+    escala: { min: 1, max: 5, min_label: 'Quase não me afetam', max_label: 'Me afetam profundamente, custam a passar' },
     dimensao: 'injustica'
   },
   {
     id: 'FER13', categoria: 'feridas_infancia', tipo: 'escala',
-    texto: 'De 1 a 5, o quanto é difícil confiar plenamente em alguém, mesmo quando a pessoa não te deu motivos.',
-    escala: { min: 1, max: 5, min_label: 'Confio com facilidade', max_label: 'É muito difícil confiar de verdade' },
+    texto: 'De 1 a 5, o quanto é difícil confiar de verdade em alguém, mesmo quando essa pessoa nunca te deu motivo nenhum pra desconfiança.',
+    escala: { min: 1, max: 5, min_label: 'Confio com facilidade, sem grande esforço', max_label: 'É muito difícil confiar de verdade, mesmo sem motivo' },
     dimensao: 'traicao'
   },
 
   // ---------- estilo de vida (pra orientação de compatibilidade) ----------
   {
     id: 'EST01', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Sobre formar família e ter filhos, o que mais representa você hoje?',
+    texto: 'Quando você imagina sua vida daqui a alguns anos, os filhos aparecem nesse retrato de que forma?',
     opcoes: [
-      { texto: 'Quero muito ser pai/mãe, é uma prioridade clara', tag: 'filhos_sim' },
-      { texto: 'Estou aberto(a), mas não é uma urgência', tag: 'filhos_aberto' },
-      { texto: 'Prefiro não ter filhos', tag: 'filhos_nao' },
-      { texto: 'Já tenho filhos e quero mais', tag: 'filhos_tem_quer_mais' },
-      { texto: 'Já tenho filhos e minha família está completa', tag: 'filhos_tem_completo' },
-      { texto: 'Ainda estou decidindo sobre isso', tag: 'filhos_indeciso' }
+      { texto: 'Aparecem com nitidez — quero muito ser pai/mãe, é algo que meu coração já decidiu', tag: 'filhos_sim' },
+      { texto: 'Aparecem como possibilidade real, mas sem pressa nem urgência', tag: 'filhos_aberto' },
+      { texto: 'Não aparecem — e estou em paz com isso', tag: 'filhos_nao' },
+      { texto: 'Já fazem parte da minha vida, e ainda quero que a família cresça mais', tag: 'filhos_tem_quer_mais' },
+      { texto: 'Já fazem parte da minha vida, e sinto que minha família está completa assim', tag: 'filhos_tem_completo' },
+      { texto: 'Ainda é uma pergunta em aberto dentro de mim', tag: 'filhos_indeciso' }
     ]
   },
   {
     id: 'EST02', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Quando pensa em férias ideais, o que mais combina com você?',
+    texto: 'Se pudesse desenhar as férias que realmente recarregam você, qual cenário nasceria primeiro?',
     opcoes: [
-      { texto: 'Aventura — trilha, natureza, lugar novo e desafiador', tag: 'ferias_aventura' },
-      { texto: 'Descanso total — praia, rede, sem compromisso nenhum', tag: 'ferias_descanso' },
-      { texto: 'Cultura — museus, história, gastronomia de um lugar novo', tag: 'ferias_cultura' },
-      { texto: 'Perto de casa, com família e amigos por perto', tag: 'ferias_perto' },
-      { texto: 'Qualquer lugar, desde que seja com quem eu amo', tag: 'ferias_flexivel' },
-      { texto: 'Prefiro economizar a viajar', tag: 'ferias_economizar' }
+      { texto: 'Uma trilha, um lugar desconhecido, um desafio que me tira do lugar comum', tag: 'ferias_aventura' },
+      { texto: 'Uma rede, uma praia, silêncio e nenhum compromisso', tag: 'ferias_descanso' },
+      { texto: 'Um museu, uma cidade nova pra explorar com calma e curiosidade', tag: 'ferias_cultura' },
+      { texto: 'Perto de casa, cercado(a) de quem eu amo', tag: 'ferias_perto' },
+      { texto: 'Qualquer lugar — o que importa de verdade é a companhia', tag: 'ferias_flexivel' },
+      { texto: 'Sinceramente, prefiro guardar o dinheiro a gastar em viagem', tag: 'ferias_economizar' }
     ]
   },
   {
     id: 'EST03', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Sobre dinheiro, qual frase mais parece com você?',
+    texto: 'Falar sobre dinheiro revela alguma coisa sobre cada um de nós. Qual frase te representa de verdade?',
     opcoes: [
-      { texto: 'Gosto de planejar tudo, poupar e ter reserva', tag: 'dinheiro_planejador' },
-      { texto: 'Vivo mais no presente, gasto com o que me faz feliz agora', tag: 'dinheiro_presente' },
-      { texto: 'Falar de dinheiro me deixa desconfortável, prefiro evitar o assunto', tag: 'dinheiro_desconfortavel' },
-      { texto: 'Sou bem aberto(a) e direto(a) quando o assunto é dinheiro', tag: 'dinheiro_aberto' },
-      { texto: 'Gosto de investir e fazer o dinheiro trabalhar', tag: 'dinheiro_investidor' },
-      { texto: 'Ainda estou aprendendo a lidar bem com isso', tag: 'dinheiro_aprendendo' }
+      { texto: 'Gosto de planejar, poupar, ter uma reserva que me dá chão', tag: 'dinheiro_planejador' },
+      { texto: 'Vivo mais o presente — gasto com o que me faz feliz agora', tag: 'dinheiro_presente' },
+      { texto: 'Esse assunto me deixa desconfortável, e prefiro evitá-lo quando posso', tag: 'dinheiro_desconfortavel' },
+      { texto: 'Sou direto(a) e transparente quando o assunto é dinheiro, sem rodeios', tag: 'dinheiro_aberto' },
+      { texto: 'Gosto de investir, de fazer o dinheiro trabalhar por mim', tag: 'dinheiro_investidor' },
+      { texto: 'Ainda estou aprendendo a lidar bem com isso, sem vergonha de admitir', tag: 'dinheiro_aprendendo' }
     ]
   },
   {
     id: 'EST04', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Morar perto da sua família é algo que você considera...',
+    texto: 'Pensando na sua família de origem, o quanto a proximidade física com ela pesa nas suas decisões de vida?',
     opcoes: [
-      { texto: 'Muito importante, quero ficar sempre por perto', tag: 'familia_perto_essencial' },
-      { texto: 'Importante, mas não abriria mão de uma boa oportunidade por isso', tag: 'familia_perto_flexivel' },
-      { texto: 'Pouco importante, prefiro seguir onde a vida me levar', tag: 'familia_perto_baixo' },
-      { texto: 'Já moro longe e está tudo bem assim', tag: 'familia_longe_ok' },
-      { texto: 'Prefiro morar longe, por opção mesmo', tag: 'familia_longe_opcao' },
-      { texto: 'Nunca parei pra pensar nisso', tag: 'familia_perto_indefinido' }
+      { texto: 'Muito — quero ficar sempre por perto, isso não é negociável pra mim', tag: 'familia_perto_essencial' },
+      { texto: 'Importa, mas eu não abriria mão de uma boa oportunidade só por isso', tag: 'familia_perto_flexivel' },
+      { texto: 'Pouco — prefiro seguir onde a vida me levar', tag: 'familia_perto_baixo' },
+      { texto: 'Já moro longe, e fiz as pazes com essa distância', tag: 'familia_longe_ok' },
+      { texto: 'Prefiro morar longe, por escolha mesmo, não por circunstância', tag: 'familia_longe_opcao' },
+      { texto: 'Nunca parei pra refletir sobre isso de verdade', tag: 'familia_perto_indefinido' }
     ]
   },
   {
     id: 'EST05', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Entre ter um lugar fixo e estável ou viver viajando bastante, você se identifica mais com...',
+    texto: 'Entre criar raízes profundas num só lugar e viver em movimento constante, pra qual desses dois você se inclina de verdade?',
     opcoes: [
-      { texto: 'Lugar fixo — gosto de raiz, rotina e um lar bem estabelecido', tag: 'estilo_fixo' },
-      { texto: 'Grandes viagens — gosto de me mudar, conhecer, não criar raízes fixas', tag: 'estilo_viajante' },
-      { texto: 'Um equilíbrio — uma base fixa, com viagens frequentes', tag: 'estilo_equilibrado' },
-      { texto: 'Depende muito da fase da vida', tag: 'estilo_depende' },
-      { texto: 'Ainda não vivi o suficiente pra saber o que prefiro', tag: 'estilo_indefinido' },
-      { texto: 'Gostaria de viajar mais, mas hoje não é possível', tag: 'estilo_deseja_viajar' }
+      { texto: 'Raízes — gosto de estabilidade, rotina, um lar bem construído', tag: 'estilo_fixo' },
+      { texto: 'Movimento — gosto de mudar, descobrir, nunca me prender demais a um lugar', tag: 'estilo_viajante' },
+      { texto: 'Um equilíbrio — uma base fixa, com viagens frequentes pra respirar', tag: 'estilo_equilibrado' },
+      { texto: 'Depende muito da fase de vida que estou vivendo', tag: 'estilo_depende' },
+      { texto: 'Ainda não vivi o suficiente pra saber, com sinceridade, o que prefiro', tag: 'estilo_indefinido' },
+      { texto: 'Gostaria de viajar mais do que minha realidade hoje permite', tag: 'estilo_deseja_viajar' }
     ]
   },
   {
     id: 'EST06', categoria: 'estilo_vida', tipo: 'selecao_multipla', max_selecoes: 3,
-    texto: 'Quais desses sonhos mais representam o que você imagina pra sua vida? (escolha até 3)',
+    texto: 'Se você pudesse escolher só três sonhos pra levar com você pro resto da vida, quais estariam nessa lista? (escolha até 3)',
     opcoes: [
-      { texto: 'Ter um negócio ou projeto próprio', tag: 'sonho_empreender' },
-      { texto: 'Construir uma família grande e unida', tag: 'sonho_familia' },
-      { texto: 'Morar em outro país ou cidade', tag: 'sonho_morar_fora' },
-      { texto: 'Ter estabilidade financeira e paz', tag: 'sonho_estabilidade' },
-      { texto: 'Viajar o mundo', tag: 'sonho_viajar' },
-      { texto: 'Deixar um legado — em arte, trabalho ou comunidade', tag: 'sonho_legado' }
+      { texto: 'Construir algo que seja só meu — um negócio, um projeto próprio', tag: 'sonho_empreender' },
+      { texto: 'Formar uma família grande, unida, cheia de gente que se ama', tag: 'sonho_familia' },
+      { texto: 'Recomeçar em outro país, outra cidade, outra versão de mim mesmo(a)', tag: 'sonho_morar_fora' },
+      { texto: 'Alcançar estabilidade financeira e paz de verdade', tag: 'sonho_estabilidade' },
+      { texto: 'Ver o mundo com os próprios olhos, viajando o quanto puder', tag: 'sonho_viajar' },
+      { texto: 'Deixar um legado — em arte, trabalho ou comunidade — maior que minha própria vida', tag: 'sonho_legado' }
     ]
   },
   {
     id: 'EST07', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Sobre fé ou espiritualidade, o que mais representa você?',
+    texto: 'Se alguém te perguntasse, hoje, qual é o lugar da fé na sua vida, o que você responderia sem pensar duas vezes?',
     opcoes: [
-      { texto: 'Central na minha vida, organizo minha rotina em torno disso', tag: 'fe_central' },
-      { texto: 'Importante, mas vivida de um jeito mais pessoal e leve', tag: 'fe_pessoal' },
-      { texto: 'Respeito quem tem fé, mas não é algo que eu pratico', tag: 'fe_respeito' },
-      { texto: 'Não faz parte da minha vida', tag: 'fe_nao' },
-      { texto: 'Estou em busca, ainda sem definição', tag: 'fe_busca' },
-      { texto: 'Prefiro não falar sobre isso', tag: 'fe_prefere_nao_falar' }
+      { texto: 'Central — organizo minha rotina, minhas decisões, em torno disso', tag: 'fe_central' },
+      { texto: 'Importante, mas vivida de um jeito pessoal, sem rótulo fixo', tag: 'fe_pessoal' },
+      { texto: 'Respeito profundamente quem tem fé, mas não é algo que eu pratico', tag: 'fe_respeito' },
+      { texto: 'Não faz parte da minha vida hoje', tag: 'fe_nao' },
+      { texto: 'Estou em busca, sem uma resposta fechada ainda', tag: 'fe_busca' },
+      { texto: 'Prefiro não abrir esse assunto', tag: 'fe_prefere_nao_falar' }
     ]
   },
   {
     id: 'EST08', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Sobre sair, balada e festas, o que mais representa você hoje?',
+    texto: 'Uma noite perfeita de sexta-feira, pra você, se parece mais com o quê?',
     opcoes: [
-      { texto: 'Adoro, vou sempre que posso', tag: 'social_ama' },
-      { texto: 'Gosto, mas com moderação — de vez em quando está ótimo', tag: 'social_moderado' },
-      { texto: 'Prefiro encontros pequenos e tranquilos a festas grandes', tag: 'social_intimo' },
-      { texto: 'Não é mais algo que me atrai muito', tag: 'social_baixo' },
-      { texto: 'Nunca fui muito de balada, prefiro outros programas', tag: 'social_nao' },
-      { texto: 'Depende muito da companhia', tag: 'social_depende' }
+      { texto: 'Balada, música alta, gente por todo lado — eu no meio disso, vivo(a)', tag: 'social_ama' },
+      { texto: 'Uma saída de vez em quando, com moderação — o suficiente', tag: 'social_moderado' },
+      { texto: 'Um encontro pequeno, íntimo, com poucas pessoas que realmente importam', tag: 'social_intimo' },
+      { texto: 'Sinceramente, isso já não me atrai como antes', tag: 'social_baixo' },
+      { texto: 'Nunca foi muito o meu tipo de programa', tag: 'social_nao' },
+      { texto: 'Depende inteiramente de quem está do meu lado', tag: 'social_depende' }
     ]
   },
   {
     id: 'EST09', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Sobre rotina no dia a dia, você se sente mais...',
+    texto: 'No fundo, seu corpo se sente mais em paz com estrutura ou com espontaneidade?',
     opcoes: [
-      { texto: 'Estruturado(a) — gosto de plano, horário, previsibilidade', tag: 'rotina_estruturado' },
-      { texto: 'Espontâneo(a) — prefiro decidir na hora, sem plano fixo', tag: 'rotina_espontaneo' },
-      { texto: 'Um equilíbrio — gosto de alguma estrutura, com espaço pro imprevisto', tag: 'rotina_equilibrado' },
-      { texto: 'Depende muito da fase da vida', tag: 'rotina_depende' },
-      { texto: 'Gostaria de ter mais rotina do que tenho hoje', tag: 'rotina_deseja_mais' },
-      { texto: 'Gostaria de ter menos rotina do que tenho hoje', tag: 'rotina_deseja_menos' }
+      { texto: 'Estrutura — gosto de plano, horário, previsibilidade', tag: 'rotina_estruturado' },
+      { texto: 'Espontaneidade — prefiro decidir na hora, sem amarras', tag: 'rotina_espontaneo' },
+      { texto: 'Um meio-termo — alguma estrutura, com espaço pro imprevisto', tag: 'rotina_equilibrado' },
+      { texto: 'Depende muito da fase de vida que estou vivendo', tag: 'rotina_depende' },
+      { texto: 'Queria ter mais estrutura do que tenho hoje', tag: 'rotina_deseja_mais' },
+      { texto: 'Queria ter menos estrutura do que tenho hoje', tag: 'rotina_deseja_menos' }
     ]
   },
   {
     id: 'EST10', categoria: 'estilo_vida', tipo: 'selecao_multipla', max_selecoes: 4,
-    texto: 'Do que você mais gosta no tempo livre? (escolha até 4)',
+    texto: 'No seu tempo livre — aquele que ninguém cobra de você — o que mais te faz voltar pra si mesmo(a)? (escolha até 4)',
     opcoes: [
-      { texto: 'Leitura', tag: 'gosta_leitura' },
-      { texto: 'Esportes ou atividade física', tag: 'gosta_esportes' },
-      { texto: 'Arte, música ou cinema', tag: 'gosta_arte' },
-      { texto: 'Natureza e ar livre', tag: 'gosta_natureza' },
-      { texto: 'Tecnologia e games', tag: 'gosta_tecnologia' },
-      { texto: 'Cozinhar ou gastronomia', tag: 'gosta_gastronomia' }
+      { texto: 'Um livro aberto e o silêncio ao redor', tag: 'gosta_leitura' },
+      { texto: 'O corpo em movimento — esporte, atividade física', tag: 'gosta_esportes' },
+      { texto: 'Arte, música, cinema — qualquer coisa que me emocione', tag: 'gosta_arte' },
+      { texto: 'O ar livre, a natureza, o espaço aberto', tag: 'gosta_natureza' },
+      { texto: 'Tecnologia, games, o universo digital', tag: 'gosta_tecnologia' },
+      { texto: 'Cozinhar, experimentar sabores, criar na cozinha', tag: 'gosta_gastronomia' }
     ]
   },
   {
     id: 'EST11', categoria: 'estilo_vida', tipo: 'multipla_escolha',
-    texto: 'Sobre o hábito de leitura, o que mais representa você?',
+    texto: 'Qual dessas frases descreve, com mais honestidade, sua relação com a leitura hoje?',
     opcoes: [
-      { texto: 'Leio bastante, é parte da minha rotina', tag: 'leitura_muita' },
-      { texto: 'Leio de vez em quando, quando um livro me chama atenção', tag: 'leitura_as_vezes' },
-      { texto: 'Prefiro outros formatos (podcast, vídeo, áudio) a ler', tag: 'leitura_outros_formatos' },
-      { texto: 'Não é um hábito meu hoje, mas gostaria que fosse', tag: 'leitura_deseja' },
-      { texto: 'Não curto muito ler, e tudo bem com isso', tag: 'leitura_nao' },
-      { texto: 'Leio bastante, mas mais por trabalho ou estudo do que por prazer', tag: 'leitura_funcional' }
+      { texto: 'Leio bastante — é parte real da minha rotina', tag: 'leitura_muita' },
+      { texto: 'Leio de vez em quando, quando um livro realmente me chama', tag: 'leitura_as_vezes' },
+      { texto: 'Prefiro outros formatos — podcast, vídeo, áudio — a ler propriamente', tag: 'leitura_outros_formatos' },
+      { texto: 'Não é um hábito meu hoje, mas é algo que eu gostaria de cultivar', tag: 'leitura_deseja' },
+      { texto: 'Não curto muito ler, e fiz as pazes com isso', tag: 'leitura_nao' },
+      { texto: 'Leio bastante, mas mais por necessidade — trabalho, estudo — do que por prazer', tag: 'leitura_funcional' }
     ]
   }
 ];

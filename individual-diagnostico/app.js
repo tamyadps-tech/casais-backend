@@ -2,7 +2,7 @@
   'use strict';
 
   const $ = (sel) => document.querySelector(sel);
-  const views = ['landing', 'quiz', 'result'];
+  const views = ['landing', 'orientacao', 'quiz', 'result'];
 
   let state = {
     nome: '',
@@ -34,6 +34,11 @@
     state.nome = nome;
     state.index = 0;
     state.answers = {};
+    showView('orientacao');
+  });
+
+  // ---------- orientação ----------
+  $('#btn-orientacao-continuar').addEventListener('click', () => {
     showView('quiz');
     renderQuestion();
   });
