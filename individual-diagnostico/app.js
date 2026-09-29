@@ -191,6 +191,40 @@
     return entries[0][0];
   }
 
+  // "Volume" do traço dominante: o quanto ele se destacou sozinho vs.
+  // dividiu espaço com as outras tags da mesma categoria.
+  function volumeLevel(counts, top) {
+    if (!top) return 'sutil';
+    const positivos = Object.values(counts).filter((v) => v > 0);
+    const total = positivos.reduce((a, b) => a + b, 0);
+    if (!total) return 'sutil';
+    const proporcao = (counts[top] || 0) / total;
+    if (proporcao >= 0.55) return 'alto';
+    if (proporcao >= 0.35) return 'moderado';
+    return 'sutil';
+  }
+
+  // "Volume" emocional geral: reatividade média nas perguntas de escala
+  // (distância até o centro da escala, 1 a 5), independente da dimensão.
+  function reatividadeEmocional() {
+    const escalas = QUESTIONS.filter((q) => q.tipo === 'escala');
+    let soma = 0;
+    let n = 0;
+    escalas.forEach((q) => {
+      const resposta = state.answers[q.id];
+      if (resposta === undefined || resposta === NAO_SEI_TEXTO) return;
+      const valor = Number(resposta);
+      if (Number.isNaN(valor)) return;
+      soma += Math.abs(valor - 3);
+      n += 1;
+    });
+    if (!n) return null;
+    const media = soma / n;
+    if (media >= 1.3) return 'alto';
+    if (media >= 0.7) return 'medio';
+    return 'baixo';
+  }
+
   function estiloVidaTags() {
     const tags = [];
     QUESTIONS.filter((q) => q.categoria === 'estilo_vida').forEach((q) => {
@@ -207,19 +241,24 @@
 
   // ---------- montagem do resultado ----------
   function finishQuiz() {
-    const temperamento = topTag(tally('temperamento')) || 'sanguineo';
+    const temperamentoCounts = tally('temperamento');
+    const temperamento = topTag(temperamentoCounts) || 'sanguineo';
     const apego = topTag(tally('apego')) || 'seguro';
     const ferida = topTag(tally('feridas_infancia'));
     const tagsEstiloVida = estiloVidaTags();
+    const volumeTemperamento = volumeLevel(temperamentoCounts, temperamento);
+    const volumeEmocional = reatividadeEmocional();
 
     $('#result-title').textContent = `Sobre ${state.nome} nos relacionamentos`;
 
     const partes = [];
-    partes.push(`${state.nome}, antes de mais nada: isso aqui não é um diagnóstico clínico, nem um rótulo pra carregar. É um espelho — construído a partir de como você mesmo(a) descreveu que reage, ama e se protege. A ideia não é te dizer quem você é, e sim te ajudar a reconhecer um padrão que talvez você já sinta, mas nunca tenha visto escrito com clareza.`);
+    partes.push(`${state.nome}, antes de mais nada: isso aqui não é um diagnóstico clínico, nem um rótulo pra carregar. É um espelho — construído a partir de como você mesmo(a) descreveu que reage, ama e se protege, e apoiado em pesquisa real de personalidade, apego e neurociência das emoções (os nomes e estudos vêm citados ao longo do texto, caso queira se aprofundar por conta própria). A ideia não é te dizer quem você é, e sim te ajudar a reconhecer um padrão que talvez você já sinta, mas nunca tenha visto escrito com clareza.`);
     partes.push(TEMPERAMENTO_BLOCKS[temperamento]);
+    if (TEMPERAMENTO_VOLUME_BLOCKS[volumeTemperamento]) partes.push(TEMPERAMENTO_VOLUME_BLOCKS[volumeTemperamento]);
     partes.push(APEGO_BLOCKS[apego]);
     if (ferida && FERIDA_BLOCKS[ferida]) partes.push(FERIDA_BLOCKS[ferida]);
     partes.push(DAR_RECEBER_BLOCKS[apego]);
+    if (volumeEmocional && VOLUME_EMOCIONAL_BLOCKS[volumeEmocional]) partes.push(VOLUME_EMOCIONAL_BLOCKS[volumeEmocional]);
     partes.push(CLOSING);
 
     $('#result-text').innerHTML = partes.map((p) => `<p>${escapeHtml(p).replace(/\n\n/g, '</p><p>')}</p>`).join('');
