@@ -27,12 +27,24 @@ perde (por isso não é preciso se preocupar com dados pessoais).
   `index.html`, `styles.css`, `data.js` ou `app.js` mudarem, pra
   regenerar o `espelho-standalone.html` atualizado.
 
+### Versão em inglês ("Mirror")
+
+Mesma ferramenta, mesmo visual, texto todo traduzido — pra compartilhar com
+pacientes de fora do Brasil. Arquivos equivalentes com sufixo `.en`:
+`index.en.html`, `data.en.js`, `app.en.js` (o `styles.css` é compartilhado,
+não tem texto). Rode `node build-standalone.js en` pra gerar/atualizar o
+`espelho-standalone-en.html` — o arquivo único da versão em inglês, pra
+publicar exatamente do mesmo jeito que a versão em português.
+
 ## Como publicar no Netlify (mais simples — arquivo único)
 
 1. Entre em [app.netlify.com/drop](https://app.netlify.com/drop) (crie uma conta grátis se ainda não tiver).
-2. Arraste **só o arquivo `espelho-standalone.html`** pra dentro da área indicada.
+2. Arraste **só o arquivo `espelho-standalone.html`** (ou `espelho-standalone-en.html`, pra versão em inglês) pra dentro da área indicada.
 3. Em segundos o Netlify gera um link ao vivo (tipo `nome-aleatorio.netlify.app`), já com todo o visual certo.
 4. Se quiser, troque esse nome em **"Site settings" → "Change site name"**.
+
+Publique as duas versões como sites separados no Netlify (dois links
+diferentes) se quiser manter PT e EN ao vivo ao mesmo tempo.
 
 Esse deploy é completamente independente do app de casais no Railway —
 os dois podem viver ao mesmo tempo, sem interferir um no outro.
