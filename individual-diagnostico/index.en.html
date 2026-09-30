@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mirror</title>
+  <meta name="description" content="A mirror on how you relate to others — temperament, the way you love, and what your story still has to teach." />
+  <meta name="theme-color" content="#7c5cff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- LANDING -->
+    <section id="view-landing" class="view">
+      <div class="card center">
+        <div class="mark" aria-hidden="true"></div>
+        <h1>Mirror</h1>
+        <p class="muted">An honest portrait of how you relate to others.</p>
+        <div class="join-form">
+          <label class="join-label" for="nome-input">Your name</label>
+          <input type="text" id="nome-input" placeholder="What should we call you?" maxlength="60" />
+        </div>
+        <p class="form-error small" id="landing-error" hidden></p>
+        <button class="btn-primary" id="btn-start">Start</button>
+      </div>
+    </section>
+
+    <!-- ORIENTATION -->
+    <section id="view-orientacao" class="view" hidden>
+      <div class="card">
+        <h1>Before you begin</h1>
+        <p>This isn't a diagnosis. No one is going to tell you who you are — this is only here to help you recognize, more clearly, patterns you may already sense but have never seen written down.</p>
+        <p>Personality isn't the same as rigidity. A trait isn't a life sentence — it's just the path that, through repetition, has become the easiest one to walk so far. Everything mapped out here can be refined, reworked, grown. None of it is fixed forever.</p>
+        <p>For this mirror to reflect well, answer honestly — not with the answer that sounds "best" or most flattering. There's no right answer here, only the one that's true for you, today.</p>
+        <p class="muted small">There are about 50 questions, and it takes around 15-20 minutes. Nothing is saved on any server: everything happens right here, in your browser.</p>
+        <button class="btn-primary" id="btn-orientacao-continuar">Got it, let's start</button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="view-quiz" class="view" hidden>
+      <div class="quiz-wrap">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="quiz-meta">
+          <span id="quiz-counter" class="muted small"></span>
+        </div>
+        <div class="card">
+          <p class="question-text" id="question-text"></p>
+          <div id="answer-area"></div>
+        </div>
+        <div class="quiz-nav">
+          <button class="btn-link" id="btn-back">Back</button>
+          <button class="btn-primary" id="btn-next" hidden>Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="view-result" class="view" hidden>
+      <div class="card">
+        <h1 id="result-title">About you in relationships</h1>
+        <div class="result-text" id="result-text"></div>
+      </div>
+
+      <div class="card" id="parceiro-ideal" hidden>
+        <h2>The kind of partner who tends to fit well with you</h2>
+        <p class="muted small">This isn't about finding someone perfect — it's about recognizing, in lifestyle and behavior, who tends to walk well alongside you. It's purely behavioral compatibility: it doesn't replace emotional connection, deeper values, or — most importantly — the mutual choice and attraction of two real people.</p>
+        <p class="muted small" style="margin-top:14px; font-weight:700;">Someone who fits well with you, day to day, is probably someone who:</p>
+        <ul class="parceiro-lista" id="parceiro-ideal-lista"></ul>
+        <p class="muted small" style="margin-top:14px;">No list replaces the daily choice to love — this is just here to help you see, more clearly, the kind of everyday life that tends to flow more naturally for you.</p>
+      </div>
+
+      <div class="card center">
+        <p class="muted small">Want to redo it with another name, or share it with someone?</p>
+        <button class="btn-secondary" id="btn-restart">Start over</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="/data.en.js"></script>
+  <script src="/app.en.js"></script>
+</body>
+</html>
