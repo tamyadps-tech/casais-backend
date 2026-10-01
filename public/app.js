@@ -11,7 +11,8 @@
     reforco: 'Reforço',
     dinamica_apego: 'Conexão',
     cuidado_ferida: 'Cuidado',
-    papo_valores: 'Papo de valores'
+    papo_valores: 'Papo de valores',
+    surpresa_especial: 'Surpresa especial'
   };
 
   const NAO_SEI_TEXTO = 'Não sei / não se aplica';

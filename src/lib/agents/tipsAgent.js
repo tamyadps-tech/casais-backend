@@ -30,7 +30,8 @@ const INICIO_POR_TIPO = {
   reforco: (nome, f) => `${nome}, boa notícia: ${f.fato}.`,
   dinamica_apego: (nome, f) => `${nome}, uma coisa sobre vocês dois: ${f.fato}.`,
   cuidado_ferida: (nome, f) => `${nome}, um cuidado importante: ${f.fato}.`,
-  papo_valores: (nome, f) => `${nome}, uma reflexão pra essa semana: ${f.fato}.`
+  papo_valores: (nome, f) => `${nome}, uma reflexão pra essa semana: ${f.fato}.`,
+  surpresa_especial: (nome, f) => `${nome}, uma ideia boa pra essa semana: ${f.fato}.`
 };
 
 // Conector usado quando um segundo fato principal se emenda ao primeiro —
@@ -40,7 +41,8 @@ const CONECTOR_SEGUINTE = {
   reforco: 'Além disso, boa notícia: ',
   dinamica_apego: 'Outra coisa sobre vocês dois: ',
   cuidado_ferida: 'Um cuidado a mais: ',
-  papo_valores: 'Também vale uma reflexão: '
+  papo_valores: 'Também vale uma reflexão: ',
+  surpresa_especial: 'E também vale aproveitar: '
 };
 
 // sugestao_acao (fato+conselho) costuma vir sem ponto final — garante que
@@ -115,7 +117,7 @@ TAREFA: Escreva UMA dica construtiva, calorosa e de verdade ÚTIL pra ${targetNa
 
 Seja criativo e específico de propósito: pense em algo que só faria sentido pra ESSE casal, com esses fatos específicos — não um conselho de relacionamento genérico que caberia em qualquer casal. Dê um exemplo concreto de como fazer isso na prática (uma frase pra dizer, um gesto exato, um momento específico do dia), não só "conversem sobre isso" ou "demonstrem mais carinho". Varie a forma de abrir a mensagem — não comece sempre com "sabia que" ou "boa notícia", escreva como alguém que conhece bem o casal escreveria essa mensagem especificamente hoje.
 
-Se algum fato for do tipo "papo_valores", essa parte não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom, mas ainda assim específica e não repetitiva. NÃO use emojis. Evite rótulos de diagnóstico ("apego ansioso", "ferida de rejeição" etc — descreva o comportamento, não o rótulo); "linguagem do amor" pode ser citado normalmente quando for o assunto. Escreva com simplicidade, amor e respeito pelos dois, como um amigo(a) de verdade torcendo por eles.${correcoes}`;
+Se algum fato for do tipo "papo_valores", essa parte não soe como alarme — é só um convite gentil pra uma conversa. Se for "reforco", é uma dica de comemorar o que já está bom, mas ainda assim específica e não repetitiva. Se for "surpresa_especial", o fato já é algo que o(a) próprio(a) ${partnerName} contou sobre si (comida, música, uma lembrança, um dia perfeito) — capriche na criatividade de COMO transformar isso num gesto real, com um exemplo bem concreto (quando fazer, como surpreender, que detalhe cuidar), não repita a ideia de ação pronta que foi dada, invente em cima dela. NÃO use emojis. Evite rótulos de diagnóstico ("apego ansioso", "ferida de rejeição" etc — descreva o comportamento, não o rótulo); "linguagem do amor" pode ser citado normalmente quando for o assunto. Escreva com simplicidade, amor e respeito pelos dois, como um amigo(a) de verdade torcendo por eles.${correcoes}`;
 
     return ask(prompt, { maxTokens: 750 });
   };
