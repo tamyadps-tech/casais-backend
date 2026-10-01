@@ -2,8 +2,10 @@
 
 Ferramenta individual, separada do app de casais: qualquer pessoa responde
 sozinha (sem precisar de parceiro(a)) e recebe um texto pessoal sobre como
-se relaciona — temperamento, apego, feridas de infância e o tipo de
-parceiro(a) que tende a combinar com o estilo de vida dela.
+se relaciona — temperamento, apego, feridas de infância, intimidade física,
+reatividade emocional, relação consigo mesma e o tipo de parceiro(a) que
+tende a combinar com o estilo de vida dela (incluindo linguagem do amor,
+finanças e cronobiologia).
 
 100% estática — roda inteira no navegador, sem servidor, sem banco de
 dados, sem custo de IA. Nada é salvo em lugar nenhum além da tela da
@@ -14,7 +16,7 @@ perde (por isso não é preciso se preocupar com dados pessoais).
 
 - `index.html` — as quatro telas (nome → orientação → questionário → resultado).
 - `styles.css` — visual (mesma identidade do app de casais).
-- `data.js` — as 50 perguntas e todo o conteúdo do resultado.
+- `data.js` — as 68 perguntas e todo o conteúdo do resultado.
 - `app.js` — a lógica: navegação, pontuação e montagem do texto final.
 - `espelho-standalone.html` — **os quatro arquivos acima juntos em um só**
   (CSS e JS embutidos inline). Gerado por `build-standalone.js`. Use esse

@@ -425,6 +425,124 @@ const QUESTIONS = [
     dimensao: 'traicao'
   },
 
+  // ---------- intimidade física ----------
+  {
+    id: 'INT01', categoria: 'intimidade', tipo: 'multipla_escolha',
+    texto: 'Falar abertamente sobre o que te dá prazer — ou sobre o que não te agrada — na intimidade com alguém é algo que você:',
+    opcoes: [
+      { texto: 'Faz com naturalidade, sem muito filtro — prefiro dizer a deixar o outro adivinhar', tag: 'intimidade_livre' },
+      { texto: 'Consigo fazer, mas só depois de me sentir realmente segura(o) com a pessoa', tag: 'intimidade_criteriosa' },
+      { texto: 'Acho bem difícil — prefiro que as coisas aconteçam sem precisar verbalizar muito', tag: 'intimidade_reservada' },
+      { texto: 'Depende muito do meu estado emocional naquele momento, varia bastante', tag: 'intimidade_oscilante' },
+      { texto: 'Nunca parei pra pensar nisso com clareza', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'INT02', categoria: 'intimidade', tipo: 'multipla_escolha',
+    texto: 'Depois de um dia emocionalmente pesado, o que costuma acontecer com seu desejo por intimidade física?',
+    opcoes: [
+      { texto: 'Quase não muda — desejo e humor seguem meio independentes um do outro', tag: 'intimidade_livre' },
+      { texto: 'Só desperta de verdade depois que eu já me sinto cuidado(a), ouvido(a), em paz', tag: 'intimidade_criteriosa' },
+      { texto: 'Quase desaparece — fico fechado(a) demais pra pensar nisso', tag: 'intimidade_reservada' },
+      { texto: 'Pode ir pros dois lados — às vezes some, às vezes é exatamente o que eu busco pra aliviar', tag: 'intimidade_oscilante' },
+      { texto: 'Não sei dizer com certeza', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'INT03', categoria: 'intimidade', tipo: 'multipla_escolha',
+    texto: 'Pedir, na hora, o que você realmente quer durante um momento de intimidade é algo que:',
+    opcoes: [
+      { texto: 'Faço sem muito custo — sei nomear o que quero', tag: 'intimidade_livre' },
+      { texto: 'Consigo fazer, mas prefiro que a confiança já esteja bem construída antes', tag: 'intimidade_criteriosa' },
+      { texto: 'Acho desconfortável — prefiro sinalizar de um jeito mais indireto', tag: 'intimidade_reservada' },
+      { texto: 'Varia muito dependendo de como eu estou emocionalmente naquele dia', tag: 'intimidade_oscilante' },
+      { texto: 'Nunca tive essa experiência pra saber responder', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'INT04', categoria: 'intimidade', tipo: 'escala',
+    texto: 'De 1 a 5, o quanto seu desejo por intimidade física depende de se sentir emocionalmente seguro(a) com a pessoa, mais do que de qualquer outro fator.',
+    escala: { min: 1, max: 5, min_label: 'Quase nada — desejo e segurança emocional andam separados pra mim', max_label: 'Muito — sem segurança emocional, o desejo simplesmente não aparece' },
+    dimensao: 'intimidade_criteriosa'
+  },
+
+  // ---------- reatividade emocional ----------
+  {
+    id: 'REA01', categoria: 'reatividade', tipo: 'multipla_escolha',
+    texto: 'No meio de uma discussão que está esquentando, o que seu corpo faz primeiro, antes da sua cabeça conseguir pensar com calma?',
+    opcoes: [
+      { texto: 'Sobe o tom, a defesa vem rápido e direto, quase automática', tag: 'reage_na_hora' },
+      { texto: 'A vontade de sair fisicamente daquele lugar é quase incontrolável', tag: 'recua_na_hora' },
+      { texto: 'Trava por dentro — a mente esvazia, as palavras simplesmente não saem', tag: 'trava_por_dentro' },
+      { texto: 'Sinto o corpo reagir, mas ainda consigo respirar e manter algum controle', tag: 'regula_rapido' },
+      { texto: 'Depende muito de quem é a outra pessoa na discussão', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'REA02', categoria: 'reatividade', tipo: 'escala',
+    texto: 'De 1 a 5, o quanto seu coração dispara, sua respiração muda ou seu corpo esquenta quando uma discussão fica tensa — antes mesmo de qualquer palavra mais forte ser dita.',
+    escala: { min: 1, max: 5, min_label: 'Quase nada — meu corpo continua calmo mesmo em discussão tensa', max_label: 'Muito — meu corpo dispara antes de eu conseguir pensar direito' },
+    dimensao: 'reage_na_hora'
+  },
+  {
+    id: 'REA03', categoria: 'reatividade', tipo: 'multipla_escolha',
+    texto: 'Depois de um momento de estresse emocional forte, quanto tempo seu corpo costuma levar pra voltar ao normal?',
+    opcoes: [
+      { texto: 'Pouco tempo — eu me acalmo rápido, sozinho(a) mesmo', tag: 'regula_rapido' },
+      { texto: 'Preciso de bastante tempo sozinho(a), longe de tudo, pra voltar ao normal', tag: 'recua_na_hora' },
+      { texto: 'Fico remoendo por dentro, mesmo quando por fora já pareço calmo(a)', tag: 'trava_por_dentro' },
+      { texto: 'Só volto ao normal depois de extravasar — falar alto, chorar, me mexer', tag: 'reage_na_hora' },
+      { texto: 'Varia muito, não dá pra generalizar', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'REA04', categoria: 'reatividade', tipo: 'escala',
+    texto: 'De 1 a 5, o quanto você consegue se acalmar sozinho(a), sem precisar que a outra pessoa faça ou diga algo primeiro.',
+    escala: { min: 1, max: 5, min_label: 'Quase nada — preciso que o outro aja primeiro pra eu me acalmar', max_label: 'Muito — consigo me regular sozinho(a), na maior parte das vezes' },
+    dimensao: 'regula_rapido'
+  },
+
+  // ---------- relação consigo mesmo(a) ----------
+  {
+    id: 'EU01', categoria: 'individuo', tipo: 'multipla_escolha',
+    texto: 'Ficar sozinho(a) por um bom tempo — sem agenda, sem compromisso, sem ninguém por perto — desperta em você, principalmente:',
+    opcoes: [
+      { texto: 'Uma paz genuína — gosto da minha própria companhia, sem que isso signifique solidão', tag: 'autonomia_solida' },
+      { texto: 'Um desconforto que só diminui quando percebo que é temporário, não permanente', tag: 'em_construcao' },
+      { texto: 'Um alívio grande demais — às vezes prefiro ficar sozinho(a) a lidar com alguém', tag: 'isolamento_defensivo' },
+      { texto: 'Um vazio que me faz querer preencher a agenda o quanto antes', tag: 'busca_completude' },
+      { texto: 'Depende muito da fase de vida que estou vivendo', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EU02', categoria: 'individuo', tipo: 'multipla_escolha',
+    texto: 'Quando você erra feio, a primeira voz que aparece dentro da sua cabeça costuma dizer o quê?',
+    opcoes: [
+      { texto: 'Algo gentil, tipo "tá certo errar, todo mundo passa por isso" — sigo sem me destruir por dentro', tag: 'autonomia_solida' },
+      { texto: 'Uma crítica dura, que com esforço consciente eu consigo suavizar depois de um tempo', tag: 'em_construcao' },
+      { texto: 'Uma vontade de resolver sozinho(a) e não deixar ninguém ver o tamanho do erro', tag: 'isolamento_defensivo' },
+      { texto: 'Uma necessidade quase urgente de alguém me dizer que ainda está tudo bem', tag: 'busca_completude' },
+      { texto: 'Varia muito dependendo do erro', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EU03', categoria: 'individuo', tipo: 'multipla_escolha',
+    texto: 'O quanto seu senso de valor pessoal muda dependendo de estar (ou não) numa relação agora?',
+    opcoes: [
+      { texto: 'Quase nada — meu valor não depende do meu status de relacionamento', tag: 'autonomia_solida' },
+      { texto: 'Um pouco — às vezes eu me pego pensando nisso, mas sei separar as duas coisas', tag: 'em_construcao' },
+      { texto: 'Prefiro nem pensar nisso — foco só em mim e deixo esse assunto de lado', tag: 'isolamento_defensivo' },
+      { texto: 'Bastante — estar numa relação boa muda muito como eu me sinto comigo mesmo(a)', tag: 'busca_completude' },
+      { texto: 'Nunca tinha parado pra pensar nisso com honestidade', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EU04', categoria: 'individuo', tipo: 'escala',
+    texto: 'De 1 a 5, o quanto você consegue continuar sendo você mesmo(a) — opiniões, gostos, limites — mesmo perto de alguém que você quer muito agradar.',
+    escala: { min: 1, max: 5, min_label: 'Quase nada — me perco de mim mesmo(a) tentando agradar', max_label: 'Muito — continuo sendo eu, mesmo quando quero muito agradar' },
+    dimensao: 'autonomia_solida'
+  },
+
   // ---------- estilo de vida (pra orientação de compatibilidade) ----------
   {
     id: 'EST01', categoria: 'estilo_vida', tipo: 'multipla_escolha',
@@ -557,6 +675,72 @@ const QUESTIONS = [
       { texto: 'Não curto muito ler, e fiz as pazes com isso', tag: 'leitura_nao' },
       { texto: 'Leio bastante, mas mais por necessidade — trabalho, estudo — do que por prazer', tag: 'leitura_funcional' }
     ]
+  },
+  {
+    id: 'EST12', categoria: 'estilo_vida', tipo: 'selecao_multipla', max_selecoes: 2,
+    texto: 'O que mais faz você se sentir amado(a) de verdade, sem sombra de dúvida? (escolha até 2)',
+    opcoes: [
+      { texto: 'Palavras ditas ou escritas — um elogio sincero, um "eu te amo" dito na hora certa', tag: 'amor_palavras' },
+      { texto: 'Tempo de verdade, só a dois, sem celular nem pressa', tag: 'amor_tempo' },
+      { texto: 'Um mimo pensado — não pelo valor, mas por mostrar que alguém prestou atenção', tag: 'amor_presentes' },
+      { texto: 'Gestos de cuidado no dia a dia — alguém resolver algo por mim, sem que eu peça', tag: 'amor_atos' },
+      { texto: 'Contato físico — abraço, mão dada, estar perto fisicamente', tag: 'amor_toque' }
+    ]
+  },
+  {
+    id: 'EST13', categoria: 'estilo_vida', tipo: 'selecao_multipla', max_selecoes: 2,
+    texto: 'E o que você mais naturalmente oferece a quem ama, quase sem pensar? (escolha até 2)',
+    opcoes: [
+      { texto: 'Palavras — elogio, reconhecimento, dizer o que sinto em voz alta', tag: 'amor_oferece_palavras' },
+      { texto: 'Tempo — separar momentos de verdade só pros dois', tag: 'amor_oferece_tempo' },
+      { texto: 'Mimos pensados, mesmo pequenos', tag: 'amor_oferece_presentes' },
+      { texto: 'Ações — resolver coisas pela pessoa, cuidar na prática', tag: 'amor_oferece_atos' },
+      { texto: 'Contato físico — abraço, carinho, proximidade', tag: 'amor_oferece_toque' }
+    ]
+  },
+  {
+    id: 'EST14', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'Pensando na sua relação com dinheiro hoje, qual frase soa mais verdadeira?',
+    opcoes: [
+      { texto: 'Prefiro nem pensar muito nisso — dinheiro me deixa desconfortável, então evito o assunto', tag: 'dinheiro_evitador' },
+      { texto: 'Dinheiro é uma medida real de sucesso — gosto de ver meu patrimônio crescer e aparecer', tag: 'dinheiro_status' },
+      { texto: 'Mais dinheiro sempre resolveria boa parte dos meus problemas — é quase uma obsessão silenciosa', tag: 'dinheiro_idolatra' },
+      { texto: 'Fico constantemente alerta com gastos, mesmo quando financeiramente estou bem — nunca é o suficiente pra me sentir seguro(a)', tag: 'dinheiro_vigilante' },
+      { texto: 'Tenho uma relação tranquila e equilibrada com dinheiro, sem grandes dramas', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EST15', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'Quando o assunto é dinheiro numa relação, seu estilo tende mais a:',
+    opcoes: [
+      { texto: 'Falar abertamente sobre quanto ganho, gasto e guardo, sem rodeio nem vergonha', tag: 'dinheiro_transparente' },
+      { texto: 'Preferir manter algumas coisas financeiras só minhas, mesmo numa relação séria', tag: 'dinheiro_reservado' },
+      { texto: 'Deixar que o assunto vá se resolvendo sozinho, sem conversa muito direta sobre isso', tag: 'dinheiro_evasivo' },
+      { texto: 'Querer ter o controle das decisões financeiras do casal, mesmo sem perceber isso', tag: 'dinheiro_controlador' },
+      { texto: 'Ainda não vivi isso o suficiente pra saber meu próprio estilo', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EST16', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'Se você pudesse escolher livremente, sem nenhum compromisso te prendendo a horário algum, a que horas seu corpo realmente escolheria acordar e dormir?',
+    opcoes: [
+      { texto: 'Cedo, naturalmente — acordo disposto(a) e já sinto o pico de energia pela manhã', tag: 'cronotipo_matutino' },
+      { texto: 'Tarde, naturalmente — minha melhor energia e clareza vêm à noite, até de madrugada', tag: 'cronotipo_vespertino' },
+      { texto: 'Num meio-termo confortável, sem grande preferência por nenhum extremo', tag: 'cronotipo_intermediario' },
+      { texto: 'Varia bastante dependendo da fase, do sono acumulado, da época do ano', tag: 'cronotipo_variavel' },
+      { texto: 'Nunca prestei atenção nisso de verdade', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EST17', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'Ser obrigado(a) a funcionar fora do seu horário natural (acordar muito cedo sendo notívago, por exemplo) costuma te custar:',
+    opcoes: [
+      { texto: 'Quase nada — me adapto com facilidade a praticamente qualquer horário', tag: 'rotina_adaptavel' },
+      { texto: 'Bastante — fico visivelmente mais irritado(a), cansado(a) ou disperso(a) nesses períodos', tag: 'rotina_sensivel_ritmo' },
+      { texto: 'Só persiste por um tempo — meu corpo se ajusta depois de alguns dias', tag: 'rotina_ajuste_gradual' },
+      { texto: 'Prefiro nem me colocar nessa situação quando tenho escolha', tag: 'rotina_protege_ritmo' },
+      { texto: 'Nunca passei por isso de forma marcante', tag: 'neutro' }
+    ]
   }
 ];
 
@@ -652,7 +836,37 @@ const TAG_TO_PARCEIRO_IDEAL = {
   leitura_outros_formatos: 'entende que aprender pode vir de várias formas, não só do livro',
   leitura_deseja: 'te incentiva a criar esse hábito, sem pressa nem cobrança',
   leitura_nao: 'não faz da leitura um critério de valor — te aceita como você é',
-  leitura_funcional: 'entende que sua leitura tem propósito prático, e valoriza isso também'
+  leitura_funcional: 'entende que sua leitura tem propósito prático, e valoriza isso também',
+
+  amor_palavras: 'expressa com palavras, não só por dentro — elogia, reconhece, diz o que sente em voz alta',
+  amor_tempo: 'separa tempo de verdade pra vocês dois, sem deixar a correria engolir esses momentos',
+  amor_presentes: 'presta atenção nos detalhes que fazem você feliz, mesmo nos mimos pequenos',
+  amor_atos: 'mostra cuidado através de ação concreta, resolvendo coisas por você sem que precise pedir',
+  amor_toque: 'busca contato físico com naturalidade, sem que você precise pedir',
+
+  amor_oferece_palavras: 'sabe reconhecer e valorizar quando você expressa carinho em palavras — isso não é pouco pra quem oferece esse tipo de cuidado',
+  amor_oferece_tempo: 'valoriza genuinamente o tempo que você separa pra ele(a), sem tratar isso como óbvio',
+  amor_oferece_presentes: 'reconhece a intenção por trás de cada mimo pensado que você oferece, mesmo os pequenos',
+  amor_oferece_atos: 'nota e agradece os cuidados práticos que você oferece no dia a dia, sem dar por garantido',
+  amor_oferece_toque: 'recebe bem o contato físico que você naturalmente oferece, sem estranhar essa proximidade',
+
+  dinheiro_evitador: 'tem paciência pra construir com você, aos poucos, a coragem de falar sobre dinheiro sem desconforto',
+  dinheiro_status: 'entende sua relação entre dinheiro e conquista, sem julgar isso como superficialidade',
+  dinheiro_idolatra: 'ajuda a trazer um pouco de chão pra ansiedade financeira, sem minimizar o que você sente',
+  dinheiro_vigilante: 'tem paciência com sua vigilância financeira, mesmo quando os números já mostram segurança',
+  dinheiro_transparente: 'também valoriza abertura total sobre dinheiro, sem guardar segredo financeiro',
+  dinheiro_reservado: 'respeita seu espaço de autonomia financeira, mesmo dividindo uma vida a dois',
+  dinheiro_evasivo: 'topa puxar, com gentileza, as conversas sobre dinheiro que você tende a evitar',
+  dinheiro_controlador: 'sabe equilibrar com você quem decide o quê, sem que o controle financeiro vire um ponto cego',
+
+  cronotipo_matutino: 'não estranha (ou compartilha) sua disposição logo cedo, mesmo que isso signifique dormir mais cedo também',
+  cronotipo_vespertino: 'respeita seu pico de energia mais tarde, sem cobrar que você finja ser uma pessoa matutina',
+  cronotipo_intermediario: 'se ajusta com facilidade ao seu ritmo mais flexível de horários',
+  cronotipo_variavel: 'tem paciência com a variação do seu relógio biológico, sem exigir uma rotina fixa demais',
+  rotina_adaptavel: 'não precisa se preocupar em combinar horários perfeitamente com você — você se ajusta com facilidade',
+  rotina_sensivel_ritmo: 'respeita o quanto fugir do seu ritmo natural custa caro, e evita exigir isso sem necessidade real',
+  rotina_ajuste_gradual: 'tem paciência durante os dias em que seu corpo ainda está se ajustando a uma mudança de horário',
+  rotina_protege_ritmo: 'entende e apoia você quando escolhe proteger seu ritmo natural, em vez de forçar uma adaptação desnecessária'
 };
 
 // ---------- blocos de texto (montados por combinação, como o phraseBank do app de casais) ----------
@@ -687,6 +901,27 @@ const FERIDA_BLOCKS = {
   humilhacao: 'Se o que mais dói em você é o julgamento, a exposição, o sentir-se pequeno(a) na frente dos outros, vale perguntar: houve, na sua história, correções feitas em público, comparações constantes, um adulto que ensinava através da vergonha em vez de através do exemplo? O psiquiatra e pesquisador de trauma Bessel van der Kolk descreve, em seu trabalho sobre como o corpo guarda os registros do que vivemos, que vergonha repetida na infância deixa uma marca física, não só emocional — um jeito de encolher, literalmente, diante do julgamento. Você não é excessivamente sensível. Você foi ensinado(a), cedo, a temer ser visto(a) por inteiro.',
   traicao: 'Confiar plenamente, mesmo quando ninguém te deu motivo pra desconfiar, pode parecer impossível se, em algum momento da sua história, uma promessa que deveria ter sido cumprida — de um pai, de uma mãe, de quem deveria ser previsível — simplesmente não foi. Não precisa ter sido um evento dramático; às vezes é a soma de pequenas quebras de palavra que, juntas, ensinaram um padrão: o que é dito nem sempre é o que acontece. Hoje isso aparece como uma desconfiança que chega antes da razão, testando a lealdade de gente que talvez nunca tenha te dado motivo pra isso. A confiança que foi quebrada cedo pode ser reconstruída — só não do dia pra noite, e não sozinho(a).',
   injustica: 'Se pequenas desigualdades te afetam profundamente demais pra quem está de fora, talvez, na sua história, regras tenham sido aplicadas de forma desigual — pra você, ou entre você e alguém mais próximo de um adulto importante. Uma criança que vive isso desenvolve um radar hipersensível pra desproporção, pra tratamento injusto, pra sentir que está sempre pagando mais caro do que deveria. Esse radar é, muitas vezes, correto — sua percepção de injustiça costuma ser real. O que vale treinar não é desligar essa sensibilidade, mas calibrar o tamanho da resposta ao tamanho real do problema, sem deixar que uma injustiça antiga responda no lugar da atual.'
+};
+
+const INTIMIDADE_BLOCKS = {
+  intimidade_livre: 'Você fala sobre desejo, sobre prazer, sobre o que funciona e o que não funciona, sem tratar isso como um território proibido. A pesquisadora Emily Nagoski, autora de um dos estudos mais citados sobre resposta sexual, descreve o desejo como resultado de um equilíbrio entre "acelerador" (o que liga o desejo) e "freios" (o que desliga) — e quem consegue nomear os dois em voz alta tem muito mais chance de construir uma intimidade que funciona de verdade pros dois lados. Seu desafio não é aprender a se abrir — é lembrar que nem todo mundo chega com essa mesma facilidade, e que paciência com quem tem o freio mais sensível faz toda diferença.',
+  intimidade_criteriosa: 'Seu desejo não liga no automático — ele pede segurança emocional primeiro, e isso não é frieza, nem falta de desejo: é um dos "freios" mais comuns que a pesquisadora Emily Nagoski descreve no chamado modelo de controle duplo da resposta sexual. Pra você, intimidade física e intimidade emocional caminham quase sempre juntas. Vale nomear isso pra quem você ama, em vez de esperar que a pessoa adivinhe — porque de fora, essa necessidade pode parecer rejeição, quando na verdade é só o seu jeito de precisar de chão antes de se entregar.',
+  intimidade_reservada: 'Verbalizar desejo, pedir o que você quer, dizer o que não funciona — tudo isso pede uma vulnerabilidade que você ainda trata como território arriscado. Não é falta de desejo: é desconforto em nomear, o que é bem diferente. A terapeuta Esther Perel costuma dizer que o erotismo pede alguma dose de risco — e colocar em palavras o que a gente quer é, de fato, um risco real, de ser julgado(a) ou mal compreendido(a). Vale começar pequeno: nomear uma coisa só, uma vez, pra uma pessoa de confiança — a vulnerabilidade fica mais leve com prática, não com uma única dose de coragem.',
+  intimidade_oscilante: 'Seu desejo não segue um padrão fixo — varia com seu estado emocional, com o dia, com o quanto você se sente seguro(a) naquele momento específico. Isso também se encaixa no modelo de "acelerador e freios" de Emily Nagoski: seus freios parecem mais sensíveis ao contexto do que os de outras pessoas, o que significa que fatores externos (estresse, uma briga recente, cansaço) pesam mais na sua resposta do que pesariam em alguém com um sistema mais estável. Não é instabilidade de caráter — é um sistema de resposta mais reativo ao ambiente. Vale comunicar isso, em vez de deixar que a oscilação seja lida como desinteresse.'
+};
+
+const REATIVIDADE_BLOCKS = {
+  reage_na_hora: 'Quando a tensão sobe, seu corpo entra em ação antes da sua cabeça conseguir moderar — é o que o pesquisador John Gottman, num dos estudos mais citados sobre casais, chama de "flooding": o coração dispara, geralmente acima de 100 batimentos por minuto, e nesse estado o cérebro racional perde parte da capacidade de processar com calma. Reagir rápido não é falta de controle — é fisiologia acontecendo mais rápido que reflexão. O treino aqui não é deixar de sentir forte, é reconhecer o sinal do corpo cedo o bastante pra pedir uma pausa antes que ele tome conta de tudo.',
+  recua_na_hora: 'Diante de tensão, seu corpo pede distância física — sair da sala, se afastar, ganhar espaço antes de continuar. Dentro da teoria polivagal, do pesquisador Stephen Porges, isso se aproxima do que se chama de resposta de fuga: o sistema nervoso decide que a segurança está em colocar distância entre você e a fonte de estresse. Não é fraqueza nem desinteresse pela conversa — é uma forma legítima de regulação. O ponto de atenção é avisar antes de sumir: "preciso de um tempo, já volto" muda completamente como quem fica se sente com a sua saída.',
+  trava_por_dentro: 'Em momentos de tensão alta, sua mente parece esvaziar — as palavras somem, o corpo trava, e por fora você pode até parecer calmo(a), mas por dentro está tudo acontecendo ao mesmo tempo. Na teoria polivagal de Stephen Porges, esse é o padrão de congelamento — um estado em que o sistema nervoso decide que nem lutar nem fugir é seguro, e a resposta vira imobilidade. É real, não é frieza nem desinteresse. Vale nomear pra quem está com você, mesmo que depois: "eu travei, não foi falta de me importar" ajuda o outro a não interpretar seu silêncio como ausência de sentimento.',
+  regula_rapido: 'Seu corpo até reage à tensão — isso é humano, acontece com todo mundo — mas você consegue respirar, pensar e voltar ao equilíbrio sem precisar de muito tempo nem de intervenção externa. É um sinal de boa capacidade de autorregulação — a habilidade, descrita amplamente na literatura sobre regulação emocional, de se acalmar sem depender inteiramente do ambiente ou da outra pessoa. Isso é um recurso valioso numa relação: você pode ser a âncora nos momentos mais turbulentos, contanto que não vire a única pessoa responsável por acalmar os dois.'
+};
+
+const INDIVIDUO_BLOCKS = {
+  autonomia_solida: 'Você parece ter o que o pediatra e psicanalista Donald Winnicott chamou de "capacidade de ficar só" — não isolamento, mas a habilidade de estar na própria companhia sem se sentir incompleto(a) ou abandonado(a). Winnicott via isso como um dos sinais mais claros de maturidade emocional: só consegue se conectar de verdade com o outro quem não depende dessa conexão pra se sentir inteiro(a). O psiquiatra Murray Bowen chamava algo parecido de "diferenciação do self" — a capacidade de manter sua própria identidade mesmo em proximidade emocional intensa com alguém. Você já carrega uma boa base disso. O cuidado é não deixar que essa autonomia vire uma armadura contra deixar alguém entrar de verdade.',
+  em_construcao: 'Seu senso de valor e sua capacidade de ficar bem sozinho(a) ainda oscilam — às vezes vêm com facilidade, às vezes pedem esforço consciente pra se manter firmes. Isso não é fraqueza, é processo: o psiquiatra Murray Bowen descrevia a "diferenciação do self" — a capacidade de manter identidade própria mesmo perto de alguém importante — como algo que se desenvolve ao longo da vida, não como um traço fixo de nascença. Você está, pelo visto, no meio desse caminho: já sabe reconhecer quando se perde um pouco de si, e já consegue, com algum esforço, voltar. Essa consciência já é metade do trabalho.',
+  isolamento_defensivo: 'Existe uma diferença importante entre estar bem sozinho(a) e evitar, por proteção, deixar alguém se aproximar demais — e pelo seu padrão, vale observar de perto qual das duas é a sua. O psicanalista Donald Winnicott descrevia a verdadeira capacidade de ficar só como algo construído a partir de uma base segura anterior, não como recusa de intimidade. Quando a independência vira um escudo — resolver tudo sozinho(a), não deixar ninguém ver o tamanho de uma dificuldade — ela pode, sem intenção, afastar exatamente o tipo de cuidado que faria bem. Não é sobre deixar de ser forte, é sobre permitir, de vez em quando, que alguém segure uma parte do peso com você.',
+  busca_completude: 'Seu bem-estar parece depender bastante de estar numa relação, ou de receber confirmação externa de que está tudo bem. Isso é profundamente humano — ninguém se constrói sozinho(a) — mas vale uma pergunta honesta: você está construindo uma vida que ama por conta própria, ou esperando que uma relação complete um vazio que só você pode preencher primeiro? O psicanalista Donald Winnicott descrevia a capacidade de ficar só como pré-requisito, não como obstáculo, pra uma intimidade saudável — porque só se conecta de verdade quem não está usando o outro pra se sentir inteiro(a). Isso não desvaloriza seu desejo por uma relação — é só um convite pra fortalecer a base antes de construir em cima dela.'
 };
 
 const DAR_RECEBER_BLOCKS = {
