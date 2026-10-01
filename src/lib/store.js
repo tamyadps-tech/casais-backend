@@ -114,9 +114,36 @@ function readPhraseIndex(cId) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
+// Hash determinístico simples (djb2) — usado só pra escolher um ponto de
+// partida "espalhado" na rotação de frases quando não há contador salvo
+// ainda (ver nextPhraseVariant), nunca pra nada sensível a colisão.
+function djb2(str) {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i += 1) {
+    hash = ((hash << 5) + hash + str.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+}
+
+// DATA_DIR é um diretório temporário (/tmp por padrão) — some a cada
+// reinício do servidor (todo redeploy no Railway, por exemplo). Sem esse
+// fallback, perder o phrase-index.json faz a rotação sempre recomeçar na
+// variação 0, dando a impressão de que a mesma frase "se repete quase
+// sempre". Em vez de sempre reiniciar em 0, usamos um ponto de partida
+// amarrado ao dia de hoje (muda todo dia, mesmo sem contador salvo) — e,
+// uma vez que o contador exista, a rotação volta a avançar normalmente
+// (nunca repete a mesma variação duas vezes seguidas dentro do mesmo
+// processo).
+function dateSeededStart(cId, key, poolSize) {
+  const today = new Date().toISOString().slice(0, 10);
+  return djb2(`${cId}:${key}:${today}`) % poolSize;
+}
+
 function nextPhraseVariant(cId, key, poolSize) {
   const idx = readPhraseIndex(cId);
-  const current = (idx[key] || 0) % poolSize;
+  const hasStored = Object.prototype.hasOwnProperty.call(idx, key);
+  const start = hasStored ? idx[key] : dateSeededStart(cId, key, poolSize);
+  const current = start % poolSize;
   idx[key] = (current + 1) % poolSize;
   fs.writeFileSync(phraseIndexPath(cId), JSON.stringify(idx, null, 2));
   return current;

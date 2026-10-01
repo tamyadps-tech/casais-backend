@@ -9,7 +9,13 @@ const devotionalBank = require('../data/devotionalBank');
 
 const router = express.Router();
 
-const START_DATE = process.env.DEVOTIONAL_START_DATE || new Date().toISOString().slice(0, 10);
+// Data fixa no código (não "hoje") de propósito — se DEVOTIONAL_START_DATE
+// não estiver configurada no Railway, "hoje" mudaria a cada reinício do
+// servidor (todo redeploy), reiniciando a rotação do zero e sempre
+// mostrando o primeiro devocional do banco. Com uma data fixa, a rotação
+// é estável mesmo sem a variável de ambiente configurada.
+const DEFAULT_START_DATE = '2026-09-28';
+const START_DATE = process.env.DEVOTIONAL_START_DATE || DEFAULT_START_DATE;
 const END_DATE = process.env.DEVOTIONAL_END_DATE || addMonths(START_DATE, 3);
 
 function addMonths(dateStr, months) {
