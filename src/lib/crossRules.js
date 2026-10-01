@@ -355,6 +355,13 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
         tipo: 'reforco',
         nivel,
         variant_key: `valores_${nivel}`,
+        // Nota científica fixa, somada à variação de frase sorteada em
+        // phraseBank.js (ver resolveConselho) — explica o PORQUÊ desse tipo
+        // de alinhamento importar, não só comemora o fato em si.
+        extra_nota:
+          nivel === 'alta'
+            ? 'A pesquisa do psicólogo John Gottman com milhares de casais mostra que esse tipo de alinhamento constrói o que ele chama de "sistema de significado compartilhado" — um dos pilares mais fortes de relações duradouras, mais até do que a ausência de conflito'
+            : 'Segundo o pesquisador John Gottman, não é preciso concordar em tudo pra ter uma base sólida — é a sobreposição real, mesmo parcial, que já começa a construir o que ele chama de "sistema de significado compartilhado" entre o casal',
         alvo: alvo.name,
         sobre: sobre.name,
         confianca: 'alta',
@@ -370,6 +377,8 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
         tipo: 'papo_valores',
         nivel,
         variant_key: `valores_${nivel}`,
+        extra_nota:
+          'Vale saber: o pesquisador John Gottman descobriu que cerca de 69% dos conflitos de um casal são "problemas perpétuos" — diferenças de personalidade ou de valores que não se resolvem de vez, só se aprende a dialogar sobre elas com respeito, ao longo do tempo. Pensar diferente aqui não é um defeito da relação, é só mais um desses temas',
         alvo: alvo.name,
         sobre: sobre.name,
         confianca: 'alta',
