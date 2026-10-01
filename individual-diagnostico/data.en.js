@@ -424,6 +424,124 @@ const QUESTIONS = [
     dimensao: 'traicao'
   },
 
+  // ---------- physical intimacy ----------
+  {
+    id: 'INT01', categoria: 'intimidade', tipo: 'multipla_escolha',
+    texto: 'Talking openly about what brings you pleasure — or what doesn’t work for you — in intimacy with someone is something you:',
+    opcoes: [
+      { texto: 'Do naturally, without much filter — I’d rather say it than let the other person guess', tag: 'intimidade_livre' },
+      { texto: 'Can do, but only once I truly feel safe with the person', tag: 'intimidade_criteriosa' },
+      { texto: 'Find quite hard — I’d rather things just happen without having to put it into words', tag: 'intimidade_reservada' },
+      { texto: 'Depends a lot on my emotional state in that moment, it varies a lot', tag: 'intimidade_oscilante' },
+      { texto: 'I’ve never really stopped to think about it clearly', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'INT02', categoria: 'intimidade', tipo: 'multipla_escolha',
+    texto: 'After an emotionally heavy day, what usually happens to your desire for physical intimacy?',
+    opcoes: [
+      { texto: 'Barely changes — desire and mood seem fairly independent of each other for me', tag: 'intimidade_livre' },
+      { texto: 'Only really wakes up once I already feel cared for, heard, at peace', tag: 'intimidade_criteriosa' },
+      { texto: 'Pretty much disappears — I get too shut down to even think about it', tag: 'intimidade_reservada' },
+      { texto: 'Can go either way — sometimes it vanishes, sometimes it’s exactly what I reach for to unwind', tag: 'intimidade_oscilante' },
+      { texto: 'I honestly can’t say for sure', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'INT03', categoria: 'intimidade', tipo: 'multipla_escolha',
+    texto: 'Asking, in the moment, for what you actually want during intimacy is something that:',
+    opcoes: [
+      { texto: 'I do without much trouble — I know how to name what I want', tag: 'intimidade_livre' },
+      { texto: 'I can do, but I prefer trust to already be well established first', tag: 'intimidade_criteriosa' },
+      { texto: 'I find uncomfortable — I’d rather signal it in a more indirect way', tag: 'intimidade_reservada' },
+      { texto: 'Varies a lot depending on how I’m feeling emotionally that day', tag: 'intimidade_oscilante' },
+      { texto: 'I’ve never had that experience to know how to answer', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'INT04', categoria: 'intimidade', tipo: 'escala',
+    texto: 'From 1 to 5, how much your desire for physical intimacy depends on feeling emotionally safe with the person, more than on any other factor.',
+    escala: { min: 1, max: 5, min_label: 'Barely at all — desire and emotional safety run separately for me', max_label: 'A lot — without emotional safety, desire simply doesn’t show up' },
+    dimensao: 'intimidade_criteriosa'
+  },
+
+  // ---------- emotional reactivity ----------
+  {
+    id: 'REA01', categoria: 'reatividade', tipo: 'multipla_escolha',
+    texto: 'In the middle of an argument that’s heating up, what does your body do first, before your mind can think calmly?',
+    opcoes: [
+      { texto: 'Raises its volume, the defense comes fast and direct, almost automatic', tag: 'reage_na_hora' },
+      { texto: 'The urge to physically leave that place is almost impossible to resist', tag: 'recua_na_hora' },
+      { texto: 'Freezes up inside — the mind goes blank, the words just won’t come out', tag: 'trava_por_dentro' },
+      { texto: 'I feel my body react, but I can still breathe and keep some control', tag: 'regula_rapido' },
+      { texto: 'Depends a lot on who the other person in the argument is', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'REA02', categoria: 'reatividade', tipo: 'escala',
+    texto: 'From 1 to 5, how much your heart races, your breathing changes, or your body heats up when an argument gets tense — even before any harsher word is said.',
+    escala: { min: 1, max: 5, min_label: 'Barely at all — my body stays calm even in a tense argument', max_label: 'A lot — my body races before I can even think straight' },
+    dimensao: 'reage_na_hora'
+  },
+  {
+    id: 'REA03', categoria: 'reatividade', tipo: 'multipla_escolha',
+    texto: 'After a moment of intense emotional stress, how long does your body usually take to return to normal?',
+    opcoes: [
+      { texto: 'Not long — I calm down fast, on my own', tag: 'regula_rapido' },
+      { texto: 'I need a good amount of time alone, away from everything, to get back to normal', tag: 'recua_na_hora' },
+      { texto: 'I keep stewing on it inside, even when I already look calm on the outside', tag: 'trava_por_dentro' },
+      { texto: 'I only get back to normal after letting it out — talking loudly, crying, moving around', tag: 'reage_na_hora' },
+      { texto: 'It varies a lot, I can’t really generalize', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'REA04', categoria: 'reatividade', tipo: 'escala',
+    texto: 'From 1 to 5, how much you’re able to calm yourself down on your own, without needing the other person to do or say something first.',
+    escala: { min: 1, max: 5, min_label: 'Barely at all — I need the other person to act first for me to calm down', max_label: 'A lot — I can regulate myself on my own, most of the time' },
+    dimensao: 'regula_rapido'
+  },
+
+  // ---------- relationship with yourself ----------
+  {
+    id: 'EU01', categoria: 'individuo', tipo: 'multipla_escolha',
+    texto: 'Being alone for a good while — no agenda, no commitments, nobody around — mostly stirs up, in you:',
+    opcoes: [
+      { texto: 'A genuine peace — I enjoy my own company, and it doesn’t feel like loneliness', tag: 'autonomia_solida' },
+      { texto: 'A discomfort that only eases once I realize it’s temporary, not permanent', tag: 'em_construcao' },
+      { texto: 'A relief that’s almost too big — sometimes I’d rather be alone than deal with someone', tag: 'isolamento_defensivo' },
+      { texto: 'An emptiness that makes me want to fill my schedule as soon as possible', tag: 'busca_completude' },
+      { texto: 'Depends a lot on the phase of life I’m in', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EU02', categoria: 'individuo', tipo: 'multipla_escolha',
+    texto: 'When you mess up badly, what’s the first voice that shows up in your head usually say?',
+    opcoes: [
+      { texto: 'Something kind, like "it’s okay to mess up, everyone does" — I move on without tearing myself apart', tag: 'autonomia_solida' },
+      { texto: 'A harsh critic, which with conscious effort I manage to soften after a while', tag: 'em_construcao' },
+      { texto: 'An urge to fix it alone and not let anyone see how big the mistake was', tag: 'isolamento_defensivo' },
+      { texto: 'An almost urgent need for someone to tell me it’s still okay', tag: 'busca_completude' },
+      { texto: 'It varies a lot depending on the mistake', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EU03', categoria: 'individuo', tipo: 'multipla_escolha',
+    texto: 'How much does your sense of personal worth change depending on whether you’re in a relationship right now?',
+    opcoes: [
+      { texto: 'Barely at all — my worth doesn’t depend on my relationship status', tag: 'autonomia_solida' },
+      { texto: 'A little — I sometimes catch myself thinking about it, but I know how to keep the two separate', tag: 'em_construcao' },
+      { texto: 'I’d rather not think about it at all — I just focus on myself and leave that subject aside', tag: 'isolamento_defensivo' },
+      { texto: 'Quite a lot — being in a good relationship really changes how I feel about myself', tag: 'busca_completude' },
+      { texto: 'I’d never honestly stopped to think about it', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EU04', categoria: 'individuo', tipo: 'escala',
+    texto: 'From 1 to 5, how much you’re able to keep being yourself — opinions, tastes, limits — even around someone you really want to please.',
+    escala: { min: 1, max: 5, min_label: 'Barely at all — I lose myself trying to please', max_label: 'A lot — I stay myself, even when I really want to please' },
+    dimensao: 'autonomia_solida'
+  },
+
   // ---------- lifestyle (for compatibility guidance) ----------
   {
     id: 'EST01', categoria: 'estilo_vida', tipo: 'multipla_escolha',
@@ -556,6 +674,72 @@ const QUESTIONS = [
       { texto: 'I don’t really enjoy reading, and I’ve made peace with that', tag: 'leitura_nao' },
       { texto: 'I read a lot, but more out of necessity — work, study — than for pleasure', tag: 'leitura_funcional' }
     ]
+  },
+  {
+    id: 'EST12', categoria: 'estilo_vida', tipo: 'selecao_multipla', max_selecoes: 2,
+    texto: 'What truly makes you feel loved, without a shadow of a doubt? (pick up to 2)',
+    opcoes: [
+      { texto: 'Words, spoken or written — a sincere compliment, an "I love you" said at the right time', tag: 'amor_palavras' },
+      { texto: 'Real time, just the two of you, no phone, no rush', tag: 'amor_tempo' },
+      { texto: 'A thoughtful little gift — not for its value, but for showing someone paid attention', tag: 'amor_presentes' },
+      { texto: 'Everyday acts of care — someone handling something for me, without my having to ask', tag: 'amor_atos' },
+      { texto: 'Physical touch — a hug, holding hands, being physically close', tag: 'amor_toque' }
+    ]
+  },
+  {
+    id: 'EST13', categoria: 'estilo_vida', tipo: 'selecao_multipla', max_selecoes: 2,
+    texto: 'And what do you most naturally offer the people you love, almost without thinking? (pick up to 2)',
+    opcoes: [
+      { texto: 'Words — compliments, recognition, saying what I feel out loud', tag: 'amor_oferece_palavras' },
+      { texto: 'Time — setting aside real moments just for the two of us', tag: 'amor_oferece_tempo' },
+      { texto: 'Thoughtful little gifts, even small ones', tag: 'amor_oferece_presentes' },
+      { texto: 'Actions — handling things for the person, caring in practical ways', tag: 'amor_oferece_atos' },
+      { texto: 'Physical touch — hugging, affection, closeness', tag: 'amor_oferece_toque' }
+    ]
+  },
+  {
+    id: 'EST14', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'Thinking about your relationship with money today, which sentence rings truest?',
+    opcoes: [
+      { texto: 'I’d rather not think about it much — money makes me uncomfortable, so I tend to avoid the subject', tag: 'dinheiro_evitador' },
+      { texto: 'Money is a real measure of success — I like seeing my net worth grow and show for itself', tag: 'dinheiro_status' },
+      { texto: 'More money would always solve a good chunk of my problems — it’s almost a quiet obsession', tag: 'dinheiro_idolatra' },
+      { texto: 'I stay constantly on alert about spending, even when I’m financially fine — it never feels like enough to feel secure', tag: 'dinheiro_vigilante' },
+      { texto: 'I have a calm, balanced relationship with money, without much drama', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EST15', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'When money comes up in a relationship, your style tends more toward:',
+    opcoes: [
+      { texto: 'Talking openly about how much I earn, spend, and save, without hedging or shame', tag: 'dinheiro_transparente' },
+      { texto: 'Preferring to keep some financial things to myself, even in a serious relationship', tag: 'dinheiro_reservado' },
+      { texto: 'Letting the subject sort itself out, without much direct conversation about it', tag: 'dinheiro_evasivo' },
+      { texto: 'Wanting to keep control of the couple’s financial decisions, even without quite realizing it', tag: 'dinheiro_controlador' },
+      { texto: 'I haven’t lived that enough yet to know my own style', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EST16', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'If you could freely choose, with absolutely no commitment tying you to any schedule, what time would your body actually choose to wake up and go to sleep?',
+    opcoes: [
+      { texto: 'Early, naturally — I wake up ready and already feel my energy peak in the morning', tag: 'cronotipo_matutino' },
+      { texto: 'Late, naturally — my best energy and clarity come at night, even into the early hours', tag: 'cronotipo_vespertino' },
+      { texto: 'A comfortable middle ground, without a strong preference for either extreme', tag: 'cronotipo_intermediario' },
+      { texto: 'It varies quite a bit depending on the phase, accumulated sleep, time of year', tag: 'cronotipo_variavel' },
+      { texto: 'I’ve never really paid attention to that', tag: 'neutro' }
+    ]
+  },
+  {
+    id: 'EST17', categoria: 'estilo_vida', tipo: 'multipla_escolha',
+    texto: 'Being forced to function outside your natural schedule (waking up very early as a night owl, for example) usually costs you:',
+    opcoes: [
+      { texto: 'Barely anything — I adapt easily to almost any schedule', tag: 'rotina_adaptavel' },
+      { texto: 'Quite a lot — I get visibly more irritable, tired, or scattered during those periods', tag: 'rotina_sensivel_ritmo' },
+      { texto: 'It only lasts for a while — my body adjusts after a few days', tag: 'rotina_ajuste_gradual' },
+      { texto: 'I’d rather not put myself in that situation when I have a choice', tag: 'rotina_protege_ritmo' },
+      { texto: 'I’ve never gone through that in any noticeable way', tag: 'neutro' }
+    ]
   }
 ];
 
@@ -650,7 +834,37 @@ const TAG_TO_PARCEIRO_IDEAL = {
   leitura_outros_formatos: 'understands that learning can come in many forms, not just from books',
   leitura_deseja: 'encourages you to build that habit, with no rush and no pressure',
   leitura_nao: 'doesn’t make reading a measure of worth — accepts you as you are',
-  leitura_funcional: 'understands that your reading serves a practical purpose, and values that too'
+  leitura_funcional: 'understands that your reading serves a practical purpose, and values that too',
+
+  amor_palavras: 'expresses love in words, not just inside — compliments, acknowledges, says what they feel out loud',
+  amor_tempo: 'sets aside real time for the two of you, without letting the rush swallow those moments',
+  amor_presentes: 'pays attention to the details that make you happy, even in the small thoughtful gifts',
+  amor_atos: 'shows care through concrete action, handling things for you without being asked',
+  amor_toque: 'seeks physical touch naturally, without you having to ask',
+
+  amor_oferece_palavras: 'knows how to recognize and value it when you express affection in words — that’s no small thing for someone who offers that kind of care',
+  amor_oferece_tempo: 'genuinely values the time you set aside for them, without treating it as a given',
+  amor_oferece_presentes: 'recognizes the intention behind every thoughtful little gift you offer, even the small ones',
+  amor_oferece_atos: 'notices and appreciates the practical care you offer day to day, without taking it for granted',
+  amor_oferece_toque: 'receives well the physical touch you naturally offer, without finding that closeness strange',
+
+  dinheiro_evitador: 'has patience to build, with you, little by little, the courage to talk about money without discomfort',
+  dinheiro_status: 'understands your relationship between money and achievement, without judging it as superficial',
+  dinheiro_idolatra: 'helps bring a bit of grounding to financial anxiety, without minimizing what you feel',
+  dinheiro_vigilante: 'has patience with your financial vigilance, even when the numbers already show security',
+  dinheiro_transparente: 'also values full openness about money, without keeping financial secrets',
+  dinheiro_reservado: 'respects your space of financial autonomy, even while sharing a life together',
+  dinheiro_evasivo: 'is willing to gently bring up the money conversations you tend to avoid',
+  dinheiro_controlador: 'knows how to balance with you who decides what, without financial control becoming a blind spot',
+
+  cronotipo_matutino: 'doesn’t mind (or shares) your early-morning energy, even if it means going to bed early too',
+  cronotipo_vespertino: 'respects your later energy peak, without expecting you to fake being a morning person',
+  cronotipo_intermediario: 'adjusts easily to your more flexible rhythm of schedules',
+  cronotipo_variavel: 'has patience with the shifts in your internal clock, without demanding too fixed a routine',
+  rotina_adaptavel: 'doesn’t have to worry about perfectly matching schedules with you — you adapt easily',
+  rotina_sensivel_ritmo: 'respects how much it costs you to go against your natural rhythm, and avoids demanding it without real need',
+  rotina_ajuste_gradual: 'has patience during the days your body is still adjusting to a schedule change',
+  rotina_protege_ritmo: 'understands and supports you when you choose to protect your natural rhythm, instead of forcing an unnecessary adjustment'
 };
 
 // ---------- result text blocks (assembled by combination) ----------
@@ -683,6 +897,27 @@ const FERIDA_BLOCKS = {
   humilhacao: 'If what hurts you most is judgment, exposure, feeling small in front of others, it’s worth asking: was there, in your story, public corrections, constant comparisons, an adult who taught through shame instead of through example? Psychiatrist and trauma researcher Bessel van der Kolk describes, in his work on how the body keeps the record of what we live through, that repeated childhood shame leaves a physical mark, not just an emotional one — a way of literally shrinking in the face of judgment. You’re not overly sensitive. You were taught, early on, to fear being fully seen.',
   traicao: 'Trusting fully, even when no one has given you a reason not to, can feel impossible if, at some point in your story, a promise that should have been kept — from a parent, from whoever was supposed to be reliable — simply wasn’t. It doesn’t have to have been one dramatic event; sometimes it’s the sum of small broken words that, together, taught a pattern: what’s said isn’t always what happens. Today it shows up as a suspicion that arrives before reason does, testing the loyalty of people who may never have given you a reason for it. Trust broken early can be rebuilt — just not overnight, and not alone.',
   injustica: 'If small unfairnesses affect you far more deeply than they seem to affect others, maybe, in your story, rules were applied unevenly — to you, or between you and someone closer to an important adult. A child who lives through that develops a hypersensitive radar for disproportion, for unfair treatment, for feeling like they’re always paying more than they should. That radar is, often, accurate — your sense of unfairness tends to be real. What’s worth training isn’t turning off that sensitivity, but calibrating the size of the response to the size of the actual problem, without letting an old unfairness answer in place of the current one.'
+};
+
+const INTIMIDADE_BLOCKS = {
+  intimidade_livre: 'You talk about desire, about pleasure, about what works and what doesn’t, without treating it as forbidden ground. Researcher Emily Nagoski, author of one of the most cited studies on sexual response, describes desire as the result of a balance between an "accelerator" (what turns desire on) and "brakes" (what turns it off) — and being able to name both out loud makes it far more likely you’ll build intimacy that actually works for both people. Your challenge isn’t learning to open up — it’s remembering that not everyone arrives with that same ease, and that patience with a more sensitive brake makes all the difference.',
+  intimidade_criteriosa: 'Your desire doesn’t switch on automatically — it asks for emotional safety first, and that’s not coldness, nor lack of desire: it’s one of the most common "brakes" that researcher Emily Nagoski describes in what’s known as the dual control model of sexual response. For you, physical and emotional intimacy walk together almost always. It’s worth naming this to whoever you love, instead of waiting for them to guess — because from the outside, this need can look like rejection, when really it’s just your way of needing solid ground before giving yourself over.',
+  intimidade_reservada: 'Putting desire into words, asking for what you want, saying what isn’t working — all of that asks for a vulnerability you still treat as risky territory. It’s not a lack of desire: it’s discomfort naming it, which is quite different. Therapist Esther Perel often says eroticism requires some degree of risk — and putting into words what we want is, in fact, a real risk, of being judged or misunderstood. It’s worth starting small: naming just one thing, once, to someone you trust — vulnerability gets lighter with practice, not with one single dose of courage.',
+  intimidade_oscilante: 'Your desire doesn’t follow a fixed pattern — it shifts with your emotional state, with the day, with how safe you feel in that specific moment. This also fits Emily Nagoski’s "accelerator and brakes" model: your brakes seem more sensitive to context than other people’s, which means external factors (stress, a recent fight, exhaustion) weigh more heavily on your response than they would for someone with a steadier system. It isn’t instability of character — it’s a response system more reactive to the environment. It’s worth communicating this, instead of letting the shift be read as disinterest.'
+};
+
+const REATIVIDADE_BLOCKS = {
+  reage_na_hora: 'When tension rises, your body kicks into action before your mind can slow it down — this is what researcher John Gottman, in one of the most cited studies on couples, calls "flooding": the heart races, usually above 100 beats per minute, and in that state the rational brain loses some of its ability to process calmly. Reacting fast isn’t a lack of control — it’s physiology happening faster than reflection. The practice here isn’t to feel less intensely, it’s to recognize the body’s signal early enough to ask for a pause before it takes over everything.',
+  recua_na_hora: 'Faced with tension, your body asks for physical distance — leaving the room, stepping back, gaining space before continuing. Within the polyvagal theory of researcher Stephen Porges, this resembles what’s called a flight response: the nervous system decides safety lies in putting distance between you and the source of stress. It isn’t weakness or disinterest in the conversation — it’s a legitimate form of regulation. The thing to watch is giving notice before disappearing: "I need some time, I’ll be back" completely changes how the person left behind feels about your leaving.',
+  trava_por_dentro: 'In moments of high tension, your mind seems to go blank — the words disappear, the body freezes, and on the outside you might even look calm, while inside everything is happening at once. In Stephen Porges’ polyvagal theory, this is the freeze pattern — a state in which the nervous system decides neither fighting nor fleeing is safe, and the response becomes stillness. It’s real, not coldness or disinterest. It’s worth naming it to whoever is with you, even afterward: "I froze, it wasn’t that I stopped caring" helps the other person not read your silence as an absence of feeling.',
+  regula_rapido: 'Your body does react to tension — that’s human, it happens to everyone — but you’re able to breathe, think, and return to balance without needing much time or outside intervention. That’s a sign of good self-regulation capacity — the ability, widely described in the literature on emotional regulation, to calm down without depending entirely on the environment or the other person. That’s a valuable resource in a relationship: you can be the anchor in the more turbulent moments, as long as it doesn’t become your job alone to calm both of you down.'
+};
+
+const INDIVIDUO_BLOCKS = {
+  autonomia_solida: 'You seem to have what pediatrician and psychoanalyst Donald Winnicott called the "capacity to be alone" — not isolation, but the ability to be in your own company without feeling incomplete or abandoned. Winnicott saw this as one of the clearest signs of emotional maturity: only someone who doesn’t depend on connection to feel whole can truly connect with another person. Psychiatrist Murray Bowen called something similar "differentiation of self" — the capacity to hold onto your own identity even in intense emotional closeness with someone. You already carry a solid base of that. The thing to watch is not letting that autonomy become armor against truly letting someone in.',
+  em_construcao: 'Your sense of worth and your ability to be okay alone still waver — sometimes they come easily, sometimes they take conscious effort to hold steady. That isn’t weakness, it’s process: psychiatrist Murray Bowen described "differentiation of self" — the capacity to hold your own identity even close to someone important — as something that develops over a lifetime, not a fixed trait you’re born with. You’re apparently somewhere in the middle of that path: you already know how to notice when you lose a bit of yourself, and you can already, with some effort, come back. That awareness is already half the work.',
+  isolamento_defensivo: 'There’s an important difference between being okay alone and avoiding, for protection, letting someone get too close — and given your pattern, it’s worth looking closely at which one is actually yours. Psychoanalyst Donald Winnicott described true capacity to be alone as something built from a secure base earlier on, not as a refusal of intimacy. When independence becomes a shield — handling everything alone, not letting anyone see the size of a struggle — it can, without meaning to, push away exactly the kind of care that would do you good. It isn’t about being less strong, it’s about letting someone, every now and then, hold part of the weight with you.',
+  busca_completude: 'Your well-being seems to depend quite a bit on being in a relationship, or on getting outside confirmation that everything’s okay. That’s deeply human — nobody builds themselves alone — but it’s worth an honest question: are you building a life you love on your own terms, or waiting for a relationship to fill a gap only you can fill first? Psychoanalyst Donald Winnicott described the capacity to be alone as a prerequisite, not an obstacle, for healthy intimacy — because only someone who isn’t using the other person to feel whole can truly connect. That doesn’t devalue your desire for a relationship — it’s just an invitation to strengthen the foundation before building on top of it.'
 };
 
 const DAR_RECEBER_BLOCKS = {

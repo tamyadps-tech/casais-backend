@@ -250,6 +250,9 @@
     const temperamento = topTag(temperamentoCounts) || 'sanguineo';
     const apego = topTag(tally('apego')) || 'seguro';
     const ferida = topTag(tally('feridas_infancia'));
+    const intimidade = topTag(tally('intimidade'));
+    const reatividade = topTag(tally('reatividade'));
+    const individuo = topTag(tally('individuo'));
     const tagsEstiloVida = estiloVidaTags();
     const volumeTemperamento = volumeLevel(temperamentoCounts, temperamento);
     const volumeEmocional = reatividadeEmocional();
@@ -264,6 +267,9 @@
     if (ferida && FERIDA_BLOCKS[ferida]) partes.push(FERIDA_BLOCKS[ferida]);
     partes.push(DAR_RECEBER_BLOCKS[apego]);
     if (volumeEmocional && VOLUME_EMOCIONAL_BLOCKS[volumeEmocional]) partes.push(VOLUME_EMOCIONAL_BLOCKS[volumeEmocional]);
+    if (individuo && INDIVIDUO_BLOCKS[individuo]) partes.push(INDIVIDUO_BLOCKS[individuo]);
+    if (intimidade && INTIMIDADE_BLOCKS[intimidade]) partes.push(INTIMIDADE_BLOCKS[intimidade]);
+    if (reatividade && REATIVIDADE_BLOCKS[reatividade]) partes.push(REATIVIDADE_BLOCKS[reatividade]);
     partes.push(CLOSING);
 
     $('#result-text').innerHTML = partes.map((p) => `<p>${escapeHtml(p).replace(/\n\n/g, '</p><p>')}</p>`).join('');
