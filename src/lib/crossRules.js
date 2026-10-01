@@ -74,20 +74,20 @@ const APEGO_CUIDADO = {
 // própria vida", uma reflexão pra ela mesma, não uma instrução sobre o
 // parceiro(a).
 const APEGO_AUTO_REFLEXAO = {
-  seguro: 'você lida naturalmente bem com intimidade e com distância — isso é uma base sólida. Vale lembrar que nem todo mundo tem essa mesma facilidade, e ter paciência com quem tem mais dificuldade faz toda diferença',
-  ansioso: 'você tende a buscar reafirmação com frequência e pode sentir o silêncio do outro como distância, mesmo quando não é. Perceber esse padrão no momento em que ele aparece já ajuda a não reagir no automático',
-  evitativo: 'você tende a valorizar muito a própria independência, e abrir mão de um pouco de controle emocional pode ser desconfortável. Notar isso ajuda a não fechar a porta bem na hora em que alguém se aproxima de verdade',
-  desorganizado: 'você pode sentir vontade de se aproximar e, ao mesmo tempo, vontade de recuar — é mais comum do que parece, e só reconhecer esse padrão já ajuda a suavizá-lo com o tempo'
+  seguro: 'você lida naturalmente bem com intimidade e com distância — e isso não é sorte, é biografia: pesquisas de John Bowlby e Mary Ainsworth mostram que um apego seguro se forma quando, na infância, alguém respondeu de forma consistente às suas necessidades, e isso calibrou seu cérebro pra confiar que o outro vai voltar. Vale lembrar que nem todo mundo teve essa mesma base, e ter paciência com quem tem mais dificuldade faz toda diferença',
+  ansioso: 'seu cérebro aprendeu cedo que a atenção do outro era inconsistente, e criou uma estratégia de alerta: buscar reafirmação, escanear sinais de distância, sentir o silêncio do outro como ameaça mesmo quando não é. Não é carência nem exagero — é o sistema nervoso fazendo o que aprendeu a fazer pra garantir proximidade. Perceber esse padrão no momento em que ele aparece, lembrando que é uma reação antiga e não uma leitura precisa do presente, já ajuda a não reagir no automático',
+  evitativo: 'seu cérebro aprendeu, em algum momento, que contar com alguém doía mais do que se virar sozinho(a), e criou uma estratégia de desligar a própria necessidade de proximidade pra se proteger. A pesquisadora Mary Main mostrou que, por dentro, o corpo de quem tem esse padrão reage ao estresse tanto quanto o de qualquer pessoa — mesmo quando por fora parece calmo e independente. Notar esse mecanismo ajuda a não fechar a porta bem na hora em que alguém se aproxima de verdade',
+  desorganizado: 'existe uma explicação concreta pra essa sensação de puxar e empurrar ao mesmo tempo: pesquisas de Mary Main e Erik Hesse descrevem esse padrão como "medo sem solução" — quando, na infância, a mesma pessoa que acolhia também era fonte de medo, o cérebro aprende a ativar aproximação e fuga ao mesmo tempo. Não é contradição de caráter, é um circuito antigo. Só reconhecer esse padrão quando ele aparece já ajuda a suavizá-lo com o tempo'
 };
 
 // Mesma lógica, mas sobre a ferida da infância mais forte da PRÓPRIA
 // pessoa — uma sensibilidade sua, não um cuidado que o outro precisa ter.
 const FERIDA_AUTO_REFLEXAO = {
-  rejeicao: 'você carrega uma sensibilidade grande a se sentir rejeitado(a). Vale observar quando isso te faz interpretar como rejeição algo que, no fundo, nem era sobre você',
-  abandono: 'você tende a temer ser deixado(a) — reconhecer isso na hora ajuda a diferenciar um medo antigo de um sinal real do presente',
-  humilhacao: 'você é sensível a julgamento e exposição. Vale notar quando isso te faz reagir mais forte do que a situação realmente pede',
-  traicao: 'confiar plenamente não é fácil pra você. Perceber essa dificuldade é o primeiro passo pra não colocar na conta do outro algo que é uma ferida sua',
-  injustica: 'situações de injustiça mexem fundo com você. Vale notar quando essa sensibilidade acaba ampliando um conflito que, sozinho, seria pequeno'
+  rejeicao: 'a ferida de rejeição planta uma crença bem cedo — "eu não sou suficiente" — e o cérebro passa a escanear o ambiente em busca de provas que confirmem essa crença, mesmo em situações ambíguas que não tinham nada a ver com você. Vale observar quando isso te faz interpretar como rejeição algo que, no fundo, nem era sobre você',
+  abandono: 'o medo de ser deixado(a) costuma vir de uma experiência real de ausência ou perda, e o sistema nervoso aprendeu a tratar qualquer sinal de distância como alarme de perigo — por isso a reação pode vir forte e rápida, antes mesmo de você entender o que sentiu. Reconhecer isso na hora ajuda a diferenciar um medo antigo de um sinal real do presente',
+  humilhacao: 'a sensibilidade a julgamento e exposição geralmente nasce de momentos em que ser visto significava ser exposto ou diminuído, e o corpo guarda essa memória como alerta de vergonha, não só como lembrança — pesquisadores como Bessel van der Kolk mostram como esse tipo de marca fica registrada no corpo, não só na mente consciente. Vale notar quando isso te faz reagir mais forte do que a situação realmente pede',
+  traicao: 'confiar plenamente não é fácil pra você, e isso costuma vir de uma experiência em que confiar saiu caro — o cérebro aprende rápido a proteger contra a dor de ser enganado(a), ficando mais alerta a qualquer inconsistência. Perceber essa dificuldade é o primeiro passo pra não colocar na conta do outro algo que é uma ferida sua',
+  injustica: 'situações de injustiça mexem fundo com você porque, em algum momento, a sensação de ser tratado(a) de forma desigual ficou marcada como ameaça — e o cérebro reage a isso quase como reagiria a um perigo real, com a mesma intensidade. Vale notar quando essa sensibilidade acaba ampliando um conflito que, sozinho, seria pequeno'
 };
 
 const VALORES_LABEL = {

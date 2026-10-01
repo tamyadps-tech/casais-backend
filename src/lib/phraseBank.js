@@ -118,72 +118,72 @@ const BANKS = {
 
   // ---------- dinâmica de apego: cuidado por estilo do parceiro(a) ----------
   apego_estilo_seguro: [
-    '{{sobre}} lida bem com espaço e com conflito — seu papel é só manter a consistência que já existe',
-    'Não precisa fazer nada muito diferente aqui — {{sobre}} já tem uma base segura, só continue sendo previsível e presente',
-    '{{sobre}} costuma dar e receber espaço com naturalidade — aproveita essa facilidade pra fortalecer a confiança entre vocês',
-    'Essa segurança de {{sobre}} é uma base rara — cuida pra não dar por garantida, mesmo sendo mais fácil de manter'
+    '{{sobre}} lida bem com espaço e com conflito — pesquisas mostram que isso vem de uma base de confiança construída cedo, então seu papel é só manter a consistência que já existe, sem tentar "consertar" o que não está quebrado',
+    'Não precisa fazer nada muito diferente aqui — o apego seguro de {{sobre}} funciona como uma "base segura" (o termo que a psicologia do apego usa pra isso), e ela se mantém forte com previsibilidade, não com grandes gestos',
+    '{{sobre}} costuma dar e receber espaço com naturalidade — isso é raro, e vale aproveitar essa facilidade pra fortalecer ainda mais a confiança entre vocês',
+    'Essa segurança de {{sobre}} é uma base rara — cuida pra não dar por garantida: até um apego seguro precisa de manutenção, só que com bem menos esforço'
   ],
   apego_estilo_ansioso: [
-    'Dê reafirmação verbal com frequência e avise quando for demorar — a previsibilidade acalma mais que qualquer discurso',
-    'Um simples aviso — tipo "te respondo em uma horinha" — evita que {{sobre}} passe esse tempo todo inseguro(a)',
-    '{{sobre}} tende a precisar sentir isso com mais frequência — um "tá tudo bem entre a gente" de vez em quando faz diferença real',
-    'Evita deixar mensagens sem resposta por muito tempo sem avisar — pra {{sobre}}, silêncio pode parecer distância'
+    'Dê reafirmação verbal com frequência e avise quando for demorar — no apego ansioso, o cérebro interpreta silêncio como sinal de perigo, então a previsibilidade acalma mais que qualquer discurso',
+    'Um simples aviso — tipo "te respondo em uma horinha" — evita que o sistema de alerta de {{sobre}} dispare sem necessidade',
+    '{{sobre}} tende a precisar sentir isso com mais frequência — um "tá tudo bem entre a gente" de vez em quando desliga, de verdade, um alarme interno que ela(e) nem escolhe sentir',
+    'Evita deixar mensagens sem resposta por muito tempo sem avisar — pra quem tem apego ansioso, o cérebro lê silêncio como distância, mesmo quando não é isso'
   ],
   apego_estilo_evitativo: [
-    'Respeite o espaço de {{sobre}} e não pressione por abertura emocional rápida — a confiança cresce com consistência, não com cobrança',
-    'Quando {{sobre}} recuar, dá o espaço sem cobrar explicação na hora — ele(a) tende a voltar sozinho(a), no tempo certo',
-    'Evita ultimato ou pressão pra "se abrir logo" — com {{sobre}}, a abertura emocional vem devagar, não por cobrança',
-    '{{sobre}} demonstra cuidado mais por ação do que por palavra — repara nesses gestos em vez de esperar só declarações'
+    'Respeite o espaço de {{sobre}} e não pressione por abertura emocional rápida — pesquisas mostram que, mesmo calmo(a) por fora, o corpo de quem tem apego evitativo reage ao estresse tanto quanto o de qualquer um; a confiança cresce com consistência, não com cobrança',
+    'Quando {{sobre}} recuar, dá o espaço sem cobrar explicação na hora — recuar é a forma que ela(e) aprendeu de se proteger, não uma rejeição a você, e ela(e) tende a voltar sozinho(a), no tempo certo',
+    'Evita ultimato ou pressão pra "se abrir logo" — a pressão só ativa ainda mais a necessidade de distância de {{sobre}}; a abertura emocional vem devagar, não por cobrança',
+    '{{sobre}} demonstra cuidado mais por ação do que por palavra — isso também é um jeito de amar, só que o dela(e); repara nesses gestos em vez de esperar só declarações'
   ],
   apego_estilo_desorganizado: [
-    'Seja o mais previsível e paciente possível, evite ultimatos — dê tempo mesmo quando {{sobre}} se afastar sem explicar',
+    'Seja o mais previsível e paciente possível, evite ultimatos — dê tempo mesmo quando {{sobre}} se afastar sem explicar; esse padrão de aproximar e recuar é um circuito antigo, não uma escolha consciente',
     '{{sobre}} pode se aproximar e se afastar sem um padrão claro — não leva pro pessoal, é mais sobre o jeito dele(a) processar do que sobre você',
     'Mantém a calma quando {{sobre}} parecer contraditório(a) — consistência da sua parte ajuda mais do que tentar entender cada oscilação',
     'Evita reagir no mesmo tom quando {{sobre}} se fechar de repente — um respiro seu ajuda os dois a não escalar a situação'
   ],
   apego_persegue_ansioso: [
-    'Dá um respiro antes de cobrar resposta ou proximidade — {{sobre}} tende a se aproximar mais quando não sente pressão',
-    'Experimenta esperar um pouco mais antes de buscar reafirmação — {{sobre}} costuma recuar exatamente quando sente essa cobrança',
-    'Quando bater a vontade de correr atrás, tenta segurar por alguns minutos — {{sobre}} tende a voltar sozinho(a) quando não sente que está sendo perseguido(a)',
-    'Nem toda distância de {{sobre}} é sobre você — dar espaço, em vez de cobrar, costuma trazer ele(a) de volta mais rápido'
+    'Dá um respiro antes de cobrar resposta ou proximidade — quanto mais pressão {{sobre}} sente, mais o sistema de alerta dela(e) dispara o sinal de distância; sem essa pressão, ela(e) tende a se aproximar mais',
+    'Experimenta esperar um pouco mais antes de buscar reafirmação — {{sobre}} costuma recuar exatamente quando sente essa cobrança; é um padrão conhecido e reversível, não um defeito de personalidade',
+    'Quando bater a vontade de correr atrás, tenta segurar por alguns minutos — {{sobre}} tende a voltar sozinho(a) quando não sente que está sendo perseguido(a); dar esse espaço é o que quebra o ciclo',
+    'Nem toda distância de {{sobre}} é sobre você — o cérebro dela(e) está processando, não rejeitando; dar espaço, em vez de cobrar, costuma trazer ela(e) de volta mais rápido'
   ],
   apego_persegue_evitativo: [
-    'Avise que precisa de um tempo, com um prazo curto ("preciso de uma hora, já volto") — isso evita que {{sobre}} entre em pânico',
-    'Antes de se afastar pra processar algo, um aviso rápido já ajuda {{sobre}} a não interpretar como abandono',
-    'Seu silêncio pode pesar mais pra {{sobre}} do que você imagina — um recado curto muda a forma como ele(a) recebe sua distância',
-    'Da próxima vez que precisar de espaço, tenta nomear isso em voz alta — {{sobre}} lida melhor com a distância quando ela vem explicada'
+    'Avise que precisa de um tempo, com um prazo curto ("preciso de uma hora, já volto") — isso evita que o alarme interno de {{sobre}} dispare, porque silêncio sem aviso costuma ser lido pelo cérebro dela(e) como abandono',
+    'Antes de se afastar pra processar algo, um aviso rápido já ajuda {{sobre}} a não interpretar sua distância como perigo — é literalmente uma questão de como o cérebro dela(e) processa ausência',
+    'Seu silêncio pode pesar mais pra {{sobre}} do que você imagina — pra quem tem apego ansioso, a ausência de sinal é processada quase como uma ameaça real, não como algo neutro',
+    'Da próxima vez que precisar de espaço, tenta nomear isso em voz alta — {{sobre}} lida muito melhor com a distância quando ela vem explicada, porque isso tira a incerteza que mais pesa'
   ],
 
   // ---------- cuidado por ferida da infância ----------
   ferida_rejeicao: [
-    'Evite comparar {{sobre}} com outras pessoas e reforce que você aceita do jeito que é, mesmo nos dias difíceis',
-    'Um elogio específico de vez em quando ajuda {{sobre}} a não duvidar do próprio valor nos momentos mais frágeis',
-    'Cuidado redobrado com brincadeiras sobre aparência ou jeito de ser — pra {{sobre}}, isso pode pesar mais do que parece',
-    'Reforçar que você escolhe {{sobre}} todo dia, sem precisar de motivo, ajuda a acalmar esse medo de não ser suficiente'
+    'Evite comparar {{sobre}} com outras pessoas e reforce que você aceita do jeito que é — quem carrega a ferida de rejeição tem o cérebro treinado a procurar provas de que não é suficiente, mesmo nos dias difíceis',
+    'Um elogio específico de vez em quando ajuda {{sobre}} a não duvidar do próprio valor nos momentos mais frágeis — não é vaidade, é desarmar uma crença antiga',
+    'Cuidado redobrado com brincadeiras sobre aparência ou jeito de ser — pra quem tem essa ferida, esses comentários confirmam um medo antigo, mesmo ditos sem nenhuma má intenção',
+    'Reforçar que você escolhe {{sobre}} todo dia, sem precisar de motivo, ajuda a acalmar esse medo de não ser suficiente — é a repetição que desconstrói a crença, não um gesto único'
   ],
   ferida_abandono: [
-    'Avise com antecedência quando for se ausentar ou demorar, e evite usar "vou embora" como argumento numa briga',
-    'Mesmo numa discussão feia, evita ameaçar terminar ou sumir — pra {{sobre}}, isso mexe bem mais fundo do que a briga em si',
-    'Um "eu não vou a lugar nenhum" dito de vez em quando, sem motivo aparente, ajuda {{sobre}} a se sentir mais seguro(a)',
-    'Cumprir o que combina, mesmo em coisas pequenas, é o que mais constrói segurança pra {{sobre}}'
+    'Avise com antecedência quando for se ausentar ou demorar, e evite usar "vou embora" como argumento numa briga — pra quem tem ferida de abandono, uma ameaça de partida é processada quase como perigo real, não como figura de linguagem',
+    'Mesmo numa discussão feia, evita ameaçar terminar ou sumir — pra {{sobre}}, isso mexe bem mais fundo do que a briga em si, ativa um medo que vem de muito antes de você',
+    'Um "eu não vou a lugar nenhum" dito de vez em quando, sem motivo aparente, ajuda {{sobre}} a se sentir mais seguro(a) — é uma forma simples de contradizer uma crença antiga',
+    'Cumprir o que combina, mesmo em coisas pequenas, é o que mais constrói segurança pra {{sobre}} — consistência repetida é o que recalibra, aos poucos, um medo tão enraizado'
   ],
   ferida_humilhacao: [
-    'Nunca corrija ou brinque em tom de deboche na frente de outras pessoas — leve pra uma conversa em particular',
-    'Se precisar apontar algo, escolhe um momento só entre vocês dois — na frente de outros, {{sobre}} sente isso de um jeito bem mais pesado',
-    'Cuidado com piadas sobre erros de {{sobre}} em grupo, mesmo sem má intenção — o efeito pode ser bem maior do que parece',
-    'Reconhecer os acertos de {{sobre}} em público pesa tanto quanto evitar expor os erros — os dois lados ajudam'
+    'Nunca corrija ou brinque em tom de deboche na frente de outras pessoas — leve pra uma conversa em particular; quem carrega ferida de humilhação registra exposição pública como ameaça, não como brincadeira',
+    'Se precisar apontar algo, escolhe um momento só entre vocês dois — na frente de outros, {{sobre}} sente isso de um jeito bem mais pesado, porque o corpo reage à vergonha quase como reagiria a um perigo',
+    'Cuidado com piadas sobre erros de {{sobre}} em grupo, mesmo sem má intenção — o efeito pode ser bem maior do que parece, porque mexe numa memória mais antiga do que a situação atual',
+    'Reconhecer os acertos de {{sobre}} em público pesa tanto quanto evitar expor os erros — os dois lados, juntos, ajudam a reescrever aos poucos essa sensibilidade'
   ],
   ferida_traicao: [
-    'Mantenha consistência entre o que fala e o que faz, mesmo em coisas pequenas — confiança se constrói aos poucos',
-    'Evite prometer o que não tem certeza que vai cumprir — pra {{sobre}}, promessa quebrada pesa mais do que parece',
-    'Ser transparente sobre pequenas coisas do dia a dia ajuda {{sobre}} a não precisar desconfiar por hábito',
-    'Se errar, admite direto — tentar disfarçar costuma doer bem mais em {{sobre}} do que o erro em si'
+    'Mantenha consistência entre o que fala e o que faz, mesmo em coisas pequenas — pra quem tem ferida de traição, o cérebro fica em alerta constante procurando sinais de inconsistência; confiança se constrói aos poucos, prova após prova',
+    'Evite prometer o que não tem certeza que vai cumprir — pra {{sobre}}, promessa quebrada pesa mais do que parece, porque confirma um padrão que o cérebro dela(e) já está programado pra temer',
+    'Ser transparente sobre pequenas coisas do dia a dia ajuda {{sobre}} a não precisar desconfiar por hábito — a transparência repetida é o que ensina o sistema de alerta dela(e) a relaxar',
+    'Se errar, admite direto — tentar disfarçar costuma doer bem mais em {{sobre}} do que o erro em si, porque o que a ferida de traição mais teme não é o erro, é ser enganado(a) de novo'
   ],
   ferida_injustica: [
-    'Explique o motivo das suas decisões e evite tratar as coisas de forma desigual sem dar contexto',
-    'Antes de decidir algo que envolve os dois, um "deixa eu te explicar por que penso assim" ajuda {{sobre}} a não sentir que foi injusto',
-    'Evita aplicar regras diferentes pra situações parecidas — {{sobre}} percebe rápido quando algo parece desproporcional',
-    'Reconhecer quando errou o tom ou foi desproporcional já ajuda bastante a acalmar {{sobre}} nesses momentos'
+    'Explique o motivo das suas decisões e evite tratar as coisas de forma desigual sem dar contexto — quem tem ferida de injustiça reage a desigualdade quase como reagiria a uma ameaça, com a mesma intensidade',
+    'Antes de decidir algo que envolve os dois, um "deixa eu te explicar por que penso assim" ajuda {{sobre}} a não sentir que foi injusto — contexto desarma a reação antes dela crescer',
+    'Evita aplicar regras diferentes pra situações parecidas — {{sobre}} percebe rápido quando algo parece desproporcional; é uma sensibilidade afiada, não exagero',
+    'Reconhecer quando errou o tom ou foi desproporcional já ajuda bastante a acalmar {{sobre}} nesses momentos — validar a percepção dela(e) importa mais do que ter razão no detalhe'
   ],
 
   // ---------- autorreflexão: fechamento (compartilhado entre estilos) ----------
