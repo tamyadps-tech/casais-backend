@@ -263,7 +263,15 @@ function pickTipInputs(targetName, findings, usedLog) {
 
   const principal1 = selectFinding(poolPrincipal, targetName, usedLog);
   const restante = poolPrincipal.filter((f) => !principal1 || f.id !== principal1.id);
-  const principal2 = selectFinding(restante, targetName, usedLog);
+  // Prioriza um segundo finding de tipo DIFERENTE do primeiro sempre que
+  // existir algum disponível — sem isso, como "papo_valores"/"reforco" tem
+  // dezenas de perguntas de valores candidatas (uma por VAL_QUESTION_ID) e
+  // os outros tipos (gesto, apego, ferida, surpresa especial) têm só um
+  // punhado, os dois findings principais do dia quase sempre acabavam
+  // sendo os dois de valores, afogando os tipos mais raros (e mais ricos,
+  // como a surpresa especial com as respostas abertas) por meses.
+  const restanteOutroTipo = principal1 ? restante.filter((f) => f.tipo !== principal1.tipo) : restante;
+  const principal2 = selectFinding(restanteOutroTipo.length ? restanteOutroTipo : restante, targetName, usedLog);
 
   return {
     findings: [principal1, principal2].filter(Boolean),
@@ -284,7 +292,13 @@ async function generateDueTips(id1, id2, { force = false } = {}) {
     return { generated: false, reason: 'not_due_today', date: today };
   }
 
-  const coupleAnalysis = await getOrBuildCoupleAnalysis(id1, id2);
+  // force: true de propósito — analyzeCouple() é 100% determinístico e sem
+  // custo de IA (IA_DESLIGADA_AQUI em crossAnalysisAgent.js), então não há
+  // motivo pra reusar uma análise antiga em cache: isso faria qualquer
+  // mudança em crossRules.js/phraseBank.js nunca valer pra um casal que já
+  // tinha uma análise salva antes da mudança. Recalcular sempre garante
+  // que a dica de hoje reflita o código de hoje.
+  const coupleAnalysis = await getOrBuildCoupleAnalysis(id1, id2, { force: true });
   if (!coupleAnalysis) {
     return { generated: false, reason: 'missing_data' };
   }

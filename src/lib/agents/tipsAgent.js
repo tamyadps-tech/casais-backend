@@ -22,7 +22,7 @@ const RUBRIC = [
   'Não usa emojis em nenhum ponto do texto',
   'Tem entre 80 e 220 palavras',
   'Se algum fato for do tipo "papo_valores", essa parte é um convite tranquilo pra conversar, nunca soa como alarme ou cobrança',
-  'Quando o fato ou a ideia de partida trouxer uma explicação sobre como o cérebro, uma crença antiga ou um padrão de comportamento funciona (tipos "dinamica_apego", "cuidado_ferida" e a dica extra de autorreflexão), a mensagem preserva esse porquê em linguagem simples — nunca vira só uma instrução de ação sem entendimento por trás, porque é esse entendimento que ajuda a pessoa de verdade',
+  'Sempre que a ideia de partida trouxer uma explicação científica — sobre como o cérebro, uma crença antiga, um padrão de comportamento ou a pesquisa de algum autor/pesquisador citado funciona, não importa o tipo do fato — a mensagem preserva esse porquê em linguagem simples — nunca vira só uma instrução de ação sem entendimento por trás, porque é esse entendimento que ajuda a pessoa de verdade',
   ...HUMANITY_RUBRIC
 ];
 
