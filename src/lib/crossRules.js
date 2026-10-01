@@ -11,7 +11,8 @@
 //   id          — chave estável, usada pro controle de repetição (o mesmo
 //                 finding não deve virar dica de novo antes do cooldown)
 //   tipo        — 'gesto_de_amor' | 'reforco' | 'dinamica_apego' |
-//                 'cuidado_ferida' | 'papo_valores' | 'auto_reflexao'
+//                 'cuidado_ferida' | 'papo_valores' | 'surpresa_especial' |
+//                 'auto_reflexao'
 //                 (auto_reflexao nunca é o finding principal — é sempre
 //                 combinado com outro na hora de montar a dica, ver
 //                 pipeline.js)
@@ -380,6 +381,78 @@ function buildPontosValores(alvo, sobre, pessoaA, pessoaB) {
   return findings;
 }
 
+// ---------- Lente 5: respostas abertas — ideias concretas de surpresa ----------
+// As perguntas abertas do questionário (comida e sobremesa favoritas,
+// lembrança mais marcante, "dia perfeito", música que lembra o
+// relacionamento) ficavam de fora do cruzamento até aqui — mesmo sendo
+// material riquíssimo pra uma dica de verdade específica desse casal, não
+// um conselho genérico. Cada uma vira um finding diferente, com o fato
+// sendo literalmente o que a própria pessoa escreveu sobre si (nunca
+// inventado), e uma ideia de ação pra preparar algo especial em cima disso.
+const RESPOSTA_ABERTA_IDEIA = {
+  CON04: (sobre, resposta) => ({
+    fato: `${sobre.name} contou que a comida favorita, aquela que nunca enjoa, é "${resposta}"`,
+    sugestao_acao: `Prepara (ou pede) esse prato pra ${sobre.name} num dia qualquer, sem ocasião especial nenhuma — só porque lembrou`
+  }),
+  CON05: (sobre, resposta) => ({
+    fato: `A sobremesa favorita de ${sobre.name}, a que salva qualquer dia ruim, é "${resposta}"`,
+    sugestao_acao: `Surpreende ${sobre.name} com essa sobremesa num dia em que perceber que ele(a) precisa de um colo`
+  }),
+  CON11: (sobre, resposta) => ({
+    fato: `A lembrança mais marcante que ${sobre.name} guarda de vocês dois até hoje é: "${resposta}"`,
+    sugestao_acao: `Recria algum detalhe desse momento — o lugar, a comida, a música que tocava — ou simplesmente conta pra ${sobre.name} que você também guarda essa lembrança com carinho`
+  }),
+  CON13: (sobre, resposta) => ({
+    fato: `O "dia perfeito" que ${sobre.name} descreveu com você é: "${resposta}"`,
+    sugestao_acao: `Organiza, mesmo que só um pedaço pequeno disso, um momento que puxe esse dia perfeito que ${sobre.name} descreveu — não precisa ser tudo de uma vez`
+  }),
+  CON14: (sobre, resposta) => ({
+    fato: `Existe uma música que faz ${sobre.name} pensar em você ou no relacionamento de vocês: "${resposta}"`,
+    sugestao_acao: `Toca essa música num momento à toa — no carro, cozinhando, chegando em casa — e vê o que isso desperta nele(a)`
+  })
+};
+
+function buildSurpresasEspeciais(alvo, sobre) {
+  const findings = [];
+  Object.entries(RESPOSTA_ABERTA_IDEIA).forEach(([questionId, montar]) => {
+    const resposta = sobre.responses && sobre.responses[questionId];
+    if (typeof resposta !== 'string' || resposta.trim().length < 3 || resposta.trim() === NAO_SEI_TEXTO) return;
+
+    const { fato, sugestao_acao } = montar(sobre, resposta.trim());
+    findings.push({
+      id: `aberta_${alvo.name}_${questionId}`,
+      tipo: 'surpresa_especial',
+      alvo: alvo.name,
+      sobre: sobre.name,
+      confianca: 'alta',
+      fato,
+      sugestao_acao
+    });
+  });
+  return findings;
+}
+
+// Pergunta aberta respondida sobre o PRÓPRIO parceiro(a) (CON12: "o que
+// você mais admira nele(a), que talvez ele(a) nem saiba que você
+// percebe") — vira um lembrete pra quem escreveu isso dizer em voz alta
+// pro parceiro(a), não só sentir por dentro.
+function buildAdmiracaoNaoDita(pessoaQueAdmira, parceiroAdmirado) {
+  const resposta = pessoaQueAdmira.responses && pessoaQueAdmira.responses.CON12;
+  if (typeof resposta !== 'string' || resposta.trim().length < 3 || resposta.trim() === NAO_SEI_TEXTO) return [];
+
+  return [
+    {
+      id: `admiracao_${pessoaQueAdmira.name}`,
+      tipo: 'reforco',
+      alvo: pessoaQueAdmira.name,
+      sobre: parceiroAdmirado.name,
+      confianca: 'alta',
+      fato: `${pessoaQueAdmira.name} admira isso em ${parceiroAdmirado.name}, e talvez nunca tenha dito: "${resposta.trim()}"`,
+      sugestao_acao: `Fala isso em voz alta pra ${parceiroAdmirado.name} essa semana, com essas mesmas palavras ou parecidas — reconhecimento dito importa muito mais do que reconhecimento só sentido por dentro`
+    }
+  ];
+}
+
 /**
  * Cruza os dados das duas pessoas e devolve a lista completa de findings,
  * já nas duas direções (o que A deveria saber sobre B, e vice-versa).
@@ -397,7 +470,11 @@ function buildFindings(pessoaA, pessoaB) {
     ...buildAutoReflexao(pessoaA),
     ...buildAutoReflexao(pessoaB),
     ...buildPontosValores(pessoaA, pessoaB, pessoaA, pessoaB),
-    ...buildPontosValores(pessoaB, pessoaA, pessoaA, pessoaB)
+    ...buildPontosValores(pessoaB, pessoaA, pessoaA, pessoaB),
+    ...buildSurpresasEspeciais(pessoaA, pessoaB),
+    ...buildSurpresasEspeciais(pessoaB, pessoaA),
+    ...buildAdmiracaoNaoDita(pessoaA, pessoaB),
+    ...buildAdmiracaoNaoDita(pessoaB, pessoaA)
   ];
 
   return findings;
